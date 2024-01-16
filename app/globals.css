@@ -1,0 +1,39 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.box {
+  border-radius: 8.52px;
+  background: rgba(255, 255, 255, 0.11);
+  box-shadow: -3.77px 3.77px 3.77px 0px rgba(255, 255, 255, 0.11) inset,
+    3.77px -3.77px 3.77px 0px rgba(194, 194, 194, 0.11) inset,
+    0px 2.3px 2.3px 0px rgba(0, 0, 0, 0.25) inset,
+    0px 4.26px 4.26px 0px rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(1.1714800596237183px);
+}
+
+.box-glass-effect {
+  border-radius: 8px;
+  background: #fff;
+  /* Glass Effect */
+  box-shadow: -3.54px 3.54px 3.54px 0px rgba(255, 255, 255, 0.11) inset,
+    3.54px -3.54px 3.54px 0px rgba(194, 194, 194, 0.11) inset,
+    0px 2.16px 2.16px 0px rgba(0, 0, 0, 0.25) inset,
+    0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(1.100000023841858px);
+}
+
+.donut-circle {
+  filter: drop-shadow(0px 2px 25px rgba(0, 0, 0, 0.08));
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+}
+
+.box-shadow {
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.1);
+}
+
+.card-box-shadow {
+  border-radius: 15px;
+  background: #fff;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+}

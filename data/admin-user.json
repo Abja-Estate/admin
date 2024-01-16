@@ -1,0 +1,17 @@
+[
+  {
+    "img": "/images/admin-user-img-1.svg",
+    "role": "Admin I",
+    "name": "Micheal Ibaro"
+  },
+  {
+    "img": "/images/admin-user-img-2.svg",
+    "role": "Admin II",
+    "name": "Steph Nze"
+  },
+  {
+    "img": "/images/admin-user-img-3.svg",
+    "role": "Admin II",
+    "name": "Bryan Uba"
+  }
+]
