@@ -1,5 +1,5 @@
 // middleware.ts
-import { NextResponse, NextRequest } from 'next/server';
+import { NextResponse, type NextRequest } from 'next/server';
 import { cookies } from 'next/headers'
 
 export default function authMiddleware(request: NextRequest) {
