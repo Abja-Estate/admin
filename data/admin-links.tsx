@@ -61,32 +61,32 @@ interface SettingsNavigationLink {
 
 export const settingsNavigationLinksData: Array<SettingsNavigationLink> = [
   {
-    href: '/admin/dashboard/settings',
+    href: '/dashboard/settings',
     linkText: 'My Account',
     leading: AccountSettings,
   },
   {
-    href: '/admin/dashboard/settings/preferences',
+    href: '/dashboard/settings/preferences',
     linkText: 'Preferences',
     leading: PreferenceIcon,
   },
   {
-    href: '/admin/dashboard/settings/notification',
+    href: '/dashboard/settings/notification',
     linkText: 'Notifications',
     leading: NotificationOutlineIcon,
   },
   {
-    href: '/admin/dashboard/settings/user-activity',
+    href: '/dashboard/settings/user-activity',
     linkText: 'User Activity',
     leading: UserActivityIcon,
   },
   {
-    href: '/admin/dashboard/settings/configuration',
+    href: '/dashboard/settings/configuration',
     linkText: 'Configuration',
     leading: ConfigurationIcon,
   },
   {
-    href: '/admin/dashboard/settings/security',
+    href: '/dashboard/settings/security',
     linkText: 'Security',
     leading: SecurityIcon,
   },
