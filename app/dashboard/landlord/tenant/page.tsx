@@ -1,8 +1,8 @@
-import { AddGreenIcon, ArrowGrowthWhiteIcon, CalenderOutlineIcon, ChevronLeftIconIcon, ChevronRightGreenIcon, DeleteRedIcon, DoubleCheckWhiteIcon, EditGreenIcon, FilterGreenIcon, HouseWhiteIcon, InformationIcon, MoreVertIcon, NotificationOutlineWhiteIcon, ProgressiveClockWhiteIcon, RequestIcon, SearchIcon, ShareIcon, ShareYellowIcon, TagIcon } from "@/components/svgs";
+import { AddGreenIcon, ArrowGrowthWhiteIcon, DeleteRedIcon, HouseWhiteIcon, InformationIcon, LocationIcon, NotificationOutlineWhiteIcon, ProgressiveClockWhiteIcon, ShareYellowIcon } from "@/components/svgs";
 import Image from "next/image";
 import Link from "next/link";
 
-export default function AdminLandord() {
+export default function Tenant() {
 
     return (
         <>
@@ -68,28 +68,33 @@ export default function AdminLandord() {
                     </div>
                 </div>
             </header>
-            <div className="my-[24px]">
+            <div className="my-[24px] flex items-center gap-2">
                 <Link href="/landlord">
                     <span className="text-[#47893F] font-bold text-[22px]">Landlords /</span>
                 </Link>
+                <Link href="/landlord">
+                    <span className="text-[#47893F] font-bold text-[22px]">Landlord&rsquo;s Tenant /</span>
+                </Link>
             </div>
-            <div className='w-full flex justify-between py-[12px] px-[22px] bg-white mt-[30px]'>
-                <div className='w-full max-w-[584px] items-center flex gap-[16px]'>
-                    <SearchIcon />
-                    <input className='flex-1 w-full placeholder-[#828282] text-[14px]' placeholder='Search' />
+            <div className='w-full flex items-center justify-between py-[16px] px-[22px] bg-white'>
+                <div className="flex gap-[20px]">
+                    <Image src='/images/tenant-profile-img.svg' alt="Tenant Profile" width={100} height={100} />
+                    <div className="py-[8px]">
+                        <h1 className="text-[#333436] text-[18px] font-semibold mb-[12px]">Akello Buma</h1>
+                        <div className="flex items-center gap-[19px] text-[#949494] mb-[4.5px]">
+                            <p>@AkelloBuma</p>
+                            <div className="bg-[#333436] w-[1px] h-[19px]"></div>
+                            <p>(+256) 567890123</p>
+                        </div>
+                        <div className="gap-[16px] flex items-center">
+                            <LocationIcon />
+                            <p className="text-[#949494] text-[14px]">Kampala, Uganda</p>
+                        </div>
+                    </div>
                 </div>
-                <div className="flex items-center gap-[24px]">
-                    <button className="px-[8px] py-[4px] text-[14px] flex gap-[8px] items-center bg-[#B5D0B2] text-[#47893F] rounded-[4px]">
-                        <FilterGreenIcon />
-                        Filter
-                    </button>
-                    <button className="px-[8px] py-[4px] text-[14px] flex gap-[8px] items-center bg-[#B5D0B2] text-[#47893F] rounded-[4px]">
-                        <ShareIcon />
-                        Export
-                    </button>
-                    <button className="px-[8px] py-[4px] text-[14px] flex gap-[8px] items-center bg-[#B5D0B2] text-[#47893F] rounded-[4px]">
-                        <CalenderOutlineIcon />
-                        Sept 2023
+                <div>
+                    <button className="text-white w-[140px] h-[38px] grid place-items-center rounded-[6px] bg-[#2A4C23]">
+                        View Profile
                     </button>
                 </div>
             </div>
@@ -132,46 +137,12 @@ export default function AdminLandord() {
                                 <span className="h-[4px] w-[4px] bg-[#47893F] rounded-[100%]"></span><p className="text-[10px] text-[#47893F]">Completed</p>
                             </div>
                             <div className='flex items-center gap-2 h-fit'>
-                                <EditGreenIcon />
+                                <InformationIcon />
                                 <ShareYellowIcon />
                                 <DeleteRedIcon />
-                                <MoreVertIcon />
                             </div>
                         </div>
                     ))}
-                </div>
-                <div className='flex mt-[30px] items-center justify-between'>
-                    <button className='border-[#828282] text-[#828282] rounded-[6px] px-[8px] py-[4px] border-[1px] flex gap-2 items-center'>
-                        <ChevronLeftIconIcon />
-                        Previous
-                    </button>
-                    <div className='flex items-center gap-2'>
-                        <button className='w-[27px] h-[27px] rounded-[6px] bg-[#B5D0B2] text-[#47893F] grid place-items-center'>
-                            1
-                        </button>
-                        <button className='w-[27px] h-[27px] rounded-[6px] bg-white text-[#828282] grid place-items-center'>
-                            2
-                        </button>
-                        <button className='w-[27px] h-[27px] rounded-[6px] bg-white text-[#828282] grid place-items-center'>
-                            3
-                        </button>
-                        <button className='w-[27px] h-[27px] rounded-[6px] bg-white text-[#828282] grid place-items-center'>
-                            ...
-                        </button>
-                        <button className='w-[27px] h-[27px] rounded-[6px] bg-white text-[#828282] grid place-items-center'>
-                            8
-                        </button>
-                        <button className='w-[27px] h-[27px] rounded-[6px] bg-white text-[#828282] grid place-items-center'>
-                            9
-                        </button>
-                        <button className='w-[27px] h-[27px] rounded-[6px] bg-white text-[#828282] grid place-items-center'>
-                            10
-                        </button>
-                    </div>
-                    <button className='text-[#47893F] bg-[#B5D0B2] rounded-[6px] px-[8px] py-[4px] border-[1px] flex gap-5 items-center'>
-                        Next
-                        <ChevronRightGreenIcon />
-                    </button>
                 </div>
             </div>
         </>
