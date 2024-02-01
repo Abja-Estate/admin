@@ -22,7 +22,7 @@ export async function POST(request: Request) {
 
   const authResponse = await fetchResponse.json();
 
-  cookies().set("access_token", authResponse.data.accessToken);
+  // cookies().set("access_token", authResponse.data.accessToken);
 
   return NextResponse.json({
     ...authResponse,
