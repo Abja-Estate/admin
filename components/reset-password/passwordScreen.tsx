@@ -6,12 +6,17 @@ import Button from "../button";
 import { BASE_URL } from "@/config";
 import toast from "react-hot-toast";
 
+interface formData {
+  password: string;
+  confirmPassword: string;
+}
+
 export default function PasswordScreen({
   changeView,
 }: ResetPasswordViewsProps) {
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState<boolean>(false);
 
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<formData>({
     password: "",
     confirmPassword: "",
   });
@@ -25,12 +30,12 @@ export default function PasswordScreen({
 
   const submit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-  
+
     try {
       const form_id = localStorage.getItem("form_id");
-  
+
       console.log("form_id", form_id);
-  
+
       const response = await fetch(`${BASE_URL}/auth/admin/reset_password`, {
         method: "POST",
         headers: {
@@ -43,10 +48,10 @@ export default function PasswordScreen({
           confirmPassword: formData.confirmPassword,
         }),
       });
-  
+
       if (response.ok) {
         const responseData = await response.json();
-  
+
         if (responseData.statusCode === 200) {
           toast.success("Password changed successful.");
           changeView("PASSWORD");
@@ -64,7 +69,7 @@ export default function PasswordScreen({
       toast.error("An error occurred while processing the request.");
     } finally {
       setLoading(false);
-    };
+    }
   };
 
   const isDisabled = !(formData.password && formData.confirmPassword);
@@ -111,12 +116,7 @@ export default function PasswordScreen({
             placeholder="Confirm Password"
           />
         </fieldset>
-        <fieldset>
-          <p className="text-center">
-            Didn&rsquo;t get a code?{" "}
-            <span className="text-[#0174C7]">Click to resend</span>
-          </p>
-        </fieldset>
+
         <fieldset className="pt-[50px]">
           <Button disabled={isDisabled} loading={loading}>
             Continue

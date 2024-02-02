@@ -8,10 +8,20 @@ import axios from "axios";
 export default function ResetPasswordScreen({
   changeView,
 }: ResetPasswordViewsProps) {
+  const [loading, setLoading] = useState(false);
+
+  const [formData, setFormData] = useState({
+    email: "",
+  });
+
   const submit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    console.log('fefe')
+    if (formData.email === "") {
+      toast.error("email cannot be blank!");
+    }
+
+    console.log("fefe");
 
     setLoading(true);
 
@@ -19,34 +29,25 @@ export default function ResetPasswordScreen({
       let response = await axios.post("api/reset-password", formData);
       console.log(response);
 
+      if (response.data.statusCode == 200) {
+        toast.success(
+          "Reset password successful, check your email for the code."
+        );
 
-      if(response.data.statusCode == 200){
-        toast.success("Reset password successful, check your email for the code.");
+        localStorage.setItem("form_email", formData.email);
 
-        localStorage.setItem("form_email", formData.email)
-
-        localStorage.setItem("form_id", response.data.data._id)
+        localStorage.setItem("form_id", response.data.data._id);
 
         changeView("OTP");
-      } else{
+      } else {
         toast.error("Reset password not successful");
       }
-      
-
     } catch (error) {
       console.log(error);
     } finally {
       setLoading(false);
     }
-
-   
   };
-
-  const [loading, setLoading] = useState(false);
-
-  const [formData, setFormData] = useState({
-    email: "",
-  });
 
   const formDataHandler = (e: ChangeEvent<HTMLInputElement>) => {
     setFormData((prev) => ({

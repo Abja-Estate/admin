@@ -144,8 +144,10 @@ export default function AdminLogin() {
             <fieldset className="pt-[18px] text-center">
               <p>
                 Forgot Password?&nbsp;
-                <Link href="/admin/reset-password">
-                  <span className="text-[#0174C7]">Tap Here</span>
+                <Link href="/reset-password">
+                  <span className="text-[#0174C7] hover:text-[#0174C7]/70">
+                    Tap Here
+                  </span>
                 </Link>
               </p>
             </fieldset>
