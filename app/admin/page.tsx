@@ -1,3 +1,4 @@
+"use client";
 import { ArrowLeftIcon } from "@/components/svgs";
 import authImage1 from "/public/images/auth-img-1.png";
 import authImage2 from "/public/images/auth-img-2.svg";
@@ -5,8 +6,28 @@ import authImage3 from "/public/images/auth-img-3.svg";
 import Image from "next/image";
 import adminUserData from "@/data/admin-user.json";
 import Link from "next/link";
+import { useEffect } from "react";
+import { BASE_URL } from "@/config";
+import { fetchAdminRequests } from "@/utils/api";
 
 export default function Admin() {
+  useEffect(() => {
+    const fetchRequests = async () => {
+      try {
+        const response = await fetchAdminRequests(`${BASE_URL}/service/admin/all_requests`);
+        if (response.statusCode === 200) {
+          console.log('data', response.data);
+        } else {
+          console.error("Error fetching admin requests:", response.error);
+        }
+      } catch (error) {
+        console.error("Error fetching admin requests:", error);
+      }     
+    };
+    fetchRequests();
+  }, [BASE_URL]);
+
+  console.log("he")
   return (
     <div className="flex">
       <figure className="relative basis-[35%]">

@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import Image from "next/image";
 import {
   ExpandMoreIcon,
@@ -6,58 +8,103 @@ import {
   NotificationIcon,
   SearchIcon,
 } from "../svgs";
+import { useEffect, useState } from "react";
+import { Popover } from "@headlessui/react";
+import Link from "next/link";
 
 export default function AdminDashboardTopNavigation() {
+  const [user, setUser] = useState<string>(""); // Initialize user state with an empty string
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const userData = localStorage.getItem("active-user"); // Declare a variable to store the retrieved user data
+
+      if (userData) {
+        try {
+          const parsedUser = JSON.parse(userData); // Parse the retrieved user data
+          setUser(parsedUser); // Update the user state with the parsed user data
+        } catch (error) {
+          console.error("Error parsing user data from localStorage:", error);
+        }
+      }
+    }
+  }, []);
+
+  console.log(user);
   return (
-    <nav className="relative z-[10] flex items-center justify-between px-[20px] py-[7px] shadow-[0px_4px_4px_0px_#00000040] bg-white">
-      <figure>
-        <Image
-          src="/images/abj-logo.svg"
-          alt="Abj logo"
-          width={70}
-          height={100}
-          draggable={false}
-        />
-      </figure>
-      <div className="flex items-center gap-[114px]">
-        <div>
-          <div className="h-[40px] rounded-[10px] bg-[#EAEDE9] w-[500px] border-[1px] border-[#3A3A3A] px-[16px] flex items-center gap-[16px]">
-            <SearchIcon />
-            <input
-              className="w-full flex-1 bg-transparent placeholder-[#3A3A3A] outline-none"
-              placeholder="Search"
-            />
-            <MicIcon />
-          </div>
-        </div>
-        <div className="flex items-center gap-[16px]">
-          <div className="h-[38px] w-[38px] bg-[#2A4C2333] rounded-[100%] relative grid place-items-center">
-            <NotificationIcon />
-            <span className="absolute h-[12px] w-[12px] grid place-items-center bg-[#D90001] text-white text-[7px] font-semibold rounded-[100%] top-[6px] right-[8px]">
-              8
-            </span>
-          </div>
-          <div className="h-[38px] w-[38px] bg-[#2A4C2333] rounded-[100%] relative grid place-items-center">
-            <MessageIcon />
-            <span className="absolute h-[12px] w-[12px] grid place-items-center bg-[#D90001] text-white text-[7px] font-semibold rounded-[100%] top-[6px] right-[8px]">
-              4
-            </span>
-          </div>
-          <div className="ml-[8px] flex items-center gap-[16px]">
-            <Image
-              src="/images/admin-user-img-1.svg"
-              alt="Abj logo"
-              width={60}
-              height={60}
-            />
-            <div>
-              <h1 className="text-[14px]">Micheal Ibaro</h1>
-              <p className="text-[14px] text-[#2A4C23] font-bold">Admin</p>
+    <>
+      <nav className="relative z-[10] flex items-center justify-between px-[20px] py-[7px] shadow-[0px_4px_4px_0px_#00000040] bg-white">
+        <figure>
+          <Image
+            src="/images/abj-logo.svg"
+            alt="Abj logo"
+            width={70}
+            height={100}
+            draggable={false}
+          />
+        </figure>
+        <div className="flex items-center gap-[114px]">
+          <div>
+            <div className="h-[40px] rounded-[10px] bg-[#EAEDE9] w-[500px] border-[1px] border-[#3A3A3A] px-[16px] flex items-center gap-[16px]">
+              <SearchIcon />
+              <input
+                className="w-full flex-1 bg-transparent placeholder-[#3A3A3A] outline-none"
+                placeholder="Search"
+              />
+              <MicIcon />
             </div>
-            <ExpandMoreIcon />
+          </div>
+          <div className="flex items-center gap-[16px]">
+            <div className="h-[38px] w-[38px] bg-[#2A4C2333] rounded-[100%] relative grid place-items-center">
+              <NotificationIcon />
+              <span className="absolute h-[12px] w-[12px] grid place-items-center bg-[#D90001] text-white text-[7px] font-semibold rounded-[100%] top-[6px] right-[8px]">
+                8
+              </span>
+            </div>
+            <div className="h-[38px] w-[38px] bg-[#2A4C2333] rounded-[100%] relative grid place-items-center">
+              <MessageIcon />
+              <span className="absolute h-[12px] w-[12px] grid place-items-center bg-[#D90001] text-white text-[7px] font-semibold rounded-[100%] top-[6px] right-[8px]">
+                4
+              </span>
+            </div>
+            <Popover className="ml-[8px] relative">
+              <Popover.Button className="flex items-center gap-[16px] outline-none">
+                <Image
+                  src="/images/admin-user-img-1.svg"
+                  alt="Admin user"
+                  width={60}
+                  height={60}
+                />
+                <div>
+                  <h1 className="text-[14px]">
+                    {user?.name} {user?.surname}
+                  </h1>
+                  <p className="text-[14px] text-[#2A4C23] font-bold">Admin</p>
+                </div>
+                <ExpandMoreIcon />
+              </Popover.Button>
+              <Popover.Panel className="absolute right-0 text-[14px] z-10 w-[140px] rounded-[10px] shadow-[0px_4px_20px_0px_#00000033] bg-white">
+                <Link href="/dashboard/profile">
+                  <button className="cursor-pointer border-t-[1px] w-full px-6 py-2 text-left">
+                    My Account
+                  </button>
+                </Link>
+                <button className="cursor-pointer border-t-[1px] w-full px-6 py-2 text-left">
+                  Activity
+                </button>
+                <button className="cursor-pointer border-t-[1px] w-full px-6 py-2 text-left">
+                  Log out
+                </button>
+              </Popover.Panel>
+            </Popover>
           </div>
         </div>
-      </div>
-    </nav>
+      </nav>
+      <Notification />
+    </>
   );
 }
+
+const Notification = () => {
+  return <div></div>;
+};

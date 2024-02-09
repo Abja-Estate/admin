@@ -89,7 +89,7 @@ const PersonalInformation = () => {
           <label className="text-[18px] text-[#949494] inline-block mb-[4px]">
             Date of Birth
           </label>
-          <div className="rounded-[10px] h-[39px] px-[16px] block w-full border-[1px] border-[#949494] text-[14px] text-[#333436] flex items-center justify-between gap-[10px]">
+          <div className="rounded-[10px] h-[39px] px-[16px] w-full border-[1px] border-[#949494] text-[14px] text-[#333436] flex items-center justify-between gap-[10px]">
             <span className="flex-1">9-Sep-1994</span>
             <CalenderIcon />
           </div>
@@ -154,7 +154,7 @@ const ContactInformation = () => {
           <label className="text-[18px] text-[#949494] inline-block mb-[4px]">
             Country
           </label>
-          <div className="rounded-[10px] h-[39px] px-[16px] px-[10px] block w-full border-[1px] border-[#949494] text-[14px] text-[#333436] flex items-center justify-between">
+          <div className="rounded-[10px] h-[39px] px-[16px] w-full border-[1px] border-[#949494] text-[14px] text-[#333436] flex items-center justify-between">
             <div className="flex items-center gap-[10px]">
               <NigeriaFlagIcon />
               <span className="text-[#333436] text-[14px]">NIG</span>

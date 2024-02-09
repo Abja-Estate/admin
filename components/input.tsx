@@ -1,12 +1,14 @@
 import clsx from 'clsx';
 import { EyeIcon, EyeSlashIcon } from './svgs';
-import { useState } from 'react';
+import { ReactNode, useState } from 'react';
+import { cn } from '@/utils/cn';
 
 interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   type: string;
+  trailing?: ReactNode
 }
 export default function Input(props: InputProps) {
-  const { type, className, ...prop } = props;
+  const { type, className, trailing, ...prop } = props;
 
   const [passwordVisibility, setPasswordVisibility] = useState(false);
 
@@ -17,7 +19,7 @@ export default function Input(props: InputProps) {
     case 'password': {
       return (
         <div
-          className={clsx(
+          className={cn(
             'flex justify-between items-center w-full border-b-[1px] border-b-primary px-[16px] h-[42px] outline-none font-medium gap-3',
             className
           )}
@@ -33,26 +35,26 @@ export default function Input(props: InputProps) {
         </div>
       );
     }
-    case 'email': {
-      return (
-        <input
-          className={clsx(
-            'block w-full border-b-[1px] border-primary px-[16px] h-[42px] outline-none font-medium',
-            className
-          )}
-          {...prop}
-        />
-      );
-    }
     default: {
       return (
-        <input
-          className={clsx(
-            'block w-full border-b-[1px] border-primary px-[16px] h-[42px] outline-none font-medium',
-            className
-          )}
-          {...prop}
-        />
+        <div className='relative'>
+          <input
+            type={type}
+            className={cn(
+              'block w-full border-b-[1px] border-primary px-[16px] h-[42px] outline-none font-medium',
+              className,
+              trailing && "pr-[30px]"
+            )}
+            {...prop}
+          />
+          {
+            trailing && (
+              <div className='absolute top-[50%] translate-y-[-50%] right-0'>
+                {trailing}
+              </div>
+            )
+          }
+        </div>
       );
     }
   }

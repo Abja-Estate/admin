@@ -11,7 +11,8 @@ export default function AdminDashboardFooter() {
         draggable={false}
       />
       <p className="text-[11px] text-[#3A3A3A] text-center pt-[2px]">
-        &copy; 2023 Abja Property Management
+        &copy; 2023 <span>-</span> <span>{new Date().getUTCFullYear()}</span>{" "}
+        Abja Property Management
       </p>
     </footer>
   );

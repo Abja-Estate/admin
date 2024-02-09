@@ -12,22 +12,32 @@ import Button from "@/components/button";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import toast from "react-hot-toast";
+// import { useDispatch, useSelector } from 'react-redux';
+// import { RootState } from '../../redux/store'; // Import RootState type
+// import { login, logout } from '../../redux/authSlice';
 
 export default function AdminLogin() {
   const router = useRouter();
   const [loading, setLoading] = useState<boolean>(false);
 
+  // LOAD SAVED LOGIN DETAILS FROM localStorage
+  const savedLoginDetails = JSON.parse(
+    localStorage.getItem("saved-login-details") || "{}"
+  );
+
   interface FormData {
     email: string;
-    password: string | any;
+    password: string;
   }
 
   const [formData, setFormData] = useState<FormData>({
-    email: "",
-    password: "",
+    email: savedLoginDetails.email || "", //use saved email if available
+    password: savedLoginDetails.password || "", // use saved password if available
   });
 
-  const [checked, setChecked] = useState<boolean>(false);
+  const [checked, setChecked] = useState<boolean>(
+    savedLoginDetails.email !== ""
+  );
 
   const formDataHandler = (e: ChangeEvent<HTMLInputElement>) => {
     setFormData((prev) => ({
@@ -44,6 +54,14 @@ export default function AdminLogin() {
 
   const backwardNavigate = () => router.back();
 
+  // const dispatch = useDispatch();
+  // const isAuthenticated = useSelector((state: RootState) => state.auth.isAuthenticated);
+
+  // const handleLogin = () => {
+  //   // Dispatch the login action with user data
+  //   dispatch(login({ id: 1, username: 'exampleUser' }));
+  // };
+
   const submit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -53,6 +71,19 @@ export default function AdminLogin() {
       let response = await axios.post("api/login", formData);
       console.log(response);
       toast.success("Login successful");
+
+      const data = response.data.data;
+
+      //save login details if "Remember Me" is checked
+
+      if (checked) {
+        localStorage.setItem("saved-login-details", JSON.stringify(formData));
+      } else {
+        // clear saved login details if "remember me" is not checked
+        localStorage.removeItem("saved-login-detail");
+      }
+
+      localStorage.setItem("active-user", JSON.stringify(data));
       router.push("/dashboard");
     } catch (error) {
       console.log(error);

@@ -5,6 +5,7 @@ import Input from "../input";
 import Button from "../button";
 import { BASE_URL } from "@/config";
 import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
 interface formData {
   password: string;
@@ -15,6 +16,7 @@ export default function PasswordScreen({
   changeView,
 }: ResetPasswordViewsProps) {
   const [loading, setLoading] = useState<boolean>(false);
+  const router = useRouter();
 
   const [formData, setFormData] = useState<formData>({
     password: "",
@@ -69,6 +71,7 @@ export default function PasswordScreen({
       toast.error("An error occurred while processing the request.");
     } finally {
       setLoading(false);
+      router.push("/login");
     }
   };
 

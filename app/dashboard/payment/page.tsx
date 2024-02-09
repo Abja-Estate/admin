@@ -11,7 +11,6 @@ import {
   SearchIcon,
   ShareIcon,
   ShareYellowIcon,
-  StarIcon,
 } from "@/components/svgs";
 import Image from "next/image";
 
