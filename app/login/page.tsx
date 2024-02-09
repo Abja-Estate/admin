@@ -21,9 +21,10 @@ export default function AdminLogin() {
   const [loading, setLoading] = useState<boolean>(false);
 
   // LOAD SAVED LOGIN DETAILS FROM localStorage
-  const savedLoginDetails = JSON.parse(
-    localStorage.getItem("saved-login-details") || "{}"
-  );
+  const savedLoginDetails =
+    typeof window !== "undefined"
+      ? JSON.parse(localStorage.getItem("saved-login-details") || "{}")
+      : {};
 
   interface FormData {
     email: string;
@@ -76,7 +77,7 @@ export default function AdminLogin() {
 
       //save login details if "Remember Me" is checked
 
-      if (checked) {
+      if (checked && typeof window !== "undefined") {
         localStorage.setItem("saved-login-details", JSON.stringify(formData));
       } else {
         // clear saved login details if "remember me" is not checked
