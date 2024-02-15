@@ -1,8 +1,32 @@
+'use client';
 import { AddGreenIcon, ArrowGrowthWhiteIcon, CalenderOutlineIcon, ChevronLeftIconIcon, ChevronRightGreenIcon, DeleteRedIcon, DoubleCheckWhiteIcon, EditGreenIcon, FilterGreenIcon, HouseWhiteIcon, InformationIcon, MoreVertIcon, NotificationOutlineWhiteIcon, ProgressiveClockWhiteIcon, RequestIcon, SearchIcon, ShareIcon, ShareYellowIcon, TagIcon } from "@/components/svgs";
 import Image from "next/image";
 import Link from "next/link";
+import { useEffect, useState } from "react";
+import { fetchAdminRequests } from "@/utils/api";
+import { BASE_URL } from "@/config";
 
 export default function AdminLandord() {
+    const [landlords, setRequests] = useState<any>(null)
+
+    useEffect(() => {
+        const fetchRequests = async (url: string, requestStateSetter: React.Dispatch<any>) => {
+          try {
+            const response = await fetchAdminRequests(`${BASE_URL}/service/admin/${url}`);
+            if (response.statusCode === 200) {
+              console.log('data', response.data);
+              requestStateSetter(response.data.data);
+            } else {
+              console.error("Error fetching landlords:", response.error);
+            }
+          } catch (error) {
+            console.error("Error fetching landlords:", error);
+          }     
+        };
+ 
+        fetchRequests("all_landlords", setRequests);
+    
+      }, [BASE_URL]);
 
     return (
         <>
@@ -99,15 +123,14 @@ export default function AdminLandord() {
                         <div className='border-[1px] border-white rounded-[4px] w-[20px] h-[20px]'></div>
                     </div>
                     <p>Landlord</p>
-                    <p>Address</p>
+              
                     <p>Email Address</p>
-                    <p>Properties</p>
-                    <p>Tenants</p>
-                    <p>Request Status</p>
-                    <p>Action</p>
+                    <p>Photo</p>
+                    <p>Status</p>
+                    <p>Action</p> 
                 </header>
                 <div className='flex flex-col gap-2'>
-                    {[...Array(6)].map((_, i) => (
+                {landlords && landlords.map((landlord: any, i: number) => (
                         <div key={i} className='bg-white w-full p-[10px] gap-[20px] grid grid-cols-[20px_1fr_1fr_1fr_1fr_1.4fr_1fr_1fr] mb-2'>
                             <div>
                                 <div className='border-[1px] border-[#828282] rounded-[4px] w-[20px] h-[20px]'></div>
@@ -115,25 +138,20 @@ export default function AdminLandord() {
                             <div>
                                 <div className='flex items-center gap-[5px] mb-[2px]'>
                                     <Image src="/images/landlord-emoji.svg" alt="Landlord Emoji" width={24} height={24} />
-                                    <p className='text-[#4f4f4f]'>Akello Buma</p>
+                                    <p className='text-[#4f4f4f]'>{landlord.name} {" "}{landlord.name}</p>
                                 </div>
-                                <p className="text-[10px] text-[#949494]">(+256) 567890123</p>
+                                <p className="text-[10px] text-[#949494]">{landlord.phone}</p>
                             </div>
-                            <p>Kampala, Uganda</p>
-                            <p>akello.buma@gmail.com</p>
-                            <p>& Properties</p>
+            
+                            <p>{landlord.email}</p>
                             <div className='flex items-center gap-[5px] mb-[2px]'>
-                                <Image src="/images/tenant-emoji.svg" alt="Tenant Emoji" width={24} height={24} />
-                                <Image src="/images/tenant-emoji.svg" alt="Tenant Emoji" className="-ml-3" width={24} height={24} />
-                                <Image src="/images/tenant-emoji.svg" alt="Tenant Emoji" className="-ml-3" width={24} height={24} />
-                                <p className='pl-2 text-[#4f4f4f]'>+10 persons</p>
+                                {/* <Image src={`${landlord.selfie}`} alt="Tenant Emoji" width={24} height={24} /> */}
+                
                             </div>
-                            <div className="bg-[#B5D0B2] rounded-[8px] px-[8px] py-[4px] flex gap-[8px] items-center h-fit">
-                                <span className="h-[4px] w-[4px] bg-[#47893F] rounded-[100%]"></span><p className="text-[10px] text-[#47893F]">Completed</p>
-                            </div>
+                            <p>{landlord.active ? "active" : "not active"}</p>
                             <div className='flex items-center gap-2 h-fit'>
                                 <EditGreenIcon />
-                                <ShareYellowIcon />
+                                <ShareYellowIcon /> 
                                 <DeleteRedIcon />
                                 <MoreVertIcon />
                             </div>
