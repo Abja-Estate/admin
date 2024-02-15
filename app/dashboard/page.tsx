@@ -46,57 +46,23 @@ export default function AdminDashboard() {
 
   // WEBSOCKET
   useEffect(() => {
-<<<<<<< HEAD
-    // Create a WebSocket connection
-    const socket = new WebSocket(
-      `ws://casmara-request-app-api.onrender.com/ws?id=abja2024Admin`
+    const ws = new WebSocket(
+      "wss://casmara-request-app-api.onrender.com/ws/admin?apiKey=Ayoseun&id=abja2024Admin"
     );
 
-    // Event listener for WebSocket connection opened
-    socket.onopen = () => {
-      console.log("WebSocket connection established.");
-    };
-
-    // Event listener for WebSocket connection closed
-    socket.onclose = () => {
-      console.log("WebSocket connection closed.");
-    };
-
-    // Event listener for WebSocket errors
-    socket.onerror = (error) => {
-      console.error("WebSocket error:", error);
-    };
-
-    // Event listener for messages received from the server
-    socket.onmessage = (event) => {
-      console.log("Message received from server:", event.data);
-      // Handle received message
-    };
-
-    // Cleanup function to close the WebSocket connection when the component unmounts
-    return () => {
-      console.log("Component unmounted. Closing WebSocket connection.");
-      socket.close();
-    };
-  }, []);
-=======
-    const ws = new WebSocket('wss://casmara-request-app-api.onrender.com/ws/admin?apiKey=Ayoseun&id=abja2024Admin');
-
     const sendBroadcastData = {
-      target_id: 'abjaInclusiveness',
+      target_id: "abjaInclusiveness",
       message: "yo, admin",
-      sender_id: "abja2024Admin"
-    }
+      sender_id: "abja2024Admin",
+    };
 
-    ws.onopen = function (event){
-      ws.send(JSON.stringify(sendBroadcastData))
-    }
+    ws.onopen = function (event) {
+      ws.send(JSON.stringify(sendBroadcastData));
+    };
 
-    ws.onmessage = function (event){
-      console.log(event.data)
-    }
-
-
+    ws.onmessage = function (event) {
+      console.log(event.data);
+    };
 
     // socket.onopen = () => {
     //   console.log("websocket connection established")
@@ -110,7 +76,6 @@ export default function AdminDashboard() {
     //   console.log("error during websocket connection")
     // }
 
-
     // socket.onmessage = () => {
     //   console.log("message received from server")
     // }
@@ -120,8 +85,7 @@ export default function AdminDashboard() {
     //   console.log('Component unmounted')
     //   socket.close();
     // };
-  }, []); 
->>>>>>> 22b2b12cab2b403aaaa299fd99745c2f096431b6
+  }, []);
 
   useEffect(() => {
     const fetchRequests = async (
