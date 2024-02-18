@@ -18,36 +18,12 @@ export default function AdminDashboard() {
   //     "wss://casmara-request-app-api.onrender.com/ws?id=abja2024Admin"
   //   );
 
-  //   // Event listener for when the connection is established
-  //   socket.addEventListener("open", function (event) {
-  //     console.log("WebSocket connection established.");
-  //   });
+  const id = process.env.ID;
+  const apiKey = process.env.API_KEY;
 
-  //   // Event listener for when a message is received from the server
-  //   socket.addEventListener("message", function (event) {
-  //     console.log("Message from server:", event.data);
-  //   });
-
-  //   // Event listener for when an error occurs
-  //   socket.addEventListener("error", function (event) {
-  //     console.error("WebSocket error:", event);
-  //   });
-
-  //   // Event listener for when the connection is closed
-  //   socket.addEventListener("close", function (event) {
-  //     console.log("WebSocket connection closed.");
-  //   });
-
-  //   // Cleanup function to close the socket when the component unmounts
-  //   return () => {
-  //     socket.close();
-  //   };
-  // }, []);
-
-  // WEBSOCKET
   useEffect(() => {
     const ws = new WebSocket(
-      "wss://casmara-request-app-api.onrender.com/ws/admin?apiKey=Ayoseun&id=abja2024Admin"
+      `wss://casmara-request-app-api.onrender.com/ws/admin?apiKey=${apiKey}&id=${id}`
     );
 
     const sendBroadcastData = {
