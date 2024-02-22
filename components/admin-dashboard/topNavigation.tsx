@@ -2,18 +2,32 @@
 
 import Image from "next/image";
 import {
+  BriefCaseIcon,
   ExpandMoreIcon,
   MessageIcon,
   MicIcon,
   NotificationIcon,
   SearchIcon,
+  StarYellowIcon,
 } from "../svgs";
 import { useEffect, useState } from "react";
 import { Popover } from "@headlessui/react";
 import Link from "next/link";
+import Modal from "../modal";
+import { cn } from "@/utils/cn";
 
 export default function AdminDashboardTopNavigation() {
   const [user, setUser] = useState<string>(""); // Initialize user state with an empty string
+
+  let [isOpen, setIsOpen] = useState(false)
+
+  function closeModal() {
+    setIsOpen(false)
+  }
+
+  function openModal() {
+    setIsOpen(true)
+  }
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -30,7 +44,6 @@ export default function AdminDashboardTopNavigation() {
     }
   }, []);
 
-  console.log(user);
   return (
     <>
       <nav className="relative z-[10] flex items-center justify-between px-[20px] py-[7px] shadow-[0px_4px_4px_0px_#00000040] bg-white">
@@ -89,7 +102,7 @@ export default function AdminDashboardTopNavigation() {
                     My Account
                   </button>
                 </Link>
-                <button className="cursor-pointer border-t-[1px] w-full px-6 py-2 text-left">
+                <button onClick={openModal} className="cursor-pointer border-t-[1px] w-full px-6 py-2 text-left">
                   Activity
                 </button>
                 <button className="cursor-pointer border-t-[1px] w-full px-6 py-2 text-left">
@@ -100,11 +113,124 @@ export default function AdminDashboardTopNavigation() {
           </div>
         </div>
       </nav>
-      <Notification />
+      <Activity isOpen={isOpen} closeModal={closeModal} />
     </>
   );
 }
 
-const Notification = () => {
-  return <div></div>;
+type ActiviyTabs = "NOTIFICATION" | "ACTIVITY-LOG"
+const Activity = ({ isOpen, closeModal }) => {
+
+  const [activeTab, setActiveTab] = useState<ActiviyTabs>("NOTIFICATION")
+
+  const toggleActiveTab = (tab: ActiviyTabs) => setActiveTab(tab)
+
+  return (
+    <Modal isOpen={isOpen} closeModal={closeModal} modalStyles="h-[100vh] max-w-[452px] flex flex-col gap-10 py-[32px]">
+      <header className="bg-[#F6F8F6] py-2 px-3 flex rounded-[4px] max-w-max mx-auto">
+        <button
+          onClick={() => toggleActiveTab("NOTIFICATION")}
+          className={cn("w-[162px] h-[32px] rounded-[6px] bg-transparent text-[#949494] text-[14px] font-semibold", activeTab === "NOTIFICATION" && "bg-[#47893F] text-white")}>
+          Notification
+        </button>
+        <button
+          onClick={() => toggleActiveTab("ACTIVITY-LOG")}
+          className={cn("w-[162px] h-[32px] bg-transparent rounded-[6px] text-[#949494] text-[14px] font-semibold", activeTab === "ACTIVITY-LOG" && "bg-[#47893F] text-white")}>
+          Activity Log
+        </button>
+      </header>
+      {
+        activeTab === "NOTIFICATION" ? <Notification /> : <ActivityLog />
+      }
+    </Modal>
+  );
 };
+
+const Notification = () => {
+
+  return (
+    <div className="flex flex-col gap-4">
+      {
+        [...Array(4)].map((_, i) => (
+          <div key={i} className="cursor-pointer border-l-[4px] border-l-[#D9D9D9] hover:border-l-[#47893F] min-h-[43px] pl-6">
+            <div>
+              <div className="flex gap-2">
+                <div className='bg-[#FFF1CE] h-[24px] w-[24px] grid place-items-center'>
+                  <StarYellowIcon />
+                </div>
+                <div className='flex items-center gap-2 flex-1 text-[14px]'>
+                  <div className="flex items-center gap-[5px]">
+                    <Image
+                      src="/images/tenant-emoji.svg"
+                      alt="Tenant Emoji"
+                      width={24}
+                      height={24}
+                      draggable={false}
+                    />
+                    <p className="text-[#4f4f4f]">Akello Buma</p>
+                  </div>
+                  <p className='text-[#4f4f4f]'>rated </p>
+                  <div className="flex items-center gap-[5px]">
+                    <Image
+                      src="/images/tenant-emoji.svg"
+                      alt="Tenant Emoji"
+                      width={24}
+                      height={24}
+                      draggable={false}
+                    />
+                    <p className="text-[#4f4f4f]">Okello Buma</p>
+                  </div>
+                </div>
+              </div>
+              <p className="text-[#949494] text-[8px] py-[3px] border-b-[1px] border-b-[#d9d9d9]">10:13 AM &nbsp; 7 NOV 2023</p>
+            </div>
+          </div>
+        ))
+      }
+    </div>
+  )
+}
+
+const ActivityLog = () => {
+  return (
+    <div className="flex flex-col gap-4">
+      {
+        [...Array(8)].map((_, i) => (
+          <div key={i} className="cursor-pointer border-l-[4px] border-l-[#D9D9D9] hover:border-l-[#47893F] min-h-[43px] pl-6">
+            <div>
+              <div className="flex gap-2">
+                <div className='bg-[#CFD9E9] h-[24px] w-[24px] grid place-items-center'>
+                  <BriefCaseIcon />
+                </div>
+                <div className='flex items-center gap-2 flex-1 text-[14px]'>
+                  <div className="flex items-center gap-[5px]">
+                    <Image
+                      src="/images/tenant-emoji.svg"
+                      alt="Tenant Emoji"
+                      width={24}
+                      height={24}
+                      draggable={false}
+                    />
+                    <p className="text-[#4f4f4f]">Akello Buma</p>
+                  </div>
+                  <p className='text-[#4f4f4f]'>rated </p>
+                  <div className="flex items-center gap-[5px]">
+                    <Image
+                      src="/images/tenant-emoji.svg"
+                      alt="Tenant Emoji"
+                      width={24}
+                      height={24}
+                      draggable={false}
+                    />
+                    <p className="text-[#4f4f4f]">Okello Buma</p>
+                  </div>
+                </div>
+              </div>
+              <p className="text-[#949494] text-[8px] py-[3px] border-b-[1px] border-b-[#d9d9d9]">10:13 AM &nbsp; 7 NOV 2023</p>
+            </div>
+          </div>
+        ))
+      }
+    </div>
+  )
+}
