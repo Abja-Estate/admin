@@ -12,7 +12,7 @@ import {
   SecurityIcon,
   SettingIcon,
   UserActivityIcon,
-} from '@/components/svgs';
+} from "@/components/svgs";
 
 interface AdminSideNavigationLink {
   href: string;
@@ -22,33 +22,33 @@ interface AdminSideNavigationLink {
 
 export const adminSideNavigationLinksData: Array<AdminSideNavigationLink> = [
   {
-    href: '/dashboard',
-    linkText: 'Dashboard',
+    href: "/dashboard",
+    linkText: "Dashboard",
     leading: DashboardIcon,
   },
   {
-    href: '/dashboard/landlord',
-    linkText: 'Landlord',
+    href: "/dashboard/landlord",
+    linkText: "Landlord",
     leading: HouseIcon,
   },
   {
-    href: '/dashboard/request',
-    linkText: 'Request',
+    href: "/dashboard/request",
+    linkText: "Request",
     leading: RequestIcon,
   },
   {
-    href: '/dashboard/payment',
-    linkText: 'Payments',
+    href: "/dashboard/payment",
+    linkText: "Payments",
     leading: PaymentIcon,
   },
   {
-    href: '/dashboard/report',
-    linkText: 'Reports',
+    href: "/dashboard/report",
+    linkText: "Reports",
     leading: ReportIcon,
   },
   {
-    href: '/dashboard/settings',
-    linkText: 'Settings',
+    href: "/dashboard/settings",
+    linkText: "Settings",
     leading: SettingIcon,
   },
 ];
@@ -61,33 +61,33 @@ interface SettingsNavigationLink {
 
 export const settingsNavigationLinksData: Array<SettingsNavigationLink> = [
   {
-    href: '/dashboard/settings',
-    linkText: 'My Account',
+    href: "/dashboard/settings",
+    linkText: "My Account",
     leading: AccountSettings,
   },
   {
-    href: '/dashboard/settings/preferences',
-    linkText: 'Preferences',
+    href: "/dashboard/settings/preferences",
+    linkText: "Preferences",
     leading: PreferenceIcon,
   },
   {
-    href: '/dashboard/settings/notification',
-    linkText: 'Notifications',
+    href: "/dashboard/settings/notification",
+    linkText: "Notifications",
     leading: NotificationOutlineIcon,
   },
   {
-    href: '/dashboard/settings/user-activity',
-    linkText: 'User Activity',
+    href: "/dashboard/settings/user-activity",
+    linkText: "User Activity",
     leading: UserActivityIcon,
   },
   {
-    href: '/dashboard/settings/configuration',
-    linkText: 'Configuration',
+    href: "/dashboard/settings/configuration",
+    linkText: "Configuration",
     leading: ConfigurationIcon,
   },
   {
-    href: '/dashboard/settings/security',
-    linkText: 'Security',
+    href: "/dashboard/settings/security",
+    linkText: "Security",
     leading: SecurityIcon,
   },
 ];

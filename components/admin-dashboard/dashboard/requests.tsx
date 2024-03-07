@@ -13,10 +13,10 @@ import {
 import { BASE_URL } from "@/config";
 import { fetchAdminRequests } from "@/utils/api";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useEffect, useState } from "react"; 
 
 export default function Requests() {
-  const [requests, setRequests] = useState<any>(null)
+  const [requests, setRequests] = useState<any>([])
 
     useEffect(() => {
         const fetchRequests = async (url: string, requestStateSetter: React.Dispatch<any>) => {
@@ -24,7 +24,23 @@ export default function Requests() {
             const response = await fetchAdminRequests(`${BASE_URL}/service/admin/${url}`);
             if (response.statusCode === 200) {
               console.log('data', response.data);
-              requestStateSetter(response.data.data);
+               // Define an empty array to store all requests
+        let allRequests: any[] = [];
+
+
+        // Iterate over the data array
+        response.data.data.forEach((entry: any) => {
+            // Iterate over the requests array inside each object
+            entry.requests.forEach((request: any) => {
+                // Push the request into the allRequests array
+                allRequests.push(request);
+            });
+        });
+        
+        // Now allRequests contains all the requests combined into a single array
+        console.log('hi', allRequests);
+        requestStateSetter(allRequests);
+
             } else {
               console.error("Error fetching landlords:", response.error);
             }
@@ -34,6 +50,8 @@ export default function Requests() {
         };
  
         fetchRequests("all_requests", setRequests);
+
+       
     
       }, [BASE_URL]);
 
@@ -46,7 +64,7 @@ export default function Requests() {
             <button className="border-[1px] border-[#7F947B] rounded-[6px] w-[24px] h-[24px] grid place-items-center">
               <ChevronLeftIcon />
             </button>
-            <h1 className="text-primary font-semibold">Aug 2023</h1>
+            <h1 className="text-primary font-semibold">MAr 2024</h1>
             <button className="border-[1px] border-[#7F947B] rounded-[6px] w-[24px] h-[24px] grid place-items-center">
               <ChevronRightIcon />
             </button>
@@ -57,11 +75,9 @@ export default function Requests() {
           <div>
             <div className="border-[1px] border-white rounded-[4px] w-[20px] h-[20px]"></div>
           </div>
-          <p>ID</p>
-          <p>Landlord</p>
-          <p>Address</p>
           <p>Tenant</p>
-          <p>Service Personnel</p>
+          <p>Address</p>
+          <p>Day</p>
           <p>Service</p>
           <p>Request Status</p>
           <p>Priority</p>
@@ -76,7 +92,6 @@ export default function Requests() {
               <div>
                 <div className="border-[1px] border-[#828282] rounded-[4px] w-[20px] h-[20px]"></div>
               </div>
-              <p>1014</p>
               <div>
                 <div className="flex items-center gap-[5px] mb-[2px]">
                   <Image
@@ -86,45 +101,20 @@ export default function Requests() {
                     draggable={false}
                     height={24}
                   />
-                  <p className="text-[#4f4f4f]">Akello Buma</p>
+                  <p className="text-[#4f4f4f]">{request?.fullName}</p>
                 </div>
-                <p className="text-[10px] text-[#949494]">(+256) 567890123</p>
+                <p className="text-[10px] text-[#949494]">{request?.phone}</p>
               </div>
-              <p>Kampala, Uganda</p>
-              <div>
-                <div className="flex items-center gap-[5px] mb-[2px]">
-                  <Image
-                    src="/images/tenant-emoji.svg"
-                    alt="Tenant Emoji"
-                    width={24}
-                    height={24}
-                    draggable={false}
-                  />
-                  <p className="text-[#4f4f4f]">Eric Smith</p>
-                </div>
-                <p className="text-[10px] text-[#949494]">(+256) 567890123</p>
-              </div>
-              <div>
-                <div className="flex items-center gap-[5px] mb-[2px]">
-                  <Image
-                    src="/images/tenant-emoji.svg"
-                    alt="Service Personnel Emoji"
-                    width={24}
-                    height={24}
-                    draggable={false}
-                  />
-                  <p className="text-[#4f4f4f]">Okello Smith</p>
-                </div>
-                <p className="text-[10px] text-[#949494]">(+256) 567890123</p>
-              </div>
-              <p>Electrician</p>
+              <p>{request?.propertyLocation}</p>
+              <p>{request?.day}</p>
+              <p>{request?.agent}</p>
               <div className="bg-[#B5D0B2] rounded-[8px] px-[8px] py-[4px] flex gap-[8px] items-center h-fit">
                 <span className="h-[4px] w-[4px] bg-[#47893F] rounded-[100%]"></span>
-                <p className="text-[10px] text-[#47893F]">Completed</p>
+                <p className="text-[10px] text-[#47893F]">{request?.status}</p>
               </div>
               <div className="bg-[#FCE6E6] rounded-[8px] px-[8px] py-[4px] flex gap-[8px] items-center h-fit">
                 <TagIcon />
-                <p className="text-[10px] text-[#EB5757]">High Priority</p>
+                <p className="text-[10px] text-[#EB5757]">{request?.priority}</p>
               </div>
               <div className="flex items-center gap-2 h-fit">
                 <InformationIcon />

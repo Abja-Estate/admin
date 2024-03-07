@@ -35,33 +35,7 @@ export default function AdminDashboard() {
     ws.onopen = function (event) {
       ws.send(JSON.stringify(sendBroadcastData));
     };
-
-    ws.onmessage = function (event) {
-      console.log(event.data);
-    };
-
-    // socket.onopen = () => {
-    //   console.log("websocket connection established")
-    // }
-
-    // socket.onclose = () => {
-    //   console.log("websocket connection closed")
-    // }
-
-    // socket.onerror = () => {
-    //   console.log("error during websocket connection")
-    // }
-
-    // socket.onmessage = () => {
-    //   console.log("message received from server")
-    // }
-
-    // Cleanup function to close the socket when the component unmounts
-    // return () => {
-    //   console.log('Component unmounted')
-    //   socket.close();
-    // };
-  }, []);
+  }, [apiKey, id]);
 
   useEffect(() => {
     const fetchRequests = async (
