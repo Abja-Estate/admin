@@ -1,19 +1,19 @@
-"use client";
-import { adminSideNavigationLinksData } from "@/data/admin-links";
-import clsx from "clsx";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
+"use client"
+import { adminSideNavigationLinksData } from "@/data/admin-links"
+import clsx from "clsx"
+import Link from "next/link"
+import { usePathname } from "next/navigation"
 
 export default function AdminDashboardSideNavigation() {
-  const pathname = usePathname();
-  console.log(pathname);
+  const pathname = usePathname()
+  console.log(pathname)
   return (
-    <nav className="w-[220px] pl-[20px] py-[24px] flex flex-col gap-[24px] shadow-[1px_0px_2px_0px_#00000040]">
+    <nav className="w-[220px] sticky top-0 pl-[20px] py-[24px] flex flex-col gap-[24px] shadow-[1px_0px_1px_0px_#00000040]">
       <div className="flex flex-col gap-[24px]">
         {adminSideNavigationLinksData.map((link, i) => {
-          const isDashboardActiveRoute = pathname === link.href;
+          const isDashboardActiveRoute = pathname === link.href
 
-          const isActiveRoute = pathname.includes(link.href);
+          const isActiveRoute = pathname.includes(link.href)
 
           const navItem =
             link.href === "/dashboard" ? (
@@ -48,11 +48,11 @@ export default function AdminDashboardSideNavigation() {
                   <span>{link.linkText}</span>
                 </div>
               </Link>
-            );
+            )
 
-          return navItem;
+          return navItem
         })}
       </div>
     </nav>
-  );
+  )
 }

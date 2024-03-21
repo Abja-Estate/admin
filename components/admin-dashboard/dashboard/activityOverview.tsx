@@ -1,6 +1,6 @@
-"use client";
-import React, { useRef, useEffect } from "react";
-import * as d3 from "d3";
+"use client"
+import React, { useRef, useEffect } from "react"
+import * as d3 from "d3"
 import {
   CalculatorIcon,
   ClockRewindIcon,
@@ -10,14 +10,14 @@ import {
   ProgressIcon,
   PropertyIcon,
   RequestIcon,
-} from "@/components/svgs";
-import Image from "next/image";
+} from "@/components/svgs"
+import Image from "next/image"
 
 interface ActivityOverviewProps {
-  requests: string[];
-  properties: string[];
-  landlords: string[];
-  rents: string[];
+  requests: string[]
+  properties: string[]
+  landlords: string[]
+  rents: string[]
 }
 
 const ActivityOverview: React.FC<ActivityOverviewProps> = ({
@@ -27,100 +27,65 @@ const ActivityOverview: React.FC<ActivityOverviewProps> = ({
   rents,
 }) => {
   return (
-    <section className="flex gap-[27px]">
-      <div className="flex gap-[24px] p-[10px] bg-white rounded-[16px] mt-5">
-        <div className="w-[160px] h-[137px] box py-[10px] px-[21px] grid place-items-center text-center">
-          <PropertyIcon />
-          <div className="pt-[8px] pb-[17px]">
-            <h1 className="text-primary text-[14px]">Properties</h1>
-            <p className="#949494 text-[10px]">
-              {properties && properties.length}&nbsp;Properties
-            </p>
-          </div>
-          <Images />
-        </div>
-        <div className="w-[160px] h-[137px] box py-[10px] px-[21px] grid place-items-center text-center">
-          <HouseHoldIcon />
-          <div className="pt-[8px] pb-[17px]">
-            <h1 className="text-primary text-[14px]">Landlords</h1>
-            <p className="#949494 text-[10px]">
-              {landlords && landlords.length}&nbsp;Landlords
-            </p>
-          </div>
-          <Images />
-        </div>
-        <div className="w-[160px] h-[137px] box py-[10px] px-[21px] grid place-items-center text-center">
-          <HouseHoldIcon />
-          <div className="pt-[8px] pb-[17px]">
-            <h1 className="text-primary text-[14px]">Rent</h1>
-            <p className="#949494 text-[10px]">
-              {rents && rents.length}&nbsp;Rents
-            </p>
-          </div>
-          <Images />
-        </div>
-        <div className="w-[160px] h-[137px] box py-[10px] px-[21px] grid place-items-center text-center">
-          <RequestIcon />
-          <div className="pt-[8px] pb-[17px]">
-            <h1 className="text-primary text-[14px]">Request</h1>
-            <p className="#949494 text-[10px]">
-              {requests && requests.length}&nbsp;Request
-            </p>
-          </div>
-          <Images />
-        </div>
+    <section className="grid grid-cols-12 gap-[27px]">
+      <div className="grid grid-cols-2 md:grid-cols-4 col-span-7 2xl:col-span-8 gap-[24px] p-[10px] md:p-3 bg-white rounded-[16px] mt-5">
+        {[
+          {
+            title: "Properties",
+            value: `${properties && properties.length} Properties`,
+            icon: <PropertyIcon />,
+          },
+          {
+            title: "Landlords",
+            value: `${landlords && landlords.length} Landlords`,
+            icon: <HouseHoldIcon />,
+          },
+          {
+            title: "Rents",
+            value: `${rents && rents.length} Rents`,
+            icon: <HouseHoldIcon />,
+          },
+          {
+            title: "Requests",
+            value: `${requests && requests.length} Requests`,
+            icon: <RequestIcon />,
+          },
+        ].map((each) => (
+          <InfoBox key={each.title} {...each} />
+        ))}
       </div>
-      <div className="px-[20px] py-[16px] flex items-center gap-[24px] box-glass-effect whitespace-nowrap">
+      <div className="px-[20px] col-span-5 2xl:col-span-4 py-[16px] flex items-center gap-[24px] justify-between box-glass-effect">
         <div className="flex flex-col gap-[10px]">
-          <div className="flex gap-[15px] items-center">
-            <CalculatorIcon />
-            <span className="text-[#949494] text-[14px]">
-              80 Total Projects
-            </span>
-          </div>
-          <div className="flex gap-[15px] items-center">
-            <ProgressIcon />
-            <span className="text-[#949494] text-[14px]">
-              41 In-Progress Tasks
-            </span>
-          </div>
-          <div className="flex gap-[15px] items-center">
-            <ClockRewindIcon />
-            <span className="text-[#949494] text-[14px]">
-              39 Pending Requests
-            </span>
-          </div>
-          <div className="flex gap-[15px] items-center">
-            <MoneyHandIcon />
-            <span className="text-[#949494] text-[14px]">Rent Collection</span>
-          </div>
-          <div className="flex gap-[15px] items-center">
-            <HomeIcon />
-            <span className="text-[#949494] text-[14px]">Others</span>
-          </div>
+          {[
+            { icon: <CalculatorIcon />, text: `80 Total Projects` },
+            { icon: <ProgressIcon />, text: `41 In-Progress Tasks` },
+            { icon: <ClockRewindIcon />, text: `39 Pending Requests` },
+            { icon: <MoneyHandIcon />, text: `Rent Collection` },
+            { icon: <HomeIcon />, text: `Others` },
+          ].map((each) => (
+            <GraphItem key={each.text} {...each} />
+          ))}
         </div>
-        <div>
-          <div className="p-2 donut-circle rounded-[100%]">
-            <DonutChart />
-          </div>
+        <div className="p-2 donut-circle rounded-[100%]">
+          <DonutChart />
         </div>
       </div>
     </section>
-  );
-};
+  )
+}
 
 const DonutChart: React.FC<{}> = () => {
-  const data = [30, 10, 40, 20, 10];
-  const colors = ["#FF00E5", "#FF4906", "#39CEF3", "#47893F", "#FAFF00"];
+  const data = [30, 10, 40, 20, 10]
+  const colors = ["#FF00E5", "#FF4906", "#39CEF3", "#47893F", "#FAFF00"]
 
-  const chartRef = useRef(null);
+  const chartRef = useRef(null)
 
   useEffect(() => {
-    const width = 150;
-    const height = 150;
-    const radius = Math.min(width, height) / 2;
-    const innerRadius = radius * 0.6;
-    const padAngle = 0.04; // Angle between sections
+    const width = 150
+    const height = 150
+    const radius = Math.min(width, height) / 2
+    const innerRadius = radius * 0.6
+    const padAngle = 0.04 // Angle between sections
 
     const svg = d3
       .select(chartRef.current)
@@ -128,23 +93,44 @@ const DonutChart: React.FC<{}> = () => {
       .attr("width", width)
       .attr("height", height)
       .append("g")
-      .attr("transform", `translate(${width / 2},${height / 2})`);
+      .attr("transform", `translate(${width / 2},${height / 2})`)
 
-    const colorScale = d3.scaleOrdinal().range(colors);
+    const colorScale = d3.scaleOrdinal().range(colors)
 
     const pie = d3
       .pie<number>()
       .value((d) => d)
-      .sort(null);
+      .sort(null)
 
     const arc: d3.Arc<any, number> = d3
       .arc<d3.DefaultArcObject, number>()
       .innerRadius(innerRadius)
       .outerRadius(radius)
       .padAngle(padAngle)
-      .cornerRadius(6); // Set the corner radius for rounded edges
+      .cornerRadius(6) // Set the corner radius for rounded edges
 
-    const arcs = pie(data);
+    const gradient = svg
+      .append("defs")
+      .append("linearGradient")
+      .attr("id", "gradient")
+      .attr("x1", "0%")
+      .attr("x2", "100%")
+      .attr("y1", "0%")
+      .attr("y2", "100%")
+
+    gradient
+      .append("stop")
+      .attr("offset", "0%")
+      .attr("stop-color", "#FF00E5")
+      .attr("stop-opacity", 1)
+
+    gradient
+      .append("stop")
+      .attr("offset", "100%")
+      .attr("stop-color", "#FF007A")
+      .attr("stop-opacity", 1)
+
+    const arcs = pie(data)
 
     svg
       .selectAll("path")
@@ -152,23 +138,33 @@ const DonutChart: React.FC<{}> = () => {
       .enter()
       .append("path")
       .attr("d", (d: any) => arc(d) as string)
-      .attr("fill", (_, i: number) => colorScale(String(i)) as string);
+      .attr("fill", (_, i: number) =>
+        i === 8 ? "url(#gradient)" : (colorScale(String(i)) as string)
+      )
 
     svg
       .append("text")
       .text("76%")
       .attr("text-anchor", "middle")
-      .attr("dy", "0.35em")
+      .attr("dy", "0em")
       .style("font-size", "16px")
-      .style("fill", "#949494");
+      .style("fill", "#949494")
+
+    svg
+      .append("text")
+      .text("Completed")
+      .attr("text-anchor", "middle")
+      .attr("dy", "1.3em")
+      .style("font-size", "12px")
+      .style("fill", "#949494")
 
     return () => {
-      d3.select(chartRef.current).selectAll("*").remove();
-    };
-  }, [data, colors]);
+      d3.select(chartRef.current).selectAll("*").remove()
+    }
+  }, [data, colors])
 
-  return <div ref={chartRef}></div>;
-};
+  return <div ref={chartRef}></div>
+}
 
 const Images = () => {
   return (
@@ -213,7 +209,37 @@ const Images = () => {
         +156
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default ActivityOverview;
+const InfoBox = ({
+  title,
+  value,
+  icon,
+}: {
+  title: string
+  value: string
+  icon: JSX.Element
+}) => {
+  return (
+    <div className="h-full box py-[10px] px-[21px] grid place-items-center text-center">
+      {icon}
+      <div className="pt-[8px] pb-[17px]">
+        <h1 className="text-primary text-[14px]">{title}</h1>
+        <p className="#949494 text-[10px]">{value}</p>
+      </div>
+      <Images />
+    </div>
+  )
+}
+
+const GraphItem = ({ icon, text }: { icon: JSX.Element; text: string }) => {
+  return (
+    <div className="flex gap-[15px] items-center">
+      {icon}
+      <span className="text-[#949494] text-[14px]">{text}</span>
+    </div>
+  )
+}
+
+export default ActivityOverview
