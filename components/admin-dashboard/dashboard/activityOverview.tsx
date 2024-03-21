@@ -28,7 +28,7 @@ const ActivityOverview: React.FC<ActivityOverviewProps> = ({
 }) => {
   return (
     <section className="grid grid-cols-12 gap-[27px]">
-      <div className="grid grid-cols-2 md:grid-cols-4 col-span-7 2xl:col-span-8 gap-[24px] p-[10px] md:p-3 bg-white rounded-[16px] mt-5">
+      <div className="grid grid-cols-2 md:grid-cols-4 col-span-full xl:col-span-7 2xl:col-span-8 gap-[24px] p-[10px] md:p-3 bg-white rounded-[16px] mt-5">
         {[
           {
             title: "Properties",
@@ -54,7 +54,7 @@ const ActivityOverview: React.FC<ActivityOverviewProps> = ({
           <InfoBox key={each.title} {...each} />
         ))}
       </div>
-      <div className="px-[20px] col-span-5 2xl:col-span-4 py-[16px] flex items-center gap-[24px] justify-between box-glass-effect">
+      <div className="px-[20px] col-span-full xl:col-span-5 2xl:col-span-4 py-[16px] flex items-center gap-[24px] justify-between box-glass-effect">
         <div className="flex flex-col gap-[10px]">
           {[
             { icon: <CalculatorIcon />, text: `80 Total Projects` },
@@ -81,8 +81,8 @@ const DonutChart: React.FC<{}> = () => {
   const chartRef = useRef(null)
 
   useEffect(() => {
-    const width = 150
-    const height = 150
+    const width = 130
+    const height = 130
     const radius = Math.min(width, height) / 2
     const innerRadius = radius * 0.6
     const padAngle = 0.04 // Angle between sections
@@ -175,35 +175,35 @@ const Images = () => {
         alt="User"
         width={25}
         height={25}
-        className="-ml-[10px]"
+        className="-ml-[10px] xl:-ml-[14px] 2xl:-ml-[10px]"
       />
       <Image
         src="/images/Ellipse 103.svg"
         alt="User"
         width={25}
         height={25}
-        className="-ml-[10px]"
+        className="-ml-[10px] xl:-ml-[14px] 2xl:-ml-[10px]"
       />
       <Image
         src="/images/Ellipse 104.svg"
         alt="User"
         width={25}
         height={25}
-        className="-ml-[10px]"
+        className="-ml-[10px] xl:-ml-[14px] 2xl:-ml-[10px]"
       />
       <Image
         src="/images/Ellipse 105.svg"
         alt="User"
         width={25}
         height={25}
-        className="-ml-[10px]"
+        className="-ml-[10px] xl:-ml-[14px] 2xl:-ml-[10px]"
       />
       <Image
         src="/images/Ellipse 106.svg"
         alt="User"
         width={25}
         height={25}
-        className="-ml-[10px]"
+        className="-ml-[10px] xl:-ml-[14px] 2xl:-ml-[10px]"
       />
       <div className="border-[2px] border-white bg-[#d9d9d9] grid place-items-center text-[6px] text-center w-[22px] h-[22px] rounded-[100%] -ml-[10px]">
         +156

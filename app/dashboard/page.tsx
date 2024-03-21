@@ -67,16 +67,16 @@ export default function AdminDashboard() {
       <header className="">
         <h1 className="font-semibold">Activity overview</h1>
       </header>
-      <div className="flex flex-col gap-[30px]">
+      <div className="flex flex-col w-full gap-[30px]">
         <ActivityOverview
           requests={requests}
           landlords={landlords}
           properties={properties}
           rents={rents}
         />
-        <NumberOfDownloads />
+        {/* <NumberOfDownloads />
         <Requests />
-        <RecentPayments />
+        <RecentPayments /> */}
       </div>
     </>
   )

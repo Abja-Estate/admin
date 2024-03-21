@@ -9,51 +9,51 @@ import {
   MoreVertIcon,
   SearchIcon,
   TagIcon,
-} from "@/components/svgs";
-import { BASE_URL } from "@/config";
-import { fetchAdminRequests } from "@/utils/api";
-import Image from "next/image";
-import { useEffect, useState } from "react"; 
+} from "@/components/svgs"
+import { BASE_URL } from "@/config"
+import { fetchAdminRequests } from "@/utils/api"
+import Image from "next/image"
+import { useEffect, useState } from "react"
 
 export default function Requests() {
   const [requests, setRequests] = useState<any>([])
 
-    useEffect(() => {
-        const fetchRequests = async (url: string, requestStateSetter: React.Dispatch<any>) => {
-          try {
-            const response = await fetchAdminRequests(`${BASE_URL}/service/admin/${url}`);
-            if (response.statusCode === 200) {
-              console.log('data', response.data);
-               // Define an empty array to store all requests
-        let allRequests: any[] = [];
+  useEffect(() => {
+    const fetchRequests = async (
+      url: string,
+      requestStateSetter: React.Dispatch<any>
+    ) => {
+      try {
+        const response = await fetchAdminRequests(
+          `${BASE_URL}/service/admin/${url}`
+        )
+        if (response.statusCode === 200) {
+          console.log("data", response.data)
+          // Define an empty array to store all requests
+          let allRequests: any[] = []
 
-
-        // Iterate over the data array
-        response.data.data.forEach((entry: any) => {
+          // Iterate over the data array
+          response.data.data.forEach((entry: any) => {
             // Iterate over the requests array inside each object
             entry.requests.forEach((request: any) => {
-                // Push the request into the allRequests array
-                allRequests.push(request);
-            });
-        });
-        
-        // Now allRequests contains all the requests combined into a single array
-        console.log('hi', allRequests);
-        requestStateSetter(allRequests);
+              // Push the request into the allRequests array
+              allRequests.push(request)
+            })
+          })
 
-            } else {
-              console.error("Error fetching landlords:", response.error);
-            }
-          } catch (error) {
-            console.error("Error fetching landlords:", error);
-          }     
-        };
- 
-        fetchRequests("all_requests", setRequests);
+          // Now allRequests contains all the requests combined into a single array
+          console.log("hi", allRequests)
+          requestStateSetter(allRequests)
+        } else {
+          console.error("Error fetching landlords:", response.error)
+        }
+      } catch (error) {
+        console.error("Error fetching landlords:", error)
+      }
+    }
 
-       
-    
-      }, [BASE_URL]);
+    fetchRequests("all_requests", setRequests)
+  }, [BASE_URL])
 
   return (
     <div className="flex gap-[27px]">
@@ -71,97 +71,104 @@ export default function Requests() {
           </div>
         </header>
         <div className="mt-[30px] text-[14px]">
-        <header className="h-[44px] bg-[#47893F] w-full p-[10px] items-center gap-[20px] text-white grid grid-cols-[20px_60px_1.2fr_1fr_1fr_1.4fr_0.8fr_0.9fr_1fr_0.82fr] mb-2">
-          <div>
-            <div className="border-[1px] border-white rounded-[4px] w-[20px] h-[20px]"></div>
-          </div>
-          <p>Tenant</p>
-          <p>Address</p>
-          <p>Day</p>
-          <p>Service</p>
-          <p>Request Status</p>
-          <p>Priority</p>
-          <p>Action</p>
-        </header>
-        <div className="flex flex-col gap-2">
-        {requests && requests.map((request: any, i: number) => (
-            <div
-              key={i}
-              className="bg-white w-full p-[10px] gap-[20px] grid grid-cols-[20px_60px_1.2fr_1fr_1fr_1.4fr_0.8fr_0.9fr_1fr_0.82fr] mb-2"
-            >
-              <div>
-                <div className="border-[1px] border-[#828282] rounded-[4px] w-[20px] h-[20px]"></div>
-              </div>
-              <div>
-                <div className="flex items-center gap-[5px] mb-[2px]">
-                  <Image
-                    src="/images/landlord-emoji.svg"
-                    alt="Landlord Emoji"
-                    width={24}
-                    draggable={false}
-                    height={24}
-                  />
-                  <p className="text-[#4f4f4f]">{request?.fullName}</p>
-                </div>
-                <p className="text-[10px] text-[#949494]">{request?.phone}</p>
-              </div>
-              <p>{request?.propertyLocation}</p>
-              <p>{request?.day}</p>
-              <p>{request?.agent}</p>
-              <div className="bg-[#B5D0B2] rounded-[8px] px-[8px] py-[4px] flex gap-[8px] items-center h-fit">
-                <span className="h-[4px] w-[4px] bg-[#47893F] rounded-[100%]"></span>
-                <p className="text-[10px] text-[#47893F]">{request?.status}</p>
-              </div>
-              <div className="bg-[#FCE6E6] rounded-[8px] px-[8px] py-[4px] flex gap-[8px] items-center h-fit">
-                <TagIcon />
-                <p className="text-[10px] text-[#EB5757]">{request?.priority}</p>
-              </div>
-              <div className="flex items-center gap-2 h-fit">
-                <InformationIcon />
-                <DeleteRedIcon />
-                <MoreVertIcon />
-              </div>
+          <header className="h-[44px] bg-[#47893F] w-full p-[10px] items-center gap-[20px] text-white grid grid-cols-[20px_60px_1.2fr_1fr_1fr_1.4fr_0.8fr_0.9fr_1fr_0.82fr] mb-2">
+            <div>
+              <div className="border-[1px] border-white rounded-[4px] w-[20px] h-[20px]"></div>
             </div>
-          ))}
-        </div>
-        <div className="flex mt-[30px] items-center justify-between">
-          <button className="border-[#828282] text-[#828282] rounded-[6px] px-[8px] py-[4px] border-[1px] flex gap-2 items-center">
-            <ChevronLeftIconIcon />
-            Previous
-          </button>
-          <div className="flex items-center gap-2">
-            <button className="w-[27px] h-[27px] rounded-[6px] bg-[#B5D0B2] text-[#47893F] grid place-items-center">
-              1
+            <p>Tenant</p>
+            <p>Address</p>
+            <p>Day</p>
+            <p>Service</p>
+            <p>Request Status</p>
+            <p>Priority</p>
+            <p>Action</p>
+          </header>
+          <div className="flex flex-col gap-2">
+            {requests &&
+              requests.map((request: any, i: number) => (
+                <div
+                  key={i}
+                  className="bg-white w-full p-[10px] gap-[20px] grid grid-cols-[20px_60px_1.2fr_1fr_1fr_1.4fr_0.8fr_0.9fr_1fr_0.82fr] mb-2"
+                >
+                  <div>
+                    <div className="border-[1px] border-[#828282] rounded-[4px] w-[20px] h-[20px]"></div>
+                  </div>
+                  <div>
+                    <div className="flex items-center gap-[5px] mb-[2px]">
+                      <Image
+                        src="/images/landlord-emoji.svg"
+                        alt="Landlord Emoji"
+                        width={24}
+                        draggable={false}
+                        height={24}
+                      />
+                      <p className="text-[#4f4f4f]">{request?.fullName}</p>
+                    </div>
+                    <p className="text-[10px] text-[#949494]">
+                      {request?.phone}
+                    </p>
+                  </div>
+                  <p>{request?.propertyLocation}</p>
+                  <p>{request?.day}</p>
+                  <p>{request?.agent}</p>
+                  <div className="bg-[#B5D0B2] rounded-[8px] px-[8px] py-[4px] flex gap-[8px] items-center h-fit">
+                    <span className="h-[4px] w-[4px] bg-[#47893F] rounded-[100%]"></span>
+                    <p className="text-[10px] text-[#47893F]">
+                      {request?.status}
+                    </p>
+                  </div>
+                  <div className="bg-[#FCE6E6] rounded-[8px] px-[8px] py-[4px] flex gap-[8px] items-center h-fit">
+                    <TagIcon />
+                    <p className="text-[10px] text-[#EB5757]">
+                      {request?.priority}
+                    </p>
+                  </div>
+                  <div className="flex items-center gap-2 h-fit">
+                    <InformationIcon />
+                    <DeleteRedIcon />
+                    <MoreVertIcon />
+                  </div>
+                </div>
+              ))}
+          </div>
+          <div className="flex mt-[30px] items-center justify-between">
+            <button className="border-[#828282] text-[#828282] rounded-[6px] px-[8px] py-[4px] border-[1px] flex gap-2 items-center">
+              <ChevronLeftIconIcon />
+              Previous
             </button>
-            <button className="w-[27px] h-[27px] rounded-[6px] bg-white text-[#828282] grid place-items-center">
-              2
-            </button>
-            <button className="w-[27px] h-[27px] rounded-[6px] bg-white text-[#828282] grid place-items-center">
-              3
-            </button>
-            <button className="w-[27px] h-[27px] rounded-[6px] bg-white text-[#828282] grid place-items-center">
-              ...
-            </button>
-            <button className="w-[27px] h-[27px] rounded-[6px] bg-white text-[#828282] grid place-items-center">
-              8
-            </button>
-            <button className="w-[27px] h-[27px] rounded-[6px] bg-white text-[#828282] grid place-items-center">
-              9
-            </button>
-            <button className="w-[27px] h-[27px] rounded-[6px] bg-white text-[#828282] grid place-items-center">
-              10
+            <div className="flex items-center gap-2">
+              <button className="w-[27px] h-[27px] rounded-[6px] bg-[#B5D0B2] text-[#47893F] grid place-items-center">
+                1
+              </button>
+              <button className="w-[27px] h-[27px] rounded-[6px] bg-white text-[#828282] grid place-items-center">
+                2
+              </button>
+              <button className="w-[27px] h-[27px] rounded-[6px] bg-white text-[#828282] grid place-items-center">
+                3
+              </button>
+              <button className="w-[27px] h-[27px] rounded-[6px] bg-white text-[#828282] grid place-items-center">
+                ...
+              </button>
+              <button className="w-[27px] h-[27px] rounded-[6px] bg-white text-[#828282] grid place-items-center">
+                8
+              </button>
+              <button className="w-[27px] h-[27px] rounded-[6px] bg-white text-[#828282] grid place-items-center">
+                9
+              </button>
+              <button className="w-[27px] h-[27px] rounded-[6px] bg-white text-[#828282] grid place-items-center">
+                10
+              </button>
+            </div>
+            <button className="text-[#47893F] bg-[#B5D0B2] rounded-[6px] px-[8px] py-[4px] border-[1px] flex gap-5 items-center">
+              Next
+              <ChevronRightGreenIcon />
             </button>
           </div>
-          <button className="text-[#47893F] bg-[#B5D0B2] rounded-[6px] px-[8px] py-[4px] border-[1px] flex gap-5 items-center">
-            Next
-            <ChevronRightGreenIcon />
-          </button>
         </div>
-      </div>
       </div>
       <Messages />
     </div>
-  );
+  )
 }
 
 const Messages = () => {
@@ -200,12 +207,12 @@ const Messages = () => {
         />
       </div>
     </div>
-  );
-};
+  )
+}
 
 interface MessageOverviewProps {
-  img: string;
-  username: string;
+  img: string
+  username: string
 }
 
 const MessageOverview = ({ img, username }: MessageOverviewProps) => {
@@ -224,5 +231,5 @@ const MessageOverview = ({ img, username }: MessageOverviewProps) => {
         </p>
       </div>
     </div>
-  );
-};
+  )
+}

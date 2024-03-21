@@ -16,7 +16,11 @@ import Link from "next/link"
 import Modal from "../modal"
 import { cn } from "@/utils/cn"
 
-export default function AdminDashboardTopNavigation() {
+export default function AdminDashboardTopNavigation({
+  setMenuIsOpen,
+}: {
+  setMenuIsOpen: Function
+}) {
   const [user, setUser] = useState<string>("") // Initialize user state with an empty string
 
   let [isOpen, setIsOpen] = useState(false)
@@ -47,7 +51,20 @@ export default function AdminDashboardTopNavigation() {
   return (
     <>
       <nav className="z-[10] sticky top-0 flex items-center justify-between px-[20px] py-[7px] shadow-[0px_4px_4px_0px_#00000040] bg-white">
-        <figure>
+        <figure className="flex gap-4 items-center">
+          <button
+            className="lg:hidden"
+            onClick={() => setMenuIsOpen((e) => !e)}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+            >
+              <path d="M4 11h12v2H4zm0-5h16v2H4zm0 12h7.235v-2H4z"></path>
+            </svg>
+          </button>
           <Image
             src="/images/abj-logo.svg"
             alt="Abj logo"

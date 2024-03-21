@@ -4,11 +4,14 @@ import clsx from "clsx"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 
-export default function AdminDashboardSideNavigation() {
+export default function AdminDashboardSideNavigation({
+  setMenuIsOpen,
+}: {
+  setMenuIsOpen: Function
+}) {
   const pathname = usePathname()
-  console.log(pathname)
   return (
-    <nav className="w-[220px] sticky top-0 pl-[20px] py-[24px] flex flex-col gap-[24px] shadow-[1px_0px_1px_0px_#00000040]">
+    <nav className="w-[220px] min-w-[13.8rem] bg-white h-screen overflow-auto sticky top-0 pl-[20px] py-[24px] flex flex-col gap-[24px] shadow-[1px_0px_1px_0px_#00000040]">
       <div className="flex flex-col gap-[24px]">
         {adminSideNavigationLinksData.map((link, i) => {
           const isDashboardActiveRoute = pathname === link.href
@@ -17,7 +20,11 @@ export default function AdminDashboardSideNavigation() {
 
           const navItem =
             link.href === "/dashboard" ? (
-              <Link key={i} href={link.href}>
+              <Link
+                onClick={() => setMenuIsOpen(false)}
+                key={i}
+                href={link.href}
+              >
                 <div
                   className={clsx(
                     "h-[40px] px-[16px] flex items-center gap-[24px] font-semibold rounded-[5px]",
@@ -33,7 +40,11 @@ export default function AdminDashboardSideNavigation() {
                 </div>
               </Link>
             ) : (
-              <Link key={i} href={link.href}>
+              <Link
+                onClick={() => setMenuIsOpen(false)}
+                key={i}
+                href={link.href}
+              >
                 <div
                   className={clsx(
                     "h-[40px] px-[16px] flex items-center gap-[24px] font-semibold rounded-[5px]",
