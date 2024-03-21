@@ -74,9 +74,9 @@ export default function AdminDashboard() {
           properties={properties}
           rents={rents}
         />
-        {/* <NumberOfDownloads />
+        <NumberOfDownloads />
         <Requests />
-        <RecentPayments /> */}
+        {/* <RecentPayments /> */}
       </div>
     </>
   )

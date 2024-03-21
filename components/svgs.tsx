@@ -1,7 +1,7 @@
 export interface SVGProps {
-  key?: string | number;
-  className?: string;
-  onClick?: () => void;
+  key?: string | number
+  className?: string
+  onClick?: () => void
 }
 
 export const ArrowLeftIcon = () => {
@@ -21,8 +21,8 @@ export const ArrowLeftIcon = () => {
         strokeLinejoin="round"
       />
     </svg>
-  );
-};
+  )
+}
 
 export const SearchIcon = () => {
   return (
@@ -41,8 +41,8 @@ export const SearchIcon = () => {
         strokeLinejoin="round"
       />
     </svg>
-  );
-};
+  )
+}
 
 export const EyeIcon = () => {
   return (
@@ -66,8 +66,8 @@ export const EyeIcon = () => {
         strokeLinejoin="round"
       />{" "}
     </svg>
-  );
-};
+  )
+}
 
 export const EyeSlashIcon = () => {
   return (
@@ -98,8 +98,8 @@ export const EyeSlashIcon = () => {
         stroke="#2A4C23"
       />
     </svg>
-  );
-};
+  )
+}
 
 export const MicIcon = () => {
   return (
@@ -115,8 +115,8 @@ export const MicIcon = () => {
         fill="#3A3A3A"
       />
     </svg>
-  );
-};
+  )
+}
 
 export const NotificationIcon = () => {
   return (
@@ -135,8 +135,8 @@ export const NotificationIcon = () => {
         strokeLinejoin="round"
       />
     </svg>
-  );
-};
+  )
+}
 
 export const MessageIcon = () => {
   return (
@@ -152,8 +152,8 @@ export const MessageIcon = () => {
         fill="#2A4C23"
       />
     </svg>
-  );
-};
+  )
+}
 
 export const ExpandMoreIcon = () => {
   return (
@@ -172,8 +172,8 @@ export const ExpandMoreIcon = () => {
         strokeLinejoin="round"
       />
     </svg>
-  );
-};
+  )
+}
 
 export const DashboardIcon = ({ className }: SVGProps) => {
   return (
@@ -192,8 +192,8 @@ export const DashboardIcon = ({ className }: SVGProps) => {
         fill=""
       />
     </svg>
-  );
-};
+  )
+}
 
 export const HouseIcon = ({ className }: SVGProps) => {
   return (
@@ -217,15 +217,15 @@ export const HouseIcon = ({ className }: SVGProps) => {
         strokeWidth="1.5"
       />
     </svg>
-  );
-};
+  )
+}
 
 export const RequestIcon = ({ className }: SVGProps) => {
   return (
     <svg
       width="26"
       height="27"
-      className= {className}
+      className={className}
       viewBox="0 0 26 27"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -236,8 +236,8 @@ export const RequestIcon = ({ className }: SVGProps) => {
         stroke-width="0.851985"
       />
     </svg>
-  );
-};
+  )
+}
 
 export const PaymentIcon = ({ className }: SVGProps) => {
   return (
@@ -258,8 +258,8 @@ export const PaymentIcon = ({ className }: SVGProps) => {
         </clipPath>
       </defs>
     </svg>
-  );
-};
+  )
+}
 
 export const ReportIcon = ({ className }: SVGProps) => {
   return (
@@ -283,8 +283,8 @@ export const ReportIcon = ({ className }: SVGProps) => {
         strokeLinejoin="round"
       />
     </svg>
-  );
-};
+  )
+}
 
 export const SettingIcon = ({ className }: SVGProps) => {
   return (
@@ -301,8 +301,8 @@ export const SettingIcon = ({ className }: SVGProps) => {
         fill="#2A4C23"
       />
     </svg>
-  );
-};
+  )
+}
 
 export const SupportIcon = ({ className }: SVGProps) => {
   return (
@@ -329,8 +329,8 @@ export const SupportIcon = ({ className }: SVGProps) => {
         </clipPath>
       </defs>
     </svg>
-  );
-};
+  )
+}
 
 export const LogoutIcon = ({ className }: SVGProps) => {
   return (
@@ -350,8 +350,8 @@ export const LogoutIcon = ({ className }: SVGProps) => {
         strokeLinejoin="round"
       />
     </svg>
-  );
-};
+  )
+}
 
 export const PropertyIcon = ({ className }: SVGProps) => {
   return (
@@ -370,8 +370,8 @@ export const PropertyIcon = ({ className }: SVGProps) => {
         strokeLinejoin="round"
       />
     </svg>
-  );
-};
+  )
+}
 
 export const HouseHoldIcon = ({ className }: SVGProps) => {
   return (
@@ -395,8 +395,8 @@ export const HouseHoldIcon = ({ className }: SVGProps) => {
         fill="#2A4C23"
       />
     </svg>
-  );
-};
+  )
+}
 
 export const CalculatorIcon = ({ className }: SVGProps) => {
   return (
@@ -422,8 +422,8 @@ export const CalculatorIcon = ({ className }: SVGProps) => {
         strokeLinejoin="round"
       />
     </svg>
-  );
-};
+  )
+}
 
 export const ProgressIcon = ({ className }: SVGProps) => {
   return (
@@ -452,8 +452,8 @@ export const ProgressIcon = ({ className }: SVGProps) => {
         </clipPath>
       </defs>
     </svg>
-  );
-};
+  )
+}
 
 export const ClockRewindIcon = ({ className }: SVGProps) => {
   return (
@@ -491,8 +491,8 @@ export const ClockRewindIcon = ({ className }: SVGProps) => {
         </clipPath>
       </defs>
     </svg>
-  );
-};
+  )
+}
 
 export const MoneyHandIcon = () => {
   return (
@@ -508,8 +508,8 @@ export const MoneyHandIcon = () => {
         fill="#39CEF3"
       />
     </svg>
-  );
-};
+  )
+}
 
 export const HomeIcon = () => {
   return (
@@ -525,8 +525,8 @@ export const HomeIcon = () => {
         fill="#FF00E5"
       />
     </svg>
-  );
-};
+  )
+}
 
 export const MoreVertIcon = () => {
   return (
@@ -542,8 +542,8 @@ export const MoreVertIcon = () => {
         fill="#4F4F4F"
       />
     </svg>
-  );
-};
+  )
+}
 
 export const CancelIcon = () => {
   return (
@@ -562,8 +562,8 @@ export const CancelIcon = () => {
         stroke-linejoin="round"
       />
     </svg>
-  );
-};
+  )
+}
 
 export const StarIcon = ({ key }: SVGProps) => {
   return (
@@ -580,15 +580,15 @@ export const StarIcon = ({ key }: SVGProps) => {
         fill="#FFD600"
       />
     </svg>
-  );
-};
+  )
+}
 
 export const ChevronLeftIcon = () => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      width="12"
-      height="20"
+      width="8"
+      height="16"
       viewBox="0 0 12 20"
       fill="none"
     >
@@ -597,15 +597,15 @@ export const ChevronLeftIcon = () => {
         fill="#7F947B"
       />
     </svg>
-  );
-};
+  )
+}
 
 export const ChevronRightIcon = () => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      width="12"
-      height="20"
+      width="8"
+      height="16"
       viewBox="0 0 12 20"
       fill="none"
     >
@@ -614,8 +614,8 @@ export const ChevronRightIcon = () => {
         fill="#7F947B"
       />
     </svg>
-  );
-};
+  )
+}
 
 export const AccountSettings = () => {
   return (
@@ -650,8 +650,8 @@ export const AccountSettings = () => {
         </clipPath>
       </defs>
     </svg>
-  );
-};
+  )
+}
 
 export const PreferenceIcon = () => {
   return (
@@ -675,8 +675,8 @@ export const PreferenceIcon = () => {
         fill="#2A4C23"
       />
     </svg>
-  );
-};
+  )
+}
 
 export const NotificationOutlineIcon = () => {
   return (
@@ -692,8 +692,8 @@ export const NotificationOutlineIcon = () => {
         fill="#2A4C23"
       />
     </svg>
-  );
-};
+  )
+}
 
 export const UserActivityIcon = () => {
   return (
@@ -709,8 +709,8 @@ export const UserActivityIcon = () => {
         fill="#2A4C23"
       />
     </svg>
-  );
-};
+  )
+}
 
 export const ConfigurationIcon = () => {
   return (
@@ -764,8 +764,8 @@ export const ConfigurationIcon = () => {
         </clipPath>
       </defs>
     </svg>
-  );
-};
+  )
+}
 
 export const SecurityIcon = () => {
   return (
@@ -805,8 +805,8 @@ export const SecurityIcon = () => {
         </clipPath>
       </defs>
     </svg>
-  );
-};
+  )
+}
 
 export const EditIcon = () => {
   return (
@@ -822,8 +822,8 @@ export const EditIcon = () => {
         fill="#2A4C23"
       />
     </svg>
-  );
-};
+  )
+}
 
 export const CalenderIcon = () => {
   return (
@@ -859,8 +859,8 @@ export const CalenderIcon = () => {
         fill="#90A4AE"
       />
     </svg>
-  );
-};
+  )
+}
 
 export const ArrowDropDown = () => {
   return (
@@ -873,8 +873,8 @@ export const ArrowDropDown = () => {
     >
       <path d="M12 15L7 10H17L12 15Z" fill="#3A3A3A" />
     </svg>
-  );
-};
+  )
+}
 
 export const NigeriaFlagIcon = () => {
   return (
@@ -902,8 +902,8 @@ export const NigeriaFlagIcon = () => {
         </clipPath>
       </defs>
     </svg>
-  );
-};
+  )
+}
 
 export const DeleteIcon = () => {
   return (
@@ -919,8 +919,8 @@ export const DeleteIcon = () => {
         fill="#D90001"
       />
     </svg>
-  );
-};
+  )
+}
 
 export const CalenderOutlineIcon = () => {
   return (
@@ -936,8 +936,8 @@ export const CalenderOutlineIcon = () => {
         fill="#47893F"
       />
     </svg>
-  );
-};
+  )
+}
 
 export const ShareIcon = () => {
   return (
@@ -953,8 +953,8 @@ export const ShareIcon = () => {
         stroke="#47893F"
       />
     </svg>
-  );
-};
+  )
+}
 
 export const ShareYellowIcon = () => {
   return (
@@ -970,8 +970,8 @@ export const ShareYellowIcon = () => {
         stroke="#F2C94C"
       />
     </svg>
-  );
-};
+  )
+}
 
 export const DeleteRedIcon = () => {
   return (
@@ -991,8 +991,8 @@ export const DeleteRedIcon = () => {
         mask="url(#path-1-inside-1_1126_7462)"
       />
     </svg>
-  );
-};
+  )
+}
 
 export const ChevronLeftIconIcon = () => {
   return (
@@ -1008,8 +1008,8 @@ export const ChevronLeftIconIcon = () => {
         fill="#828282"
       />
     </svg>
-  );
-};
+  )
+}
 
 export const ChevronRightGreenIcon = () => {
   return (
@@ -1025,8 +1025,8 @@ export const ChevronRightGreenIcon = () => {
         fill="#47893F"
       />
     </svg>
-  );
-};
+  )
+}
 
 export const CashBillIcon = () => {
   return (
@@ -1059,8 +1059,8 @@ export const CashBillIcon = () => {
         stroke-linejoin="round"
       />
     </svg>
-  );
-};
+  )
+}
 
 export const ArrowGrowthIcon = () => {
   return (
@@ -1076,8 +1076,8 @@ export const ArrowGrowthIcon = () => {
         fill="#333436"
       />
     </svg>
-  );
-};
+  )
+}
 
 export const ArrowGrowthWhiteIcon = () => {
   return (
@@ -1093,8 +1093,8 @@ export const ArrowGrowthWhiteIcon = () => {
         fill="white"
       />
     </svg>
-  );
-};
+  )
+}
 
 export const AddGreenIcon = () => {
   return (
@@ -1110,8 +1110,8 @@ export const AddGreenIcon = () => {
         stroke="#47893F"
       />
     </svg>
-  );
-};
+  )
+}
 
 export const NotificationOutlineWhiteIcon = () => {
   return (
@@ -1127,8 +1127,8 @@ export const NotificationOutlineWhiteIcon = () => {
         fill="white"
       />
     </svg>
-  );
-};
+  )
+}
 
 export const ProgressiveClockWhiteIcon = () => {
   return (
@@ -1144,8 +1144,8 @@ export const ProgressiveClockWhiteIcon = () => {
         fill="white"
       />
     </svg>
-  );
-};
+  )
+}
 
 export const DoubleCheckWhiteIcon = () => {
   return (
@@ -1161,8 +1161,8 @@ export const DoubleCheckWhiteIcon = () => {
         fill="white"
       />
     </svg>
-  );
-};
+  )
+}
 
 export const TaskCompleteWhiteIcon = () => {
   return (
@@ -1182,8 +1182,8 @@ export const TaskCompleteWhiteIcon = () => {
         fill="white"
       />
     </svg>
-  );
-};
+  )
+}
 
 export const FilterGreenIcon = () => {
   return (
@@ -1202,8 +1202,8 @@ export const FilterGreenIcon = () => {
         stroke-linejoin="round"
       />
     </svg>
-  );
-};
+  )
+}
 
 export const InformationIcon = () => {
   return (
@@ -1223,8 +1223,8 @@ export const InformationIcon = () => {
         fill="#0174C7"
       />
     </svg>
-  );
-};
+  )
+}
 
 export const TagIcon = () => {
   return (
@@ -1242,8 +1242,8 @@ export const TagIcon = () => {
         fill="#EB5757"
       />
     </svg>
-  );
-};
+  )
+}
 
 export const HouseWhiteIcon = () => {
   return (
@@ -1266,8 +1266,8 @@ export const HouseWhiteIcon = () => {
         stroke-width="1.5"
       />
     </svg>
-  );
-};
+  )
+}
 
 export const EditGreenIcon = () => {
   return (
@@ -1293,8 +1293,8 @@ export const EditGreenIcon = () => {
         stroke-linejoin="round"
       />
     </svg>
-  );
-};
+  )
+}
 
 export const LocationIcon = () => {
   return (
@@ -1310,8 +1310,8 @@ export const LocationIcon = () => {
         stroke="#D90001"
       />
     </svg>
-  );
-};
+  )
+}
 
 export const CameraIcon = () => {
   return (
@@ -1339,8 +1339,8 @@ export const CameraIcon = () => {
         stroke-linecap="round"
       />
     </svg>
-  );
-};
+  )
+}
 
 export const BriefCaseIcon = () => {
   return (
@@ -1356,8 +1356,8 @@ export const BriefCaseIcon = () => {
         fill="#103F91"
       />
     </svg>
-  );
-};
+  )
+}
 
 export const EditOutlineIcon = () => {
   return (
@@ -1378,8 +1378,20 @@ export const EditOutlineIcon = () => {
 
 export const StarYellowIcon = () => {
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
-      <path d="M9.62936 1.40153L11.6736 5.52868C11.7201 5.63343 11.7933 5.72417 11.8858 5.79184C11.9783 5.85952 12.0869 5.90177 12.2008 5.91439L16.7136 6.58296C16.8443 6.59976 16.9675 6.65338 17.0688 6.73758C17.1702 6.82177 17.2455 6.93306 17.2859 7.05844C17.3263 7.18382 17.3303 7.31812 17.2972 7.44565C17.2642 7.57319 17.1956 7.68869 17.0994 7.77868L13.8465 11.0058C13.7635 11.0834 13.7012 11.1805 13.6653 11.2883C13.6293 11.396 13.6209 11.5111 13.6408 11.623L14.4251 16.1615C14.4478 16.2919 14.4334 16.4261 14.3837 16.5488C14.3339 16.6714 14.2507 16.7776 14.1435 16.8553C14.0363 16.933 13.9095 16.9791 13.7774 16.9883C13.6454 16.9975 13.5134 16.9694 13.3965 16.9072L9.33365 14.7601C9.22961 14.709 9.11526 14.6825 8.99936 14.6825C8.88347 14.6825 8.76911 14.709 8.66508 14.7601L4.60222 16.9072C4.48533 16.9694 4.35335 16.9975 4.2213 16.9883C4.08924 16.9791 3.96241 16.933 3.85524 16.8553C3.74807 16.7776 3.66486 16.6714 3.61507 16.5488C3.56529 16.4261 3.55094 16.2919 3.57365 16.1615L4.35793 11.5715C4.37781 11.4597 4.3694 11.3446 4.33348 11.2368C4.29755 11.129 4.23524 11.032 4.15222 10.9544L0.860791 7.77868C0.763414 7.68623 0.694934 7.56753 0.663645 7.43695C0.632356 7.30638 0.639601 7.16953 0.684503 7.04299C0.729405 6.91645 0.810036 6.80564 0.916631 6.72399C1.02322 6.64234 1.15121 6.59336 1.28508 6.58296L5.79793 5.91439C5.91185 5.90177 6.02046 5.85952 6.11295 5.79184C6.20544 5.72417 6.27858 5.63343 6.32508 5.52868L8.36936 1.40153C8.42503 1.28133 8.51393 1.17956 8.62556 1.10824C8.73719 1.03692 8.86689 0.999023 8.99936 0.999023C9.13183 0.999023 9.26154 1.03692 9.37317 1.10824C9.4848 1.17956 9.57369 1.28133 9.62936 1.40153Z" stroke="#FFBB0C" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" />
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="18"
+      height="18"
+      viewBox="0 0 18 18"
+      fill="none"
+    >
+      <path
+        d="M9.62936 1.40153L11.6736 5.52868C11.7201 5.63343 11.7933 5.72417 11.8858 5.79184C11.9783 5.85952 12.0869 5.90177 12.2008 5.91439L16.7136 6.58296C16.8443 6.59976 16.9675 6.65338 17.0688 6.73758C17.1702 6.82177 17.2455 6.93306 17.2859 7.05844C17.3263 7.18382 17.3303 7.31812 17.2972 7.44565C17.2642 7.57319 17.1956 7.68869 17.0994 7.77868L13.8465 11.0058C13.7635 11.0834 13.7012 11.1805 13.6653 11.2883C13.6293 11.396 13.6209 11.5111 13.6408 11.623L14.4251 16.1615C14.4478 16.2919 14.4334 16.4261 14.3837 16.5488C14.3339 16.6714 14.2507 16.7776 14.1435 16.8553C14.0363 16.933 13.9095 16.9791 13.7774 16.9883C13.6454 16.9975 13.5134 16.9694 13.3965 16.9072L9.33365 14.7601C9.22961 14.709 9.11526 14.6825 8.99936 14.6825C8.88347 14.6825 8.76911 14.709 8.66508 14.7601L4.60222 16.9072C4.48533 16.9694 4.35335 16.9975 4.2213 16.9883C4.08924 16.9791 3.96241 16.933 3.85524 16.8553C3.74807 16.7776 3.66486 16.6714 3.61507 16.5488C3.56529 16.4261 3.55094 16.2919 3.57365 16.1615L4.35793 11.5715C4.37781 11.4597 4.3694 11.3446 4.33348 11.2368C4.29755 11.129 4.23524 11.032 4.15222 10.9544L0.860791 7.77868C0.763414 7.68623 0.694934 7.56753 0.663645 7.43695C0.632356 7.30638 0.639601 7.16953 0.684503 7.04299C0.729405 6.91645 0.810036 6.80564 0.916631 6.72399C1.02322 6.64234 1.15121 6.59336 1.28508 6.58296L5.79793 5.91439C5.91185 5.90177 6.02046 5.85952 6.11295 5.79184C6.20544 5.72417 6.27858 5.63343 6.32508 5.52868L8.36936 1.40153C8.42503 1.28133 8.51393 1.17956 8.62556 1.10824C8.73719 1.03692 8.86689 0.999023 8.99936 0.999023C9.13183 0.999023 9.26154 1.03692 9.37317 1.10824C9.4848 1.17956 9.57369 1.28133 9.62936 1.40153Z"
+        stroke="#FFBB0C"
+        stroke-width="1.2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
     </svg>
   )
 }

@@ -1,5 +1,5 @@
 "use client"
-import React, { useRef, useEffect } from "react"
+import React, { useRef, useEffect, useMemo } from "react"
 import * as d3 from "d3"
 import {
   CalculatorIcon,
@@ -14,10 +14,10 @@ import {
 import Image from "next/image"
 
 interface ActivityOverviewProps {
-  requests: string[]
-  properties: string[]
-  landlords: string[]
-  rents: string[]
+  requests: any[]
+  properties: any[]
+  landlords: any[]
+  rents: any[]
 }
 
 const ActivityOverview: React.FC<ActivityOverviewProps> = ({
@@ -27,56 +27,65 @@ const ActivityOverview: React.FC<ActivityOverviewProps> = ({
   rents,
 }) => {
   return (
-    <section className="grid grid-cols-12 gap-[27px]">
-      <div className="grid grid-cols-2 md:grid-cols-4 col-span-full xl:col-span-7 2xl:col-span-8 gap-[24px] p-[10px] md:p-3 bg-white rounded-[16px] mt-5">
-        {[
-          {
-            title: "Properties",
-            value: `${properties && properties.length} Properties`,
-            icon: <PropertyIcon />,
-          },
-          {
-            title: "Landlords",
-            value: `${landlords && landlords.length} Landlords`,
-            icon: <HouseHoldIcon />,
-          },
-          {
-            title: "Rents",
-            value: `${rents && rents.length} Rents`,
-            icon: <HouseHoldIcon />,
-          },
-          {
-            title: "Requests",
-            value: `${requests && requests.length} Requests`,
-            icon: <RequestIcon />,
-          },
-        ].map((each) => (
-          <InfoBox key={each.title} {...each} />
-        ))}
-      </div>
-      <div className="px-[20px] col-span-full xl:col-span-5 2xl:col-span-4 py-[16px] flex items-center gap-[24px] justify-between box-glass-effect">
-        <div className="flex flex-col gap-[10px]">
+    <>
+      <section className="grid grid-cols-12 gap-[27px]">
+        <div className="grid grid-cols-2 md:grid-cols-4 col-span-full xl:col-span-7 2xl:col-span-8 gap-[24px] p-[10px] md:p-3 bg-white rounded-[16px] mt-5">
           {[
-            { icon: <CalculatorIcon />, text: `80 Total Projects` },
-            { icon: <ProgressIcon />, text: `41 In-Progress Tasks` },
-            { icon: <ClockRewindIcon />, text: `39 Pending Requests` },
-            { icon: <MoneyHandIcon />, text: `Rent Collection` },
-            { icon: <HomeIcon />, text: `Others` },
+            {
+              title: "Properties",
+              value: `${properties ? properties.length : ""} Properties`,
+              icon: <PropertyIcon />,
+              images: properties?.map((each) => each.properties[0].photo),
+            },
+            {
+              title: "Landlords",
+              value: `${landlords ? landlords.length : ""} Landlords`,
+              icon: <HouseHoldIcon />,
+              images: requests?.map((each) => each.selfie),
+            },
+            {
+              title: "Rents",
+              value: `${rents ? rents.length : ""} Rents`,
+              icon: <HouseHoldIcon />,
+              images: rents?.map((each) => each.properties[0].photo),
+            },
+            {
+              title: "Requests",
+              value: `${requests ? requests.length : ""} Requests`,
+              icon: <RequestIcon />,
+              images: requests?.map((each) => each.requests[0].tenantPhoto),
+            },
           ].map((each) => (
-            <GraphItem key={each.text} {...each} />
+            <InfoBox key={each.title} {...each} />
           ))}
         </div>
-        <div className="p-2 donut-circle rounded-[100%]">
-          <DonutChart />
+        <div className="px-[20px] col-span-full xl:col-span-5 2xl:col-span-4 py-[16px] flex items-center gap-[24px] justify-between box-glass-effect">
+          <div className="flex flex-col gap-[10px]">
+            {[
+              { icon: <CalculatorIcon />, text: `80 Total Projects` },
+              { icon: <ProgressIcon />, text: `41 In-Progress Tasks` },
+              { icon: <ClockRewindIcon />, text: `39 Pending Requests` },
+              { icon: <MoneyHandIcon />, text: `Rent Collection` },
+              { icon: <HomeIcon />, text: `Others` },
+            ].map((each) => (
+              <GraphItem key={each.text} {...each} />
+            ))}
+          </div>
+          <div className="p-2 donut-circle rounded-[100%]">
+            <DonutChart />
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </>
   )
 }
 
 const DonutChart: React.FC<{}> = () => {
-  const data = [30, 10, 40, 20, 10]
-  const colors = ["#FF00E5", "#FF4906", "#39CEF3", "#47893F", "#FAFF00"]
+  const data = useMemo(() => [30, 10, 40, 20, 10], [])
+  const colors = useMemo(
+    () => ["#FF00E5", "#FF4906", "#39CEF3", "#47893F", "#FAFF00"],
+    []
+  )
 
   const chartRef = useRef(null)
 
@@ -158,56 +167,41 @@ const DonutChart: React.FC<{}> = () => {
       .style("font-size", "12px")
       .style("fill", "#949494")
 
+    const cref = chartRef.current
     return () => {
-      d3.select(chartRef.current).selectAll("*").remove()
+      d3.select(cref).selectAll("*").remove()
     }
   }, [data, colors])
 
   return <div ref={chartRef}></div>
 }
 
-const Images = () => {
+const SmallAvatar = ({ src }: { src: string }) => {
+  return (
+    <Image
+      src={src}
+      alt="User"
+      width={25}
+      height={25}
+      className="-ml-[10px] xl:-ml-[14px] 2xl:-ml-[10px] ring-1 ring-white w-[1.65rem] h-[1.65rem] object-cover min-w-[1.65rem] rounded-full"
+    />
+  )
+}
+
+const Images = ({ images }: { images?: string[] }) => {
+  const LIMIT = 6
   return (
     <div className="flex items-center">
-      <Image src="/images/Ellipse 101.svg" alt="User" width={25} height={25} />
-      <Image
-        src="/images/Ellipse 102.svg"
-        alt="User"
-        width={25}
-        height={25}
-        className="-ml-[10px] xl:-ml-[14px] 2xl:-ml-[10px]"
-      />
-      <Image
-        src="/images/Ellipse 103.svg"
-        alt="User"
-        width={25}
-        height={25}
-        className="-ml-[10px] xl:-ml-[14px] 2xl:-ml-[10px]"
-      />
-      <Image
-        src="/images/Ellipse 104.svg"
-        alt="User"
-        width={25}
-        height={25}
-        className="-ml-[10px] xl:-ml-[14px] 2xl:-ml-[10px]"
-      />
-      <Image
-        src="/images/Ellipse 105.svg"
-        alt="User"
-        width={25}
-        height={25}
-        className="-ml-[10px] xl:-ml-[14px] 2xl:-ml-[10px]"
-      />
-      <Image
-        src="/images/Ellipse 106.svg"
-        alt="User"
-        width={25}
-        height={25}
-        className="-ml-[10px] xl:-ml-[14px] 2xl:-ml-[10px]"
-      />
-      <div className="border-[2px] border-white bg-[#d9d9d9] grid place-items-center text-[6px] text-center w-[22px] h-[22px] rounded-[100%] -ml-[10px]">
-        +156
-      </div>
+      {images
+        ?.filter((each, i) => i <= LIMIT)
+        .map((each) => (
+          <SmallAvatar src={each} key={each} />
+        ))}
+      {images && images?.length > LIMIT && (
+        <div className="border-[2px] border-white bg-[#d9d9d9] grid place-items-center text-[6px] text-center w-[22px] h-[22px] rounded-[100%] -ml-[10px]">
+          +{images.length - LIMIT}
+        </div>
+      )}
     </div>
   )
 }
@@ -216,10 +210,12 @@ const InfoBox = ({
   title,
   value,
   icon,
+  images,
 }: {
   title: string
   value: string
   icon: JSX.Element
+  images?: string[]
 }) => {
   return (
     <div className="h-full box py-[10px] px-[21px] grid place-items-center text-center">
@@ -228,7 +224,7 @@ const InfoBox = ({
         <h1 className="text-primary text-[14px]">{title}</h1>
         <p className="#949494 text-[10px]">{value}</p>
       </div>
-      <Images />
+      <Images images={images} />
     </div>
   )
 }

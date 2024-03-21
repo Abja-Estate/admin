@@ -6,13 +6,13 @@ import { ApexOptions } from "apexcharts"
 export default function NumberOfDownloads() {
   return (
     <section className="grid grid-cols-12 gap-[27px]">
-      <div className="bg-white col-span-full lg:col-span-7 py-[15px] h-[252px] rounded-[10px] basis-[55%]">
+      <div className="bg-white col-span-full xl:col-span-5 py-[15px] h-[252px] rounded-[10px] basis-[55%]">
         <DownloadsChart />
       </div>
-      <div className="bg-white col-span-full md:col-span-6 py-[15px] h-[252px] rounded-[10px] flex-1">
+      <div className="bg-white col-span-full md:col-span-7 xl:col-span-4 py-[15px] h-[252px] rounded-[10px] flex-1">
         <MobileAppUsageChart />
       </div>
-      <div className="col-span-full md:col-span-6">
+      <div className="col-span-full md:col-span-5 xl:col-span-3">
         <DatePicker />
       </div>
     </section>
@@ -149,6 +149,6 @@ const MobileAppUsageChart = () => {
 
 const DatePicker = () => {
   return (
-    <div className="h-[252px] w-[253px] p-[15px] bg-white rounded-[10px]"></div>
+    <div className="h-[252px] w-full border border-[#7F947B] p-[15px] bg-white rounded-[10px]"></div>
   )
 }
