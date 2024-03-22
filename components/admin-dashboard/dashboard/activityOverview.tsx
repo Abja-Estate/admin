@@ -193,7 +193,7 @@ const Images = ({ images }: { images?: string[] }) => {
   return (
     <div className="flex items-center">
       {images
-        ?.filter((each, i) => i <= LIMIT)
+        ?.filter((each, i) => i < LIMIT)
         .map((each) => (
           <SmallAvatar src={each} key={each} />
         ))}

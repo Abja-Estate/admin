@@ -15,6 +15,15 @@ import { Popover } from "@headlessui/react"
 import Link from "next/link"
 import Modal from "../modal"
 import { cn } from "@/utils/cn"
+import MemoNoRecord2 from "../NoRecord2"
+import MemoAssign from "../svgs/Assign"
+import MemoAlarm from "../svgs/Alarm"
+import MemoCounter from "../svgs/Counter"
+import MemoDelete from "../svgs/Delete"
+import MemoProfileAdd from "../svgs/ProfileAdd"
+import MemoProcess from "../svgs/Process"
+import MemoUpdate from "../svgs/Update"
+import MemoShare from "../svgs/Share"
 
 export default function AdminDashboardTopNavigation({
   setMenuIsOpen,
@@ -177,95 +186,143 @@ const Activity = ({ isOpen, closeModal }) => {
 }
 
 const Notification = () => {
+  const notifications = [...Array(0)]
   return (
-    <div className="flex flex-col gap-4">
-      {[...Array(4)].map((_, i) => (
-        <div
-          key={i}
-          className="cursor-pointer border-l-[4px] border-l-[#D9D9D9] hover:border-l-[#47893F] min-h-[43px] pl-6"
-        >
-          <div>
-            <div className="flex gap-2">
-              <div className="bg-[#FFF1CE] h-[24px] w-[24px] grid place-items-center">
-                <StarYellowIcon />
-              </div>
-              <div className="flex items-center gap-2 flex-1 text-[14px]">
-                <div className="flex items-center gap-[5px]">
-                  <Image
-                    src="/images/tenant-emoji.svg"
-                    alt="Tenant Emoji"
-                    width={24}
-                    height={24}
-                    draggable={false}
-                  />
-                  <p className="text-[#4f4f4f]">Akello Buma</p>
-                </div>
-                <p className="text-[#4f4f4f]">rated </p>
-                <div className="flex items-center gap-[5px]">
-                  <Image
-                    src="/images/tenant-emoji.svg"
-                    alt="Tenant Emoji"
-                    width={24}
-                    height={24}
-                    draggable={false}
-                  />
-                  <p className="text-[#4f4f4f]">Okello Buma</p>
-                </div>
-              </div>
-            </div>
-            <p className="text-[#949494] text-[8px] py-[3px] border-b-[1px] border-b-[#d9d9d9]">
-              10:13 AM &nbsp; 7 NOV 2023
-            </p>
-          </div>
+    <>
+      {!notifications.length && (
+        <div className="gap-4 flex flex-col items-center justify-center h-full">
+          <MemoNoRecord2 className="h-40" />
+          <p>No New Notifications</p>
         </div>
-      ))}
-    </div>
+      )}
+      <div className="flex flex-col gap-4">
+        {notifications.map((_, i) => (
+          <div
+            key={i}
+            className="cursor-pointer border-l-[4px] border-l-[#D9D9D9] hover:border-l-[#47893F] min-h-[43px] pl-6"
+          >
+            <div>
+              <div className="flex gap-2">
+                <div className="bg-[#FFF1CE] h-[24px] w-[24px] grid place-items-center">
+                  <StarYellowIcon />
+                </div>
+                <div className="flex items-center gap-2 flex-1 text-[14px]">
+                  <div className="flex items-center gap-[5px]">
+                    <Image
+                      src="/images/tenant-emoji.svg"
+                      alt="Tenant Emoji"
+                      width={24}
+                      height={24}
+                      draggable={false}
+                    />
+                    <p className="text-[#4f4f4f]">Akello Buma</p>
+                  </div>
+                  <p className="text-[#4f4f4f]">rated </p>
+                  <div className="flex items-center gap-[5px]">
+                    <Image
+                      src="/images/tenant-emoji.svg"
+                      alt="Tenant Emoji"
+                      width={24}
+                      height={24}
+                      draggable={false}
+                    />
+                    <p className="text-[#4f4f4f]">Okello Buma</p>
+                  </div>
+                </div>
+              </div>
+              <p className="text-[#949494] text-[8px] py-[3px] border-b-[1px] border-b-[#d9d9d9]">
+                10:13 AM &nbsp; 7 NOV 2023
+              </p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </>
   )
 }
 
 const ActivityLog = () => {
+  const actionIcons = [
+    { actions: ["assign"], icon: <MemoAssign /> },
+    { actions: ["time"], icon: <MemoAlarm /> },
+    { actions: ["counter"], icon: <MemoCounter /> },
+    { actions: ["delete"], icon: <MemoDelete /> },
+    { actions: ["profileAdd"], icon: <MemoProfileAdd /> },
+    { actions: ["process"], icon: <MemoProcess /> },
+    { actions: ["edit", "update"], icon: <MemoUpdate /> },
+    { actions: ["share"], icon: <MemoShare /> },
+  ]
+  const activities = [...Array(8)].map((each) => ({
+    action:
+      actionIcons[Math.floor(Math.random() * (actionIcons.length - 0 + 1)) + 0]
+        ?.actions[0],
+  }))
   return (
-    <div className="flex flex-col gap-4">
-      {[...Array(8)].map((_, i) => (
-        <div
-          key={i}
-          className="cursor-pointer border-l-[4px] border-l-[#D9D9D9] hover:border-l-[#47893F] min-h-[43px] pl-6"
-        >
-          <div>
-            <div className="flex gap-2">
-              <div className="bg-[#CFD9E9] h-[24px] w-[24px] grid place-items-center">
-                <BriefCaseIcon />
-              </div>
-              <div className="flex items-center gap-2 flex-1 text-[14px]">
-                <div className="flex items-center gap-[5px]">
-                  <Image
-                    src="/images/tenant-emoji.svg"
-                    alt="Tenant Emoji"
-                    width={24}
-                    height={24}
-                    draggable={false}
-                  />
-                  <p className="text-[#4f4f4f]">Akello Buma</p>
-                </div>
-                <p className="text-[#4f4f4f]">rated </p>
-                <div className="flex items-center gap-[5px]">
-                  <Image
-                    src="/images/tenant-emoji.svg"
-                    alt="Tenant Emoji"
-                    width={24}
-                    height={24}
-                    draggable={false}
-                  />
-                  <p className="text-[#4f4f4f]">Okello Buma</p>
-                </div>
-              </div>
-            </div>
-            <p className="text-[#949494] text-[8px] py-[3px] border-b-[1px] border-b-[#d9d9d9]">
-              10:13 AM &nbsp; 7 NOV 2023
-            </p>
-          </div>
+    <>
+      {!activities.length && (
+        <div className="gap-4 flex flex-col items-center justify-center h-full">
+          <MemoNoRecord2 className="h-40" />
+          <p>No New Activity Log</p>
         </div>
-      ))}
-    </div>
+      )}
+      <div className="flex flex-col gap-4">
+        {activities.map((_, i) => (
+          <div
+            key={i}
+            className="cursor-pointer relative border-l-[4px] group border-l-[#D9D9D9] hover:border-l-[#47893F] min-h-[43px] pl-6"
+          >
+            <div className="absolute bg-white flex flex-col transition duration-500 opacity-0 group-hover:opacity-100 justify-center items-center h-[4.35rem] w-[4.35rem] right-0 -top-3 bottom-0 my-auto min-w-[4.35rem] log-hover-info rounded-full">
+              <Image
+                src="/images/tenant-emoji.svg"
+                alt="Tenant Emoji"
+                width={24}
+                height={24}
+                draggable={false}
+              />
+              <p className="text-[.4rem] text-[#949494]">Admin II</p>
+              <p className="text-[.5rem] text-[#333436]">Steph Nze</p>
+            </div>
+            <div>
+              <div className="flex gap-2">
+                <div className=" h-[24px] bg-slate-200 w-[24px] grid place-items-center">
+                  {
+                    actionIcons.find((each) => each.actions.includes(_.action))
+                      ?.icon
+                  }
+                </div>
+                <div className="flex items-center gap-2 flex-1 text-[14px]">
+                  {/* <div className="flex items-center gap-[5px]">
+                    <Image
+                      src="/images/man-placeholder.png"
+                      alt="Tenant Emoji"
+                      className="rounded-full"
+                      width={24}
+                      height={24}
+                      draggable={false}
+                    />
+                    <p className="text-[#4f4f4f]">Akello Buma</p>
+                  </div> */}
+                  <p className="text-[#4f4f4f]">Request was processed for </p>
+                  <div className="flex items-center gap-[5px]">
+                    <Image
+                      src="/images/man-placeholder.png"
+                      alt="Tenant Emoji"
+                      className="rounded-full"
+                      width={24}
+                      height={24}
+                      draggable={false}
+                    />
+                    <p className="text-[#4f4f4f]">Okello Buma</p>
+                  </div>
+                </div>
+              </div>
+              <p className="text-[#949494] text-[8px] py-[3px] border-b-[1px] border-b-[#d9d9d9]">
+                10:13 AM &nbsp; 7 NOV 2023
+              </p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </>
   )
 }
