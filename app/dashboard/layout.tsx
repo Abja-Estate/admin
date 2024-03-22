@@ -3,17 +3,15 @@ import AdminDashboardFooter from "@/components/admin-dashboard/footer"
 import AdminDashboardSideNavigation from "@/components/admin-dashboard/sideNavigation"
 import AdminDashboardTopNavigation from "@/components/admin-dashboard/topNavigation"
 import { useState } from "react"
+import StoreProvider from "../StoreProvider"
+import AdminAuthGuard from "@/components/AdminAuthGuard"
 
-export default function AdminDashboardLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
+function AdminDashboardLayout({ children }: { children: React.ReactNode }) {
   const [menuIsOpen, setMenuIsOpen] = useState(false)
   return (
-    <div className="flex flex-col h-[100vh]">
+    <div className="flex flex-col min-h-[100vh] relative">
       <AdminDashboardTopNavigation setMenuIsOpen={setMenuIsOpen} />
-      <div className="flex flex-1 sticky top-40">
+      <div className="flex flex-1">
         <div
           className={`transition duration-300 flex fixed lg:sticky top-16 md:top-24 z-20 w-screen lg:w-fit h-screen ${
             menuIsOpen
@@ -41,5 +39,13 @@ export default function AdminDashboardLayout({
       </div>
       <AdminDashboardFooter />
     </div>
+  )
+}
+
+export default function AuthD({ children }: { children: React.ReactNode }) {
+  return (
+    <StoreProvider>
+      <AdminAuthGuard Component={() => AdminDashboardLayout({ children })} />
+    </StoreProvider>
   )
 }

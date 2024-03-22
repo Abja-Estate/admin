@@ -6,8 +6,11 @@ import Requests from "@/components/admin-dashboard/dashboard/requests"
 import { useEffect, useState } from "react"
 import { BASE_URL } from "@/config"
 import { fetchAdminRequests } from "@/utils/api"
+import AdminAuthGuard from "@/components/AdminAuthGuard"
+import StoreProvider from "../StoreProvider"
 
 export default function AdminDashboard() {
+  // const state = useAppSelector((state) => state.admin)
   const [properties, setProperties] = useState<any>(null)
   const [landlords, setLandlords] = useState<any>(null)
   const [rents, setRents] = useState<any>(null)

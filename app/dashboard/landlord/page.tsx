@@ -3,49 +3,26 @@ import * as SVGIcon from "@/components/svgs"
 import Image from "next/image"
 import Link from "next/link"
 import { useEffect, useState } from "react"
-import { fetchAdminRequests } from "@/utils/api"
-import { BASE_URL } from "@/config"
-import Checkbox from "@/components/checkbox"
 import MemoNoRecord from "@/components/NoRecord"
 import Loading from "@/components/Loading"
 import ReactPaginate from "react-paginate"
+import { useGetLandlordsQuery } from "@/redux/endpoints"
+import { LandLord } from "@/utils/types"
 
 export default function AdminLandord() {
-  const [landlords, setRequests] = useState<any>(null)
-  const [filteredLandLords, setFilteredLandLords] = useState([])
-  const [loading, setLoading] = useState(true)
+  const { data, isLoading } = useGetLandlordsQuery("")
+
+  const [filteredLandLords, setFilteredLandLords] = useState<LandLord[]>([])
 
   useEffect(() => {
-    const fetchRequests = async (
-      url: string,
-      requestStateSetter: React.Dispatch<any>
-    ) => {
-      try {
-        const response = await fetchAdminRequests(
-          `${BASE_URL}/service/admin/${url}`
-        )
-        if (response.statusCode === 200) {
-          console.log("data", response.data)
-          requestStateSetter(response.data.data)
-        } else {
-          console.error("Error fetching landlords:", response.error)
-        }
-      } catch (error) {
-        console.error("Error fetching landlords:", error)
-      } finally {
-        setLoading(false)
-      }
-    }
-
-    fetchRequests("all_landlords", (data) => {
-      setRequests(data)
+    if (data) {
       setFilteredLandLords(data)
-    })
-  }, [])
+    }
+  }, [data])
 
   // for pagination
   const [itemOffset, setItemOffset] = useState(0)
-  const [itemsPerPage, setItemsPerPage] = useState(5)
+  const itemsPerPage = 5
   const endOffset = itemOffset + itemsPerPage
   const currentItems = filteredLandLords.slice(itemOffset, endOffset)
   const pageCount = Math.ceil(filteredLandLords.length / itemsPerPage)
@@ -149,15 +126,15 @@ export default function AdminLandord() {
         </div>
       </div>
       <div className="mt-[30px] bg-white text-[14px]">
-        {!landlords?.length && !loading && (
+        {!data?.length && !isLoading && (
           <div className="flex h-full gap-3 py-10 items-center justify-center flex-col">
             <MemoNoRecord className="w-1/5" />
             <p className="text-primary text-sm lg:text-lg">No Landlord found</p>
           </div>
         )}
-        {loading && <Loading />}
+        {isLoading && <Loading />}
 
-        {landlords?.length && (
+        {data?.length && (
           <div className="overflow-auto">
             <table className="w-full text-white">
               <thead>
@@ -175,7 +152,7 @@ export default function AdminLandord() {
                 </tr>
               </thead>
               <tbody>
-                {landlords &&
+                {data &&
                   currentItems.map((landlord: any, i: number) => (
                     <tr
                       className="bg-white text-[#4F4F4F] border-t-8 border-[#EAEDE9]"

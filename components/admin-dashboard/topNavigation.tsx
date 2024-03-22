@@ -59,7 +59,7 @@ export default function AdminDashboardTopNavigation({
 
   return (
     <>
-      <nav className="z-[10] sticky top-0 flex items-center justify-between px-[20px] py-[7px] shadow-[0px_4px_4px_0px_#00000040] bg-white">
+      <nav className="z-[40] sticky top-0 flex items-center justify-between px-[20px] py-[7px] shadow-[0px_4px_4px_0px_#00000040] bg-white">
         <figure className="flex gap-4 items-center">
           <button
             className="lg:hidden"
