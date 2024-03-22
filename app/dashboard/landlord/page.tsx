@@ -12,6 +12,7 @@ import {
   useGetRequestsQuery,
 } from "@/redux/endpoints"
 import { LandLord } from "@/utils/types"
+import LandlordDialog from "@/components/admin-dashboard/LandlordDialog"
 
 export default function AdminLandord() {
   const { data, isLoading } = useGetLandlordsQuery("")
@@ -42,10 +43,14 @@ export default function AdminLandord() {
       <header>
         <div className="bg-white h-[55px] px-[16px] flex items-center justify-between rounded-t-[10px] mb-[8px]">
           <h1 className="text-[#949494] text-[18px]">Today at a glance</h1>
-          <button className="px-[8px] py-[4px] text-[14px] whitespace-nowrap flex gap-[8px] items-center bg-[#B5D0B2] text-[#47893F] rounded-[4px]">
-            <SVGIcon.AddGreenIcon />
-            Add Landlord
-          </button>
+          <LandlordDialog
+            toggle={
+              <span className="px-[8px] py-[4px] text-[14px] whitespace-nowrap flex gap-[8px] items-center bg-[#B5D0B2] text-primary2 rounded-[4px]">
+                <SVGIcon.AddGreenIcon />
+                Add Landlord
+              </span>
+            }
+          />
         </div>
         <div className="p-[22px] rounded-b-[10px] grid grid-cols-1 sm:grid-cols-3 xl:grid-cols-4 bg-white gap-[16px]">
           <div className="h-[174px] bg-[#2F80ED] flex flex-col justify-between rounded-[10px] px-[15px] py-[10px]">
@@ -109,7 +114,7 @@ export default function AdminLandord() {
       </header>
       <div className="my-[24px]">
         <Link href="/landlord">
-          <span className="text-[#47893F] font-bold text-[22px]">
+          <span className="text-primary2 font-bold text-[22px]">
             Landlords /
           </span>
         </Link>
@@ -123,15 +128,15 @@ export default function AdminLandord() {
           />
         </div>
         <div className="flex flex-wrap sm:flex-nowrap items-center gap-x-[24px] gap-y-2">
-          <button className="px-[8px] py-[4px] text-[14px] whitespace-nowrap flex gap-[8px] items-center bg-[#B5D0B2] text-[#47893F] rounded-[4px]">
+          <button className="px-[8px] py-[4px] text-[14px] whitespace-nowrap flex gap-[8px] items-center bg-[#B5D0B2] text-primary2 rounded-[4px]">
             <SVGIcon.FilterGreenIcon />
             Filter
           </button>
-          <button className="px-[8px] py-[4px] text-[14px] whitespace-nowrap flex gap-[8px] items-center bg-[#B5D0B2] text-[#47893F] rounded-[4px]">
+          <button className="px-[8px] py-[4px] text-[14px] whitespace-nowrap flex gap-[8px] items-center bg-[#B5D0B2] text-primary2 rounded-[4px]">
             <SVGIcon.ShareIcon />
             Export
           </button>
-          <button className="px-[8px] py-[4px] text-[14px] whitespace-nowrap flex gap-[8px] items-center bg-[#B5D0B2] text-[#47893F] rounded-[4px]">
+          <button className="px-[8px] py-[4px] text-[14px] whitespace-nowrap flex gap-[8px] items-center bg-[#B5D0B2] text-primary2 rounded-[4px]">
             <SVGIcon.CalenderOutlineIcon />
             Sept 2023
           </button>
@@ -150,7 +155,7 @@ export default function AdminLandord() {
           <div className="overflow-auto">
             <table className="w-full text-white">
               <thead>
-                <tr className="bg-[#47893F] text-left">
+                <tr className="bg-primary2 text-left">
                   <td className="p-2">
                     <div className="border-[1px] border-white rounded-[4px] w-[20px] h-[20px]"></div>
                   </td>
@@ -211,7 +216,7 @@ export default function AdminLandord() {
                         <span
                           className={`px-3 py-1.5 w-fit min-w-28 transition duration-300 gap-3 group-hover:text-white flex items-center rounded-lg whitespace-nowrap ${
                             landlord.active
-                              ? "bg-primaryFade text-[#47893F] group-hover:bg-[#14FF0080]"
+                              ? "bg-primaryFade text-primary2 group-hover:bg-[#14FF0080]"
                               : "bg-[#D500004D] text-[#D50000] group-hover:bg-[#D5000080]"
                           }`}
                         >
@@ -241,7 +246,7 @@ export default function AdminLandord() {
             className="flex text-xs items-center gap-2 npage w-full justify-center"
             breakLabel="..."
             nextLabel={
-              <button className="hover:text-[#47893F] hover:bg-[#B5D0B2] bg-white transition border-[#828282] text-[#828282]  rounded-[6px] px-[8px] py-[4px] border-[1px] flex gap-5 items-center">
+              <button className="hover:text-primary2 hover:bg-[#B5D0B2] bg-white transition border-[#828282] text-[#828282]  rounded-[6px] px-[8px] py-[4px] border-[1px] flex gap-5 items-center">
                 Next
                 <SVGIcon.ChevronRightGreenIcon />
               </button>
@@ -249,10 +254,10 @@ export default function AdminLandord() {
             onPageChange={handlePageClick}
             pageRangeDisplayed={4}
             pageCount={pageCount}
-            activeLinkClassName="bg-primaryFade text-[#47893F]"
-            pageLinkClassName="hover:text-[#47893F] hover:bg-[#B5D0B2] w-[27px] h-[27px] rounded-[6px] bg-white text-[#828282] grid place-items-center"
+            activeLinkClassName="bg-primaryFade text-primary2"
+            pageLinkClassName="hover:text-primary2 hover:bg-[#B5D0B2] w-[27px] h-[27px] rounded-[6px] bg-white text-[#828282] grid place-items-center"
             previousLabel={
-              <button className="hover:text-[#47893F] hover:primaryFade border-[#828282] bg-white text-[#828282] rounded-[6px] px-[8px] py-[4px] border-[1px] flex gap-2 items-center">
+              <button className="hover:text-primary2 hover:primaryFade border-[#828282] bg-white text-[#828282] rounded-[6px] px-[8px] py-[4px] border-[1px] flex gap-2 items-center">
                 <SVGIcon.ChevronLeftIconIcon />
                 Previous
               </button>

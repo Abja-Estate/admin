@@ -1,4 +1,4 @@
-import Button from "@/components/button";
+import Button from "@/components/button"
 import {
   ArrowGrowthIcon,
   CalenderOutlineIcon,
@@ -11,8 +11,8 @@ import {
   SearchIcon,
   ShareIcon,
   ShareYellowIcon,
-} from "@/components/svgs";
-import Image from "next/image";
+} from "@/components/svgs"
+import Image from "next/image"
 
 export default function AdminPayment() {
   return (
@@ -25,7 +25,7 @@ export default function AdminPayment() {
           </div>
           <div className="flex mb-[28px]">
             <h1 className="text-[#333436] text-[34px] font-semibold">3001</h1>
-            <p className="text-[#47893F] text-[12px] mt-[22px] ml-[2px]">
+            <p className="text-primary2 text-[12px] mt-[22px] ml-[2px]">
               Total Payments
             </p>
           </div>
@@ -45,7 +45,7 @@ export default function AdminPayment() {
                   </p>
                 </div>
               </div>
-              <p className="text-[14px] text-[#47893F] mt-[5px]">
+              <p className="text-[14px] text-primary2 mt-[5px]">
                 Last Year: 2023
               </p>
             </div>
@@ -68,7 +68,7 @@ export default function AdminPayment() {
                   </p>
                 </div>
               </div>
-              <p className="text-[14px] text-[#47893F] mt-[5px]">
+              <p className="text-[14px] text-primary2 mt-[5px]">
                 This Year: 2024
               </p>
             </div>
@@ -84,27 +84,27 @@ export default function AdminPayment() {
             placeholder="Search"
           />
         </div>
-        <button className="px-[8px] py-[4px] text-[14px] flex gap-[8px] items-center bg-[#B5D0B2] text-[#47893F] rounded-[4px]">
+        <button className="px-[8px] py-[4px] text-[14px] flex gap-[8px] items-center bg-[#B5D0B2] text-primary2 rounded-[4px]">
           <CalenderOutlineIcon />
           Sept 2023
         </button>
       </div>
       <div className="w-full flex justify-between py-[12px] px-[32px] bg-white mt-[30px]">
         <div className="items-center flex gap-5">
-          <p className="text-[#47893F] font-semibold border-b-[1px] border-b-[#47893F]">
+          <p className="text-primary2 font-semibold border-b-[1px] border-b-primary2">
             Service Request Payments
           </p>
           <p className="text-[#949494] font-semibold border-b-[1px] border-b-[#949494]">
             Tenancy Payments
           </p>
         </div>
-        <button className="px-[8px] py-[4px] text-[14px] flex gap-[8px] items-center bg-[#B5D0B2] text-[#47893F] rounded-[4px]">
+        <button className="px-[8px] py-[4px] text-[14px] flex gap-[8px] items-center bg-[#B5D0B2] text-primary2 rounded-[4px]">
           <ShareIcon />
           Export
         </button>
       </div>
       <div className="mt-[30px] text-[14px]">
-        <header className="h-[44px] bg-[#47893F] w-full p-[10px] items-center gap-[20px] text-white grid grid-cols-[20px_1.2fr_1.2fr_1fr_1fr_1fr_1fr_1fr_1fr_1fr] mb-2">
+        <header className="h-[44px] bg-primary2 w-full p-[10px] items-center gap-[20px] text-white grid grid-cols-[20px_1.2fr_1.2fr_1fr_1fr_1fr_1fr_1fr_1fr_1fr] mb-2">
           <div>
             <div className="border-[1px] border-white rounded-[4px] w-[20px] h-[20px]"></div>
           </div>
@@ -157,8 +157,8 @@ export default function AdminPayment() {
               <p>1391234</p>
               <p>$600.45</p>
               <div className="bg-[#B5D0B2] rounded-[8px] px-[8px] py-[4px] flex gap-[8px] items-center">
-                <span className="h-[4px] w-[4px] bg-[#47893F] rounded-[100%]"></span>
-                <p className="text-[10px] text-[#47893F]">Tenancy</p>
+                <span className="h-[4px] w-[4px] bg-primary2 rounded-[100%]"></span>
+                <p className="text-[10px] text-primary2">Tenancy</p>
               </div>
               <p>20 OCT, 2023</p>
               <p>19 OCT, 2024</p>
@@ -176,7 +176,7 @@ export default function AdminPayment() {
             Previous
           </button>
           <div className="flex items-center gap-2">
-            <button className="w-[27px] h-[27px] rounded-[6px] bg-[#B5D0B2] text-[#47893F] grid place-items-center">
+            <button className="w-[27px] h-[27px] rounded-[6px] bg-[#B5D0B2] text-primary2 grid place-items-center">
               1
             </button>
             <button className="w-[27px] h-[27px] rounded-[6px] bg-white text-[#828282] grid place-items-center">
@@ -198,12 +198,12 @@ export default function AdminPayment() {
               10
             </button>
           </div>
-          <button className="text-[#47893F] bg-[#B5D0B2] rounded-[6px] px-[8px] py-[4px] border-[1px] flex gap-5 items-center">
+          <button className="text-primary2 bg-[#B5D0B2] rounded-[6px] px-[8px] py-[4px] border-[1px] flex gap-5 items-center">
             Next
             <ChevronRightGreenIcon />
           </button>
         </div>
       </div>
     </>
-  );
+  )
 }

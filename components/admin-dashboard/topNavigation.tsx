@@ -165,7 +165,7 @@ const Activity = ({ isOpen, closeModal }) => {
           onClick={() => toggleActiveTab("NOTIFICATION")}
           className={cn(
             "w-full h-[32px] rounded-[6px] bg-transparent text-[#949494] text-[14px] font-semibold",
-            activeTab === "NOTIFICATION" && "bg-[#47893F] text-white"
+            activeTab === "NOTIFICATION" && "bg-primary2 text-white"
           )}
         >
           Notification
@@ -174,7 +174,7 @@ const Activity = ({ isOpen, closeModal }) => {
           onClick={() => toggleActiveTab("ACTIVITY-LOG")}
           className={cn(
             "w-full h-[32px] bg-transparent rounded-[6px] text-[#949494] text-[14px] font-semibold",
-            activeTab === "ACTIVITY-LOG" && "bg-[#47893F] text-white"
+            activeTab === "ACTIVITY-LOG" && "bg-primary2 text-white"
           )}
         >
           Activity Log
@@ -199,7 +199,7 @@ const Notification = () => {
         {notifications.map((_, i) => (
           <div
             key={i}
-            className="cursor-pointer border-l-[4px] border-l-[#D9D9D9] hover:border-l-[#47893F] min-h-[43px] pl-6"
+            className="cursor-pointer border-l-[4px] border-l-[#D9D9D9] hover:border-l-primary2 min-h-[43px] pl-6"
           >
             <div>
               <div className="flex gap-2">
@@ -269,7 +269,7 @@ const ActivityLog = () => {
         {activities.map((_, i) => (
           <div
             key={i}
-            className="cursor-pointer relative border-l-[4px] group border-l-[#D9D9D9] hover:border-l-[#47893F] min-h-[43px] pl-6"
+            className="cursor-pointer relative border-l-[4px] group border-l-[#D9D9D9] hover:border-l-primary2 min-h-[43px] pl-6"
           >
             <div className="absolute bg-white flex flex-col transition duration-500 opacity-0 group-hover:opacity-100 justify-center items-center h-[4.35rem] w-[4.35rem] right-0 -top-3 bottom-0 my-auto min-w-[4.35rem] log-hover-info rounded-full">
               <Image

@@ -15,6 +15,7 @@ const config: Config = {
       },
       colors: {
         primary: '#2A4C23',
+        primary2: '#47893F',
         fade: '#949494',
         primaryFade: '#B5D0B2'
       }

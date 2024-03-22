@@ -2,17 +2,27 @@
 import { adminSideNavigationLinksData } from "@/data/admin-links"
 import clsx from "clsx"
 import Link from "next/link"
-import { usePathname } from "next/navigation"
+import { redirect, usePathname, useRouter } from "next/navigation"
+import { LogoutIcon } from "../svgs"
+import { useAppDispatch } from "@/redux/hooks"
+import { setAdminProfile } from "@/redux/adminSlice"
 
 export default function AdminDashboardSideNavigation({
   setMenuIsOpen,
 }: {
   setMenuIsOpen: Function
 }) {
+  const dispatch = useAppDispatch()
+  const router = useRouter()
   const pathname = usePathname()
+  const handleLogout = () => {
+    dispatch(setAdminProfile(null))
+    localStorage.removeItem("token")
+    router.push("/login")
+  }
   return (
     <nav className="w-[220px] min-w-[13.8rem] bg-white h-screen overflow-auto sticky top-0 pl-[20px] py-[24px] flex flex-col gap-[24px] shadow-[1px_0px_1px_0px_#00000040]">
-      <div className="flex flex-col gap-[24px]">
+      <div className="flex h-full flex-col gap-[24px]">
         {adminSideNavigationLinksData.map((link, i) => {
           const isDashboardActiveRoute = pathname === link.href
 
@@ -67,6 +77,16 @@ export default function AdminDashboardSideNavigation({
 
           return navItem
         })}
+
+        <button
+          className={clsx(
+            "h-[40px] px-[16px] mt-auto mb-20 flex items-center group hover:bg-[#7F947B] hover:text-white gap-[24px] font-semibold rounded-[5px]"
+          )}
+          onClick={handleLogout}
+        >
+          <LogoutIcon />
+          <span>Logout</span>
+        </button>
       </div>
     </nav>
   )

@@ -254,7 +254,7 @@ export default function Requests() {
   //         </div>
   //       </header>
   //       <div className="mt-[30px] text-[14px]">
-  //         <header className="h-[44px] bg-[#47893F] w-full p-[10px] items-center gap-[20px] text-white grid grid-cols-[20px_60px_1.2fr_1fr_1fr_1.4fr_0.8fr_0.9fr_1fr_0.82fr] mb-2">Frame 427318953
+  //         <header className="h-[44px] bg-primary2 w-full p-[10px] items-center gap-[20px] text-white grid grid-cols-[20px_60px_1.2fr_1fr_1fr_1.4fr_0.8fr_0.9fr_1fr_0.82fr] mb-2">Frame 427318953
   //           <div>
   //             <div className="border-[1px] border-white rounded-[4px] w-[20px] h-[20px]"></div>
   //           </div>
@@ -295,8 +295,8 @@ export default function Requests() {
   //                 <p>{request?.day}</p>
   //                 <p>{request?.agent}</p>
   //                 <div className="bg-[#B5D0B2] rounded-[8px] px-[8px] py-[4px] flex gap-[8px] items-center h-fit">
-  //                   <span className="h-[4px] w-[4px] bg-[#47893F] rounded-[100%]"></span>
-  //                   <p className="text-[10px] text-[#47893F]">
+  //                   <span className="h-[4px] w-[4px] bg-primary2 rounded-[100%]"></span>
+  //                   <p className="text-[10px] text-primary2">
   //                     {request?.status}
   //                   </p>
   //                 </div>
@@ -320,7 +320,7 @@ export default function Requests() {
   //             Previous
   //           </button>
   //           <div className="flex items-center gap-2">
-  //             <button className="w-[27px] h-[27px] rounded-[6px] bg-[#B5D0B2] text-[#47893F] grid place-items-center">
+  //             <button className="w-[27px] h-[27px] rounded-[6px] bg-[#B5D0B2] text-primary2 grid place-items-center">
   //               1
   //             </button>
   //             <button className="w-[27px] h-[27px] rounded-[6px] bg-white text-[#828282] grid place-items-center">
@@ -342,7 +342,7 @@ export default function Requests() {
   //               10
   //             </button>
   //           </div>
-  //           <button className="text-[#47893F] bg-[#B5D0B2] rounded-[6px] px-[8px] py-[4px] border-[1px] flex gap-5 items-center">
+  //           <button className="text-primary2 bg-[#B5D0B2] rounded-[6px] px-[8px] py-[4px] border-[1px] flex gap-5 items-center">
   //             Next
   //             <ChevronRightGreenIcon />
   //           </button>

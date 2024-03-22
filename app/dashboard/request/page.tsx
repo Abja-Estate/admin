@@ -1,16 +1,16 @@
-'use client';
+"use client"
 import {
   AddGreenIcon,
   ArrowGrowthIcon,
   ArrowGrowthWhiteIcon,
   CalenderOutlineIcon,
-  ChevronLeftIconIcon, 
+  ChevronLeftIconIcon,
   ChevronRightGreenIcon,
   DeleteRedIcon,
   DoubleCheckWhiteIcon,
   FilterGreenIcon,
   InformationIcon,
-  MoreVertIcon, 
+  MoreVertIcon,
   NotificationOutlineWhiteIcon,
   ProgressiveClockWhiteIcon,
   RequestIcon,
@@ -19,57 +19,57 @@ import {
   ShareYellowIcon,
   TagIcon,
   TaskCompleteWhiteIcon,
-} from "@/components/svgs";
-import { BASE_URL } from "@/config";
-import { fetchAdminRequests } from "@/utils/api";
-import Image from "next/image";
-import { useEffect, useState } from "react";
+} from "@/components/svgs"
+import { BASE_URL } from "@/config"
+import { fetchAdminRequests } from "@/utils/api"
+import Image from "next/image"
+import { useEffect, useState } from "react"
 
 export default function Request() {
   const [requests, setRequests] = useState<any>([])
 
   useEffect(() => {
-      const fetchRequests = async (url: string, requestStateSetter: React.Dispatch<any>) => {
-        try {
-          const response = await fetchAdminRequests(`${BASE_URL}/service/admin/${url}`);
-          if (response.statusCode === 200) {
-            console.log('data', response.data);
-             // Define an empty array to store all requests
-      let allRequests: any[] = [];
+    const fetchRequests = async (
+      url: string,
+      requestStateSetter: React.Dispatch<any>
+    ) => {
+      try {
+        const response = await fetchAdminRequests(
+          `${BASE_URL}/service/admin/${url}`
+        )
+        if (response.statusCode === 200) {
+          console.log("data", response.data)
+          // Define an empty array to store all requests
+          let allRequests: any[] = []
 
-
-      // Iterate over the data array
-      response.data.data.forEach((entry: any) => {
-          // Iterate over the requests array inside each object
-          entry.requests.forEach((request: any) => {
+          // Iterate over the data array
+          response.data.data.forEach((entry: any) => {
+            // Iterate over the requests array inside each object
+            entry.requests.forEach((request: any) => {
               // Push the request into the allRequests array
-              allRequests.push(request);
-          });
-      });
-      
-      // Now allRequests contains all the requests combined into a single array
-      console.log('hi', allRequests);
-      requestStateSetter(allRequests);
+              allRequests.push(request)
+            })
+          })
 
-          } else {
-            console.error("Error fetching landlords:", response.error);
-          }
-        } catch (error) {
-          console.error("Error fetching landlords:", error);
-        }     
-      };
+          // Now allRequests contains all the requests combined into a single array
+          console.log("hi", allRequests)
+          requestStateSetter(allRequests)
+        } else {
+          console.error("Error fetching landlords:", response.error)
+        }
+      } catch (error) {
+        console.error("Error fetching landlords:", error)
+      }
+    }
 
-      fetchRequests("all_requests", setRequests);
-
-     
-  
-    }, [BASE_URL]);
+    fetchRequests("all_requests", setRequests)
+  }, [BASE_URL])
   return (
     <>
       <header>
         <div className="bg-white h-[55px] px-[16px] flex items-center justify-between rounded-t-[10px] mb-[8px]">
           <h1 className="text-[#949494] text-[18px]">Today at a glance</h1>
-          <button className="px-[8px] py-[4px] text-[14px] flex gap-[8px] items-center bg-[#B5D0B2] text-[#47893F] rounded-[4px]">
+          <button className="px-[8px] py-[4px] text-[14px] flex gap-[8px] items-center bg-[#B5D0B2] text-primary2 rounded-[4px]">
             <AddGreenIcon />
             Add Request
           </button>
@@ -171,22 +171,22 @@ export default function Request() {
           />
         </div>
         <div className="flex items-center gap-[24px]">
-          <button className="px-[8px] py-[4px] text-[14px] flex gap-[8px] items-center bg-[#B5D0B2] text-[#47893F] rounded-[4px]">
+          <button className="px-[8px] py-[4px] text-[14px] flex gap-[8px] items-center bg-[#B5D0B2] text-primary2 rounded-[4px]">
             <FilterGreenIcon />
             Filter
           </button>
-          <button className="px-[8px] py-[4px] text-[14px] flex gap-[8px] items-center bg-[#B5D0B2] text-[#47893F] rounded-[4px]">
+          <button className="px-[8px] py-[4px] text-[14px] flex gap-[8px] items-center bg-[#B5D0B2] text-primary2 rounded-[4px]">
             <ShareIcon />
             Export
           </button>
-          <button className="px-[8px] py-[4px] text-[14px] flex gap-[8px] items-center bg-[#B5D0B2] text-[#47893F] rounded-[4px]">
+          <button className="px-[8px] py-[4px] text-[14px] flex gap-[8px] items-center bg-[#B5D0B2] text-primary2 rounded-[4px]">
             <CalenderOutlineIcon />
             Sept 2023
           </button>
         </div>
       </div>
       <div className="mt-[30px] text-[14px]">
-        <header className="h-[44px] bg-[#47893F] w-full p-[10px] items-center gap-[20px] text-white grid grid-cols-[20px_60px_1.2fr_1fr_1fr_1.4fr_0.8fr_0.9fr_1fr_0.82fr] mb-2">
+        <header className="h-[44px] bg-primary2 w-full p-[10px] items-center gap-[20px] text-white grid grid-cols-[20px_60px_1.2fr_1fr_1fr_1.4fr_0.8fr_0.9fr_1fr_0.82fr] mb-2">
           <div>
             <div className="border-[1px] border-white rounded-[4px] w-[20px] h-[20px]"></div>
           </div>
@@ -199,45 +199,48 @@ export default function Request() {
           <p>Action</p>
         </header>
         <div className="flex flex-col gap-2">
-        {requests && requests.map((request: any, i: number) => (
-            <div
-              key={i}
-              className="bg-white w-full p-[10px] gap-[20px] grid grid-cols-[20px_60px_1.2fr_1fr_1fr_1.4fr_0.8fr_0.9fr_1fr_0.82fr] mb-2"
-            >
-              <div>
-                <div className="border-[1px] border-[#828282] rounded-[4px] w-[20px] h-[20px]"></div>
-              </div>
-              <div>
-                <div className="flex items-center gap-[5px] mb-[2px]">
-                  <Image
-                    src="/images/landlord-emoji.svg"
-                    alt="Landlord Emoji"
-                    width={24}
-                    draggable={false}
-                    height={24}
-                  />
-                  <p className="text-[#4f4f4f]">{request?.fullName}</p>
+          {requests &&
+            requests.map((request: any, i: number) => (
+              <div
+                key={i}
+                className="bg-white w-full p-[10px] gap-[20px] grid grid-cols-[20px_60px_1.2fr_1fr_1fr_1.4fr_0.8fr_0.9fr_1fr_0.82fr] mb-2"
+              >
+                <div>
+                  <div className="border-[1px] border-[#828282] rounded-[4px] w-[20px] h-[20px]"></div>
                 </div>
-                <p className="text-[10px] text-[#949494]">{request?.phone}</p>
+                <div>
+                  <div className="flex items-center gap-[5px] mb-[2px]">
+                    <Image
+                      src="/images/landlord-emoji.svg"
+                      alt="Landlord Emoji"
+                      width={24}
+                      draggable={false}
+                      height={24}
+                    />
+                    <p className="text-[#4f4f4f]">{request?.fullName}</p>
+                  </div>
+                  <p className="text-[10px] text-[#949494]">{request?.phone}</p>
+                </div>
+                <p>{request?.propertyLocation}</p>
+                <p>{request?.day}</p>
+                <p>{request?.agent}</p>
+                <div className="bg-[#B5D0B2] rounded-[8px] px-[8px] py-[4px] flex gap-[8px] items-center h-fit">
+                  <span className="h-[4px] w-[4px] bg-primary2 rounded-[100%]"></span>
+                  <p className="text-[10px] text-primary2">{request?.status}</p>
+                </div>
+                <div className="bg-[#FCE6E6] rounded-[8px] px-[8px] py-[4px] flex gap-[8px] items-center h-fit">
+                  <TagIcon />
+                  <p className="text-[10px] text-[#EB5757]">
+                    {request?.priority}
+                  </p>
+                </div>
+                <div className="flex items-center gap-2 h-fit">
+                  <InformationIcon />
+                  <DeleteRedIcon />
+                  <MoreVertIcon />
+                </div>
               </div>
-              <p>{request?.propertyLocation}</p>
-              <p>{request?.day}</p>
-              <p>{request?.agent}</p>
-              <div className="bg-[#B5D0B2] rounded-[8px] px-[8px] py-[4px] flex gap-[8px] items-center h-fit">
-                <span className="h-[4px] w-[4px] bg-[#47893F] rounded-[100%]"></span>
-                <p className="text-[10px] text-[#47893F]">{request?.status}</p>
-              </div>
-              <div className="bg-[#FCE6E6] rounded-[8px] px-[8px] py-[4px] flex gap-[8px] items-center h-fit">
-                <TagIcon />
-                <p className="text-[10px] text-[#EB5757]">{request?.priority}</p>
-              </div>
-              <div className="flex items-center gap-2 h-fit">
-                <InformationIcon />
-                <DeleteRedIcon />
-                <MoreVertIcon />
-              </div>
-            </div>
-          ))}
+            ))}
         </div>
         <div className="flex mt-[30px] items-center justify-between">
           <button className="border-[#828282] text-[#828282] rounded-[6px] px-[8px] py-[4px] border-[1px] flex gap-2 items-center">
@@ -245,7 +248,7 @@ export default function Request() {
             Previous
           </button>
           <div className="flex items-center gap-2">
-            <button className="w-[27px] h-[27px] rounded-[6px] bg-[#B5D0B2] text-[#47893F] grid place-items-center">
+            <button className="w-[27px] h-[27px] rounded-[6px] bg-[#B5D0B2] text-primary2 grid place-items-center">
               1
             </button>
             <button className="w-[27px] h-[27px] rounded-[6px] bg-white text-[#828282] grid place-items-center">
@@ -267,12 +270,12 @@ export default function Request() {
               10
             </button>
           </div>
-          <button className="text-[#47893F] bg-[#B5D0B2] rounded-[6px] px-[8px] py-[4px] border-[1px] flex gap-5 items-center">
+          <button className="text-primary2 bg-[#B5D0B2] rounded-[6px] px-[8px] py-[4px] border-[1px] flex gap-5 items-center">
             Next
             <ChevronRightGreenIcon />
           </button>
         </div>
       </div>
     </>
-  );
+  )
 }

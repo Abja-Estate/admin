@@ -1,12 +1,12 @@
-import { BriefCaseIcon, CameraIcon, LocationIcon } from "@/components/svgs";
-import Image from "next/image";
-import Link from "next/link";
+import { BriefCaseIcon, CameraIcon, LocationIcon } from "@/components/svgs"
+import Image from "next/image"
+import Link from "next/link"
 
 export default function Profile() {
   return (
     <div className="flex gap-[32px]">
       <div className="w-[315px] flex flex-col rounded-se-[100px] bg-white">
-        <div className="p-[24px] h-[300px] border-b-[1px] border-b-[#47893F] w-full">
+        <div className="p-[24px] h-[300px] border-b-[1px] border-b-primary2 w-full">
           <figure>
             <Image
               src="/images/admin-user-img-1.svg"
@@ -20,7 +20,7 @@ export default function Profile() {
           </figure>
           <div className="flex gap-2 items-center text-[14px] text-[#949494] pt-4">
             <p>@michealibaro</p>
-            <div className="w-[1px] h-[15px] bg-[#47893F]"></div>
+            <div className="w-[1px] h-[15px] bg-primary2"></div>
             <p>(+256) 567890123</p>
           </div>
           <p className="text-[#949494] pt-2">micheal.ibaro@gmail.com</p>
@@ -58,7 +58,7 @@ export default function Profile() {
             </h1>
             <button className="flex items-center gap-[5px] rounded-[4px] bg-[#B5D0B2] px-[8px] py-[4px]">
               <CameraIcon />
-              <p className="text-[#47893F]">Change Cover</p>
+              <p className="text-primary2">Change Cover</p>
             </button>
           </div>
           <div className="flex justify-between gap-5">
@@ -87,7 +87,7 @@ export default function Profile() {
             <h1 className="text-[18px] text-[#333436] font-semibold">
               Recent Activity Log
             </h1>
-            <span className="underline text-[#47893F]">View All</span>
+            <span className="underline text-primary2">View All</span>
           </div>
           <div className="flex flex-col gap-5 text-[14px]">
             {[...Array(9)].map((_, i) => (
@@ -131,5 +131,5 @@ export default function Profile() {
         </div>
       </div>
     </div>
-  );
+  )
 }

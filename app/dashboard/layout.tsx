@@ -13,7 +13,7 @@ function AdminDashboardLayout({ children }: { children: React.ReactNode }) {
       <AdminDashboardTopNavigation setMenuIsOpen={setMenuIsOpen} />
       <div className="flex flex-1">
         <div
-          className={`transition duration-300 flex fixed lg:sticky top-16 md:top-24 z-20 w-screen lg:w-fit h-screen ${
+          className={`transition duration-300 flex fixed lg:sticky top-16 md:top-24 z-20 lg:z-0 w-screen lg:w-fit h-screen ${
             menuIsOpen
               ? "bg-black/50"
               : "pointer-events-none lg:pointer-events-auto"

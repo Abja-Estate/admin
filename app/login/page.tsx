@@ -10,6 +10,10 @@ import { useRouter } from "next/navigation"
 import axios from "axios"
 import toast from "react-hot-toast"
 import AuthLayout from "@/components/AuthLayout"
+import FormField from "@/components/FormField"
+import { signInInputs, signInSchema } from "@/utils/schema"
+import { getDefault } from "@/utils/helpers"
+import { useAdminLoginMutation } from "@/redux/endpoints"
 // import { useDispatch, useSelector } from 'react-redux';
 // import { RootState } from '../../redux/store'; // Import RootState type
 // import { login, logout } from '../../redux/authSlice';
@@ -89,6 +93,31 @@ export default function AdminLogin() {
     }
   }
 
+  const [adminLogin, { isLoading }] = useAdminLoginMutation()
+
+  const signIn_f = useFormik({
+    validationSchema: signInSchema,
+    initialValues: getDefault(signInInputs),
+    onSubmit: async (values) => {
+      const response: AnyObject = await adminLogin(values)
+      if ("data" in response) {
+        localStorage.setItem("token", response.data.access_token)
+        setTimeout(() => {
+          // navigate("/admin")
+        }, 300)
+      } else if (response.error && "data" in response.error) {
+        // dispatch(
+        //   openRespDialog({
+        //     self: true,
+        //     type: "error",
+        //     desc: response.error.data.message,
+        //     title: "Oops!",
+        //   })
+        // )
+      }
+    },
+  })
+
   return (
     <AuthLayout>
       <>
@@ -110,33 +139,16 @@ export default function AdminLogin() {
           className="flex flex-col mb-10 h-full gap-[32px] w-full max-w-[500px] mx-auto"
           onSubmit={submit}
         >
+          {signInInputs.map((each) => (
+            <FormField key={each.name} {...each} />
+          ))}
           <fieldset>
-            <label className="inline-block text-primary font-medium mb-[16px]">
-              Email or Phone number
-            </label>
-            <Input
-              type="email"
-              name="email"
-              value={formData.email}
-              onChange={formDataHandler}
-              placeholder="Enter phone number or email"
-            />
-          </fieldset>
-          <fieldset>
-            <label className="inline-block text-primary font-medium mb-[16px]">
-              Password
-            </label>
-            <Input
-              type="password"
-              name="password"
-              value={formData.password}
-              onChange={formDataHandler}
-              placeholder="Password"
-            />
-          </fieldset>
-          <fieldset>
-            <div className="flex gap-[16px] mb-[8px]">
-              <Checkbox checked={checked} onClick={toggleHandler} />
+            <div className="flex items-center gap-[16px] mb-[8px]">
+              <Checkbox
+                className="h-[1.15rem] cursor-pointer w-[1.15rem] text-primary2"
+                checked={checked}
+                onClick={toggleHandler}
+              />
               <p className="text-[#333436]">Remember Me</p>
             </div>
             <p className="text-fade">Save my login details for next time.</p>
