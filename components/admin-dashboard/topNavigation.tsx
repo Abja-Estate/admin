@@ -83,12 +83,15 @@ export default function AdminDashboardTopNavigation({
           <MicIcon />
         </div>
         <div className="flex items-center gap-[16px]">
-          <div className="h-[38px] w-[38px] min-w-[38px] bg-[#2A4C2333] rounded-[100%] relative grid place-items-center">
+          <button
+            onClick={() => setIsOpen(true)}
+            className="h-[38px] w-[38px] min-w-[38px] bg-[#2A4C2333] rounded-[100%] relative grid place-items-center"
+          >
             <NotificationIcon />
             <span className="absolute h-[12px] w-[12px] grid place-items-center bg-[#D90001] text-white text-[7px] font-semibold rounded-[100%] top-[6px] right-[8px]">
               8
             </span>
-          </div>
+          </button>
           <div className="h-[38px] w-[38px]  min-w-[38px] bg-[#2A4C2333] rounded-[100%] relative grid place-items-center">
             <MessageIcon />
             <span className="absolute h-[12px] w-[12px] grid place-items-center bg-[#D90001] text-white text-[7px] font-semibold rounded-[100%] top-[6px] right-[8px]">
@@ -146,13 +149,13 @@ const Activity = ({ isOpen, closeModal }) => {
     <Modal
       isOpen={isOpen}
       closeModal={closeModal}
-      modalStyles="h-[100vh] max-w-[452px] flex flex-col gap-10 py-[32px]"
+      modalStyles="h-[100vh] max-h-[70vh] max-w-[452px] flex flex-col gap-10 py-[32px]"
     >
-      <header className="bg-[#F6F8F6] py-2 px-3 flex rounded-[4px] max-w-max mx-auto">
+      <header className="bg-[#F6F8F6] p-2 flex gap-4 w-full rounded-[4px] mx-auto">
         <button
           onClick={() => toggleActiveTab("NOTIFICATION")}
           className={cn(
-            "w-[162px] h-[32px] rounded-[6px] bg-transparent text-[#949494] text-[14px] font-semibold",
+            "w-full h-[32px] rounded-[6px] bg-transparent text-[#949494] text-[14px] font-semibold",
             activeTab === "NOTIFICATION" && "bg-[#47893F] text-white"
           )}
         >
@@ -161,7 +164,7 @@ const Activity = ({ isOpen, closeModal }) => {
         <button
           onClick={() => toggleActiveTab("ACTIVITY-LOG")}
           className={cn(
-            "w-[162px] h-[32px] bg-transparent rounded-[6px] text-[#949494] text-[14px] font-semibold",
+            "w-full h-[32px] bg-transparent rounded-[6px] text-[#949494] text-[14px] font-semibold",
             activeTab === "ACTIVITY-LOG" && "bg-[#47893F] text-white"
           )}
         >

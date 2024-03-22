@@ -27,13 +27,15 @@ export default function AdminDashboardSideNavigation({
               >
                 <div
                   className={clsx(
-                    "h-[40px] px-[16px] flex items-center gap-[24px] font-semibold rounded-[5px]",
+                    "h-[40px] px-[16px] flex items-center group hover:bg-[#7F947B] hover:text-white gap-[24px] font-semibold rounded-[5px]",
                     isDashboardActiveRoute && "text-white bg-primary"
                   )}
                 >
                   <link.leading
                     className={
-                      isDashboardActiveRoute ? "fill-white" : "fill-primary"
+                      isDashboardActiveRoute
+                        ? "fill-white"
+                        : "fill-primary group-hover:fill-white"
                     }
                   />
                   <span>{link.linkText}</span>
@@ -47,13 +49,15 @@ export default function AdminDashboardSideNavigation({
               >
                 <div
                   className={clsx(
-                    "h-[40px] px-[16px] flex items-center gap-[24px] font-semibold rounded-[5px]",
+                    "h-[40px] px-[16px] flex items-center group hover:bg-[#7F947B] hover:text-white gap-[24px] font-semibold rounded-[5px]",
                     isActiveRoute && "text-white bg-primary"
                   )}
                 >
                   <link.leading
                     className={
-                      isActiveRoute ? "stroke-white" : "stroke-primary"
+                      isActiveRoute
+                        ? "stroke-white"
+                        : "stroke-primary group-hover:stroke-white"
                     }
                   />
                   <span>{link.linkText}</span>

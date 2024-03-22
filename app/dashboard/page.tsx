@@ -61,7 +61,7 @@ export default function AdminDashboard() {
     fetchRequests("all_properties", setProperties)
     fetchRequests("all_rents", setRents)
     fetchRequests("all_requests", setRequests)
-  }, [BASE_URL])
+  }, [])
   return (
     <>
       <header className="">
@@ -76,7 +76,7 @@ export default function AdminDashboard() {
         />
         <NumberOfDownloads />
         <Requests />
-        {/* <RecentPayments /> */}
+        <RecentPayments />
       </div>
     </>
   )
