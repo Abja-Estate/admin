@@ -12,12 +12,13 @@ import {
   RequestIcon,
 } from "@/components/svgs"
 import Image from "next/image"
+import CustomImage from "@/components/CustomImage"
 
 interface ActivityOverviewProps {
-  requests: any[]
-  properties: any[]
-  landlords: any[]
-  rents: any[]
+  requests?: any[]
+  properties?: any[]
+  landlords?: any[]
+  rents?: any[]
 }
 
 const ActivityOverview: React.FC<ActivityOverviewProps> = ({
@@ -41,7 +42,7 @@ const ActivityOverview: React.FC<ActivityOverviewProps> = ({
               title: "Landlords",
               value: `${landlords ? landlords.length : ""} Landlords`,
               icon: <HouseHoldIcon />,
-              images: requests?.map((each) => each.selfie),
+              images: landlords?.map((each) => each.selfie),
             },
             {
               title: "Rents",
@@ -178,7 +179,8 @@ const DonutChart: React.FC<{}> = () => {
 
 const SmallAvatar = ({ src }: { src: string }) => {
   return (
-    <Image
+    <CustomImage
+      fallbackSrc="/images/tenant-emoji.svg"
       src={src}
       alt="User"
       width={25}
@@ -219,7 +221,7 @@ const InfoBox = ({
 }) => {
   return (
     <div className="h-full box py-[10px] px-[21px] grid place-items-center text-center">
-      {icon}
+      <span className="text-primary">{icon}</span>
       <div className="pt-[8px] pb-[17px]">
         <h1 className="text-primary text-[14px]">{title}</h1>
         <p className="#949494 text-[10px]">{value}</p>

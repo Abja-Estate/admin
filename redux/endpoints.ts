@@ -13,7 +13,7 @@ export const appApi = createApi({
 	// refetchOnFocus: true,
 	refetchOnReconnect: true,
 	// refetchOnMountOrArgChange: true,
-	tagTypes: ['User', 'Landlord'],
+	tagTypes: ['User', 'Landlord', 'Request', 'Tenant', 'Rent', 'Property'],
 	baseQuery: fetchBaseQuery({
 		baseUrl: `${BASE_URL}/service/admin`,
 		prepareHeaders: (headers) => {
@@ -45,6 +45,28 @@ export const appApi = createApi({
 			providesTags: ['Landlord']
 		}),
 
+		getRequests: builder.query<any[], any>({
+			query: (qP) => `all_requests`,
+			transformResponse: (response: any) => response.data,
+			providesTags: ['Request']
+		}),
+
+		getTenants: builder.query<any[], any>({
+			query: (qP) => `all_tenants`,
+			transformResponse: (response: any) => response.data,
+			providesTags: ['Tenant']
+		}),
+		getRents: builder.query<any[], any>({
+			query: (qP) => `all_rents`,
+			transformResponse: (response: any) => response.data,
+			providesTags: ['Rent']
+		}),
+		getProperties: builder.query<any[], any>({
+			query: (qP) => `all_properties`,
+			transformResponse: (response: any) => response.data,
+			providesTags: ['Property']
+		}),
+
 
 	}),
 })
@@ -54,4 +76,8 @@ export const appApi = createApi({
 export const {
 	useGetLandlordsQuery,
 	useGetAdminQuery,
+	useGetPropertiesQuery,
+	useGetRequestsQuery,
+	useGetRentsQuery,
+	useGetTenantsQuery,
 } = appApi

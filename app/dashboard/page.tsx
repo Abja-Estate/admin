@@ -8,14 +8,15 @@ import { BASE_URL } from "@/config"
 import { fetchAdminRequests } from "@/utils/api"
 import AdminAuthGuard from "@/components/AdminAuthGuard"
 import StoreProvider from "../StoreProvider"
+import {
+  useGetLandlordsQuery,
+  useGetPropertiesQuery,
+  useGetRentsQuery,
+  useGetRequestsQuery,
+  useGetTenantsQuery,
+} from "@/redux/endpoints"
 
 export default function AdminDashboard() {
-  // const state = useAppSelector((state) => state.admin)
-  const [properties, setProperties] = useState<any>(null)
-  const [landlords, setLandlords] = useState<any>(null)
-  const [rents, setRents] = useState<any>(null)
-  const [requests, setRequests] = useState<any>(null)
-
   // useEffect(() => {
   //   const socket = new WebSocket(
   //     "wss://casmara-request-app-api.onrender.com/ws?id=abja2024Admin"
@@ -40,31 +41,11 @@ export default function AdminDashboard() {
     }
   }, [apiKey, id])
 
-  useEffect(() => {
-    const fetchRequests = async (
-      url: string,
-      requestStateSetter: React.Dispatch<any>
-    ) => {
-      try {
-        const response = await fetchAdminRequests(
-          `${BASE_URL}/service/admin/${url}`
-        )
-        if (response.statusCode === 200) {
-          console.log("data", response.data)
-          requestStateSetter(response.data.data)
-        } else {
-          console.error("Error fetching admin requests:", response.error)
-        }
-      } catch (error) {
-        console.error("Error fetching admin requests:", error)
-      }
-    }
+  const { data: landlords } = useGetLandlordsQuery("")
+  const { data: rents } = useGetRentsQuery("")
+  const { data: requests } = useGetRequestsQuery("")
+  const { data: properties } = useGetPropertiesQuery("")
 
-    fetchRequests("all_landlords", setLandlords)
-    fetchRequests("all_properties", setProperties)
-    fetchRequests("all_rents", setRents)
-    fetchRequests("all_requests", setRequests)
-  }, [])
   return (
     <>
       <header className="">

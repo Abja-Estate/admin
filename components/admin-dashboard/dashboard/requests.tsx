@@ -17,53 +17,21 @@ import { useEffect, useState } from "react"
 import ReactPaginate from "react-paginate"
 import NoRecord from "../../NoRecord"
 import Loading from "@/components/Loading"
+import { useGetRequestsQuery } from "@/redux/endpoints"
 
 export default function Requests() {
-  const [requests, setRequests] = useState<any>([])
+  const { data: requests, isLoading: loading } = useGetRequestsQuery("")
   const [fRequests, setFRequests] = useState<any>([])
-  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    const fetchRequests = async (
-      url: string,
-      requestStateSetter: React.Dispatch<any>
-    ) => {
-      try {
-        const response = await fetchAdminRequests(
-          `${BASE_URL}/service/admin/${url}`
-        )
-        if (response.statusCode === 200) {
-          console.log("data", response.data)
-          // Define an empty array to store all requests
-          let allRequests: any[] = []
-
-          // Iterate over the data array
-          response.data.data.forEach((entry: any) => {
-            // Iterate over the requests array inside each object
-            entry.requests.forEach((request: any) => {
-              // Push the request into the allRequests array
-              allRequests.push(request)
-            })
-          })
-
-          // Now allRequests contains all the requests combined into a single array
-          console.log("hi", allRequests)
-          requestStateSetter(allRequests)
-        } else {
-          console.error("Error fetching landlords:", response.error)
-        }
-      } catch (error) {
-        console.error("Error fetching landlords:", error)
-      } finally {
-        setLoading(false)
-      }
+    if (requests) {
+      setFRequests(
+        requests
+          .filter((each) => each.requests.length)
+          .map((each) => each.requests[0])
+      )
     }
-
-    fetchRequests("all_requests", (det: any[]) => {
-      setRequests(det)
-      setFRequests(det)
-    })
-  }, [])
+  }, [requests])
 
   const cd = new Date()
   const [cdate, setcdate] = useState({
@@ -101,10 +69,10 @@ export default function Requests() {
   const [itemOffset, setItemOffset] = useState(0)
   const [itemsPerPage, setItemsPerPage] = useState(4)
   const endOffset = itemOffset + itemsPerPage
-  const currentItems = fRequests.slice(itemOffset, endOffset)
-  const pageCount = Math.ceil(fRequests.length / itemsPerPage)
+  const currentItems = fRequests?.slice(itemOffset, endOffset)
+  const pageCount = Math.ceil(fRequests?.length / itemsPerPage)
   const handlePageClick = (event: { selected: number }) => {
-    const newOffset = (event.selected * itemsPerPage) % fRequests.length
+    const newOffset = (event.selected * itemsPerPage) % fRequests?.length
     setItemOffset(newOffset)
   }
 
@@ -132,7 +100,7 @@ export default function Requests() {
           </div>
         </header>
         <div className="text-[14px] overflow-x-auto">
-          {!requests.length && !loading && (
+          {!requests?.length && !loading && (
             <div className="flex h-full gap-3 items-center justify-center flex-col">
               <NoRecord className="w-1/4" />
               <p className="text-primary text-sm lg:text-lg">
@@ -142,7 +110,7 @@ export default function Requests() {
           )}
           {loading && <Loading />}
 
-          {!loading && requests.length && (
+          {!loading && requests?.length && (
             <table className="w-full">
               <thead>
                 <tr className="bg-[#F6F8F6] border-t-4 border-[#D4DBD3] border-b-2">
@@ -183,7 +151,7 @@ export default function Requests() {
                           src={each.tenantPhoto}
                         />
                       </td>
-                      <td className="p-3">{each.problems.join(", ")}</td>
+                      <td className="p-3">{each.problems?.join(", ")}</td>
                       <td> </td>
                       <td> </td>
                       <td className="px-3">
@@ -300,7 +268,7 @@ export default function Requests() {
   //         </header>
   //         <div className="flex flex-col gap-2">
   //           {requests &&
-  //             requests.map((request: any, i: number) => (
+  //             requests?.map((request: any, i: number) => (
   //               <div
   //                 key={i}
   //                 className="bg-white w-full p-[10px] gap-[20px] grid grid-cols-[20px_60px_1.2fr_1fr_1fr_1.4fr_0.8fr_0.9fr_1fr_0.82fr] mb-2"

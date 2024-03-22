@@ -6,11 +6,17 @@ import { useEffect, useState } from "react"
 import MemoNoRecord from "@/components/NoRecord"
 import Loading from "@/components/Loading"
 import ReactPaginate from "react-paginate"
-import { useGetLandlordsQuery } from "@/redux/endpoints"
+import {
+  useGetLandlordsQuery,
+  useGetPropertiesQuery,
+  useGetRequestsQuery,
+} from "@/redux/endpoints"
 import { LandLord } from "@/utils/types"
 
 export default function AdminLandord() {
   const { data, isLoading } = useGetLandlordsQuery("")
+  const { data: requests } = useGetRequestsQuery("")
+  const { data: properties } = useGetPropertiesQuery("")
 
   const [filteredLandLords, setFilteredLandLords] = useState<LandLord[]>([])
 
@@ -48,7 +54,9 @@ export default function AdminLandord() {
               <SVGIcon.HouseWhiteIcon />
             </div>
             <div className="flex gap-[10px]">
-              <h1 className="text-white text-[34px] font-semibold">179</h1>
+              <h1 className="text-white text-[34px] font-semibold">
+                {data && data.length}
+              </h1>
               <div className="flex items-center gap-[5px] mt-[10px]">
                 <SVGIcon.ArrowGrowthWhiteIcon />
                 <p className="text-white text-[14px] font-semibold">17%</p>
@@ -65,7 +73,9 @@ export default function AdminLandord() {
               <SVGIcon.NotificationOutlineWhiteIcon />
             </div>
             <div className="flex gap-[10px]">
-              <h1 className="text-white text-[34px] font-semibold">524</h1>
+              <h1 className="text-white text-[34px] font-semibold">
+                {properties && properties.length}
+              </h1>
               <div className="flex items-center gap-[5px] mt-[10px]">
                 <SVGIcon.ArrowGrowthWhiteIcon />
                 <p className="text-white text-[14px] font-semibold">17%</p>
@@ -82,7 +92,9 @@ export default function AdminLandord() {
               <SVGIcon.ProgressiveClockWhiteIcon />
             </div>
             <div className="flex gap-[10px]">
-              <h1 className="text-white text-[34px] font-semibold">102</h1>
+              <h1 className="text-white text-[34px] font-semibold">
+                {requests && requests.length}
+              </h1>
               <div className="flex items-center gap-[5px] mt-[10px]">
                 <SVGIcon.ArrowGrowthWhiteIcon />
                 <p className="text-white text-[14px] font-semibold">17%</p>

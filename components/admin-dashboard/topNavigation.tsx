@@ -195,7 +195,7 @@ const Notification = () => {
           <p>No New Notifications</p>
         </div>
       )}
-      <div className="flex flex-col gap-4">
+      <div className="flex flex-col overflow-auto gap-4">
         {notifications.map((_, i) => (
           <div
             key={i}
@@ -265,7 +265,7 @@ const ActivityLog = () => {
           <p>No New Activity Log</p>
         </div>
       )}
-      <div className="flex flex-col gap-4">
+      <div className="flex flex-col gap-4 overflow-auto">
         {activities.map((_, i) => (
           <div
             key={i}
