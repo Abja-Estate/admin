@@ -11,6 +11,8 @@ export interface AdminState {
 	responseDialog: {
 		path?: string,
 		open?: boolean,
+		to?: boolean,
+		btnLabel?: boolean,
 		title: string,
 		desc: string,
 		type?: "success" | "error" | "info",
@@ -25,6 +27,8 @@ const defaultResp = {
 	desc: "",
 	// type: "",
 	// icon: "",
+	to: "",
+	btnlabel: "",
 	title: "Oops!"
 }
 
@@ -54,7 +58,7 @@ export const adminSlice = createSlice({
 		},
 
 		openRespDialog: (state, action: PayloadAction<AdminState['responseDialog']>) => {
-			state.responseDialog = { self: false, ...action.payload, open: true }
+			state.responseDialog = { ...action.payload, open: true }
 		}
 	},
 })

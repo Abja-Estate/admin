@@ -35,8 +35,6 @@ export default function Checkbox(props: CheckboxProps) {
     <div
       onClick={onClick}
       className={clsx(
-        height ?? "h-[24px]",
-        width ?? "w-[24px]",
         borderWidth ?? "border-[2px]",
         checked
           ? `${checkedBorderColor ?? "border-current"}`

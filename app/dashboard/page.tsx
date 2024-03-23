@@ -15,6 +15,8 @@ import {
   useGetRequestsQuery,
   useGetTenantsQuery,
 } from "@/redux/endpoints"
+import SuccessDialog from "@/components/admin-dashboard/SuccessDialog"
+import { useAppSelector } from "@/redux/hooks"
 
 export default function AdminDashboard() {
   // useEffect(() => {
@@ -45,7 +47,6 @@ export default function AdminDashboard() {
   const { data: rents } = useGetRentsQuery("")
   const { data: requests } = useGetRequestsQuery("")
   const { data: properties } = useGetPropertiesQuery("")
-
   return (
     <>
       <header className="">

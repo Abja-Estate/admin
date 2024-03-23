@@ -5,6 +5,7 @@ import AdminDashboardTopNavigation from "@/components/admin-dashboard/topNavigat
 import { useState } from "react"
 import StoreProvider from "../StoreProvider"
 import AdminAuthGuard from "@/components/AdminAuthGuard"
+import SuccessDialog from "@/components/admin-dashboard/SuccessDialog"
 
 function AdminDashboardLayout({ children }: { children: React.ReactNode }) {
   const [menuIsOpen, setMenuIsOpen] = useState(false)
@@ -38,6 +39,8 @@ function AdminDashboardLayout({ children }: { children: React.ReactNode }) {
         </main>
       </div>
       <AdminDashboardFooter />
+
+      {/* <SuccessDialog /> */}
     </div>
   )
 }
