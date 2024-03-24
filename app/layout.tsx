@@ -3,6 +3,7 @@ import { Nunito } from "next/font/google"
 import "./globals.css"
 import { Toaster } from "react-hot-toast"
 import { Provider } from "react-redux"
+import StoreProvider from "./StoreProvider"
 // import {store} from '../redux/store'; // Import your Redux store
 
 const nunito = Nunito({
@@ -21,11 +22,13 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
-      <body className={nunito.className}>
-        {children}
-        <Toaster />
-      </body>
-    </html>
+    <StoreProvider>
+      <html lang="en">
+        <body className={nunito.className}>
+          {children}
+          <Toaster />
+        </body>
+      </html>
+    </StoreProvider>
   )
 }

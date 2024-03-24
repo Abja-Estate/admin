@@ -1,4 +1,5 @@
 import { Input } from "./types"
+import * as Yup from 'yup'
 
 export const landlordInputs: Input[] = [
 	{ label: "Full Names", name: 'fullname', type: "text", placeholder: "Full name" },

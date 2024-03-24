@@ -2,6 +2,7 @@ import { cn } from "@/utils/cn"
 import { Fragment, ReactNode, useState } from "react"
 import { EyeIcon, EyeSlashIcon } from "./svgs"
 import { Listbox, Transition } from "@headlessui/react"
+
 interface Desc {
   disabled?: boolean
   type?: "select" | string
@@ -11,7 +12,7 @@ interface Desc {
   absoluteEl?: JSX.Element
   name: string
   min?: string | number
-  formik?: ReturnType<typeof useFormik>
+  formik?: any
   t?: boolean
   inputProps?: React.HTMLAttributes<HTMLElement>
   autocomplete?: boolean
@@ -26,7 +27,9 @@ const FormField = ({ autocomplete = true, inputProps, ...props }: Desc) => {
   const [selected, setSelected] = useState<string | number | null>(null)
 
   return (
-    <div className={cn(!props.t ? "flex flex-col h-16" : "flex flex-col h-20")}>
+    <div
+      className={cn(!props.t ? "flex flex-col h-160" : "flex flex-col h-20")}
+    >
       <label
         className={cn(
           !props.t
@@ -176,13 +179,16 @@ const FormField = ({ autocomplete = true, inputProps, ...props }: Desc) => {
       </div>
       {!props.t ? (
         <>
-          {props.formik &&
+          {
+            // props.formik &&
             props.formik.touched[props.name] &&
-            props?.formik.errors[props.name] && (
-              <div className="px-4 pt-1 text-[#D90001] text-sm">
-                {props?.formik.errors[props.name] as ReactNode}
-              </div>
-            )}
+              props?.formik.errors[props.name] && (
+                <div className="px-4 pt-1 text-[#D90001] text-sm">
+                  {props?.formik.errors[props.name] as ReactNode}{" "}
+                  {JSON.stringify(props.formik)}
+                </div>
+              )
+          }
         </>
       ) : (
         <>

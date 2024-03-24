@@ -11,6 +11,7 @@ export type UserData = {
 }
 
 export interface AddAdmin {
+	actor: Actor,
 	email: string,
 	phone: string,
 	password: string,
@@ -19,8 +20,14 @@ export interface AddAdmin {
 	surname: string,
 }
 
+export interface AddLandlord extends AddAdmin {
+
+}
+
+export type Actor = "admin" | "tenant" | "landlord"
+
 export interface AdminLoginT {
-	email: string, password: string
+	email: string, password: string, actor: Actor
 }
 export interface LandLord {
 	name: string,
@@ -28,7 +35,7 @@ export interface LandLord {
 	phone: string,
 	selfie: string,
 	email: string,
-	about: string,
+	about?: string,
 	token?: string
 	password?: string
 	confirmPassword?: string

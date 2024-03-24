@@ -1,6 +1,6 @@
 // Need to use the React-specific entry point to import createApi
 import { BASE_URL } from '@/config';
-import { AddAdmin, AdminLoginT, LandLord, Package, RespData, UserData } from '@/utils/types';
+import { Actor, AddAdmin, AdminLoginT, LandLord, Package, RespData, UserData } from '@/utils/types';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
 // export const BURL = "https://4a1efe7e86e8-8302610227555236033.ngrok-free.app"
@@ -29,6 +29,10 @@ export const appApi = createApi({
 			// }
 			return headers;
 		},
+		responseHandler: (response) => {
+			console.log(response);
+			return Promise.resolve(response);
+		}
 	}),
 
 	endpoints: (builder) => ({
@@ -39,21 +43,21 @@ export const appApi = createApi({
 			// forceRefetch: () => false
 		}),
 		adminLogin: builder.mutation<RespData<any>, AdminLoginT>({
-			query: (body) => ({ url: `auth/admin/login`, method: "POST", body }),
+			query: (body) => ({ url: `auth/${body.actor}/login`, method: "POST", body }),
 			invalidatesTags: ['User']
 		}),
-		adminResetPass: builder.mutation<any, { id: string, password: string, confirmPassword: string }>({
-			query: (body) => ({ url: `auth/admin/reset_password`, method: "POST", body }),
+		adminResetPass: builder.mutation<any, { actor: Actor, id: string, password: string, confirmPassword: string }>({
+			query: (body) => ({ url: `auth/${body.actor}/reset_password`, method: "POST", body }),
 		}),
-		adminForgotPassword: builder.mutation<any, { email: string }>({
-			query: (body) => ({ url: `auth/admin/forgot_password`, method: "POST", body }),
+		adminForgotPassword: builder.mutation<any, { email: string, actor: Actor, }>({
+			query: (body) => ({ url: `auth/${body.actor}/forgot_password`, method: "POST", body }),
 		}),
-		adminVerifyOTP: builder.mutation<RespData<any>, { email: string, otp: string }>({
-			query: (body) => ({ url: `auth/admin/verify_otp`, method: "POST", body }),
+		adminVerifyOTP: builder.mutation<RespData<any>, { actor: Actor, email: string, otp: string }>({
+			query: (body) => ({ url: `auth/${body.actor}/verify_otp`, method: "POST", body }),
 			// transformResponse: (response: any) => response.data,
 		}),
 		registerAdmin: builder.mutation<RespData<UserData>, AddAdmin>({
-			query: (body) => ({ url: `auth/admin/register`, method: "POST", body }),
+			query: (body,) => ({ url: `auth/${body.actor}/register`, method: "POST", body }),
 			transformResponse: (response: any) => response.data,
 		}),
 
@@ -78,6 +82,10 @@ export const appApi = createApi({
 			query: (qP) => `service/admin/all_landlords`,
 			transformResponse: (response: any) => response.data,
 			providesTags: ['Landlord']
+		}),
+		addLandlord: builder.mutation<any, AddAdmin>({
+			query: (body) => ({ url: `auth/landlord/register`, method: "POST", body }),
+			invalidatesTags: ['Landlord']
 		}),
 		updateLandlord: builder.mutation<any, LandLord>({
 			query: (body) => ({ url: `/admin/update_landlord`, method: "POST", body }),

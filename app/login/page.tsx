@@ -14,13 +14,15 @@ import FormField from "@/components/FormField"
 import { signInInputs, signInSchema } from "@/utils/schema"
 import { getDefault } from "@/utils/helpers"
 import { useAdminLoginMutation } from "@/redux/endpoints"
+import { useFormik } from "formik"
+import { AnyObject } from "yup"
+import { AdminLoginT } from "@/utils/types"
 // import { useDispatch, useSelector } from 'react-redux';
 // import { RootState } from '../../redux/store'; // Import RootState type
 // import { login, logout } from '../../redux/authSlice';
 
 export default function AdminLogin() {
   const router = useRouter()
-  const [loading, setLoading] = useState<boolean>(false)
 
   // LOAD SAVED LOGIN DETAILS FROM localStorage
   const savedLoginDetails =
@@ -28,32 +30,18 @@ export default function AdminLogin() {
       ? JSON.parse(localStorage.getItem("saved-login-details") || "{}")
       : {}
 
-  interface FormData {
-    email: string
-    password: string
-  }
-
-  const [formData, setFormData] = useState<FormData>({
+  const formData = {
     email: savedLoginDetails.email || "", //use saved email if available
     password: savedLoginDetails.password || "", // use saved password if available
-  })
+  }
 
   const [checked, setChecked] = useState<boolean>(
     savedLoginDetails.email !== ""
   )
 
-  const formDataHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    setFormData((prev) => ({
-      ...prev,
-      [e.target.name]: e.target.value,
-    }))
-  }
-
   const toggleHandler = () => {
     setChecked((prev) => !prev)
   }
-
-  const isDisabled = !(formData.email && formData.password)
 
   // const dispatch = useDispatch();
   // const isAuthenticated = useSelector((state: RootState) => state.auth.isAuthenticated);
@@ -63,48 +51,34 @@ export default function AdminLogin() {
   //   dispatch(login({ id: 1, username: 'exampleUser' }));
   // };
 
-  const submit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-
-    setLoading(true)
-
-    try {
-      let response = await axios.post("api/login", formData)
-      console.log(response)
-      toast.success("Login successful")
-
-      const data = response.data.data
-
-      //save login details if "Remember Me" is checked
-
-      if (checked && typeof window !== "undefined") {
-        localStorage.setItem("saved-login-details", JSON.stringify(formData))
-      } else {
-        // clear saved login details if "remember me" is not checked
-        localStorage.removeItem("saved-login-detail")
-      }
-
-      localStorage.setItem("active-user", JSON.stringify(data))
-      router.push("/dashboard")
-    } catch (error) {
-      console.log(error)
-    } finally {
-      setLoading(false)
-    }
-  }
-
   const [adminLogin, { isLoading }] = useAdminLoginMutation()
 
-  const signIn_f = useFormik({
+  const signIn_f = useFormik<AdminLoginT>({
     validationSchema: signInSchema,
-    initialValues: getDefault(signInInputs),
+    initialValues: getDefault(signInInputs, formData) as AdminLoginT,
     onSubmit: async (values) => {
-      const response: AnyObject = await adminLogin(values)
+      const response: AnyObject = await adminLogin({
+        ...values,
+        actor: "admin",
+      })
+      console.log(response)
+
       if ("data" in response) {
-        localStorage.setItem("token", response.data.access_token)
-        setTimeout(() => {
-          // navigate("/admin")
-        }, 300)
+        const data = response.data.data
+
+        //save login details if "Remember Me" is checked
+
+        if (checked && typeof window !== "undefined") {
+          localStorage.setItem("saved-login-details", JSON.stringify(values))
+        } else {
+          // clear saved login details if "remember me" is not checked
+          localStorage.removeItem("saved-login-detail")
+        }
+
+        localStorage.setItem("active-user", JSON.stringify(data))
+        router.push("/dashboard")
+
+        // localStorage.setItem("token", response.data.access_token)
       } else if (response.error && "data" in response.error) {
         // dispatch(
         //   openRespDialog({
@@ -137,10 +111,10 @@ export default function AdminLogin() {
         </header>
         <form
           className="flex flex-col mb-10 h-full gap-[32px] w-full max-w-[500px] mx-auto"
-          onSubmit={submit}
+          onSubmit={signIn_f.handleSubmit}
         >
           {signInInputs.map((each) => (
-            <FormField key={each.name} {...each} />
+            <FormField formik={signIn_f} key={each.name} {...each} />
           ))}
           <fieldset>
             <div className="flex items-center gap-[16px] mb-[8px]">
@@ -178,7 +152,11 @@ export default function AdminLogin() {
               </div>
             </fieldset>
             <fieldset>
-              <Button disabled={isDisabled} loading={loading}>
+              <Button
+                type="submit"
+                disabled={!signIn_f.isValid}
+                loading={isLoading}
+              >
                 Login
               </Button>
             </fieldset>

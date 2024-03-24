@@ -47,8 +47,8 @@ function AdminDashboardLayout({ children }: { children: React.ReactNode }) {
 
 export default function AuthD({ children }: { children: React.ReactNode }) {
   return (
-    <StoreProvider>
-      <AdminAuthGuard Component={() => AdminDashboardLayout({ children })} />
-    </StoreProvider>
+    // <StoreProvider>
+    <AdminAuthGuard Component={() => AdminDashboardLayout({ children })} />
+    // </StoreProvider>
   )
 }

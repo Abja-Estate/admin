@@ -1,5 +1,6 @@
+import { AnyObject } from "yup"
 
-export const getDefault = (inputArr: any[], data = null) => {
+export const getDefault = (inputArr: any[], data: AnyObject | null = null) => {
 	let obj = {}
 	inputArr.forEach(({ name, defaultV }) => {
 		if (data) {
