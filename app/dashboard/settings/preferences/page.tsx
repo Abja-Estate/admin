@@ -1,5 +1,5 @@
-import { ArrowDropDown } from "@/components/svgs";
-import Image from "next/image";
+import { ArrowDropDown } from "@/components/svgs"
+import Image from "next/image"
 
 export default function Preference() {
   return (
@@ -51,23 +51,25 @@ export default function Preference() {
       </div>
       <div className="flex flex-col gap-[34px]">
         <div className="flex justify-between items-center">
-          <h1 className="text-[#333436] text-[18px] font-semibold">
+          <h1 className="text-textcolor100 text-[18px] font-semibold">
             Time Zone
           </h1>
-          <div className="rounded-[10px] h-[39px] px-[10px] w-[375px] border-[1px] border-[#949494] text-[14px] text-[#333436] flex items-center justify-between">
+          <div className="rounded-[10px] h-[39px] px-[10px] w-[375px] border-[1px] border-[#949494] text-[14px] text-textcolor100 flex items-center justify-between">
             <span className="text-[18px]">(UTC -08:00) Pacific Time...</span>
             <ArrowDropDown />
           </div>
         </div>
         <div className="flex justify-between items-center">
-          <h1 className="text-[#333436] text-[18px] font-semibold">Language</h1>
-          <div className="rounded-[10px] h-[39px] px-[10px] w-[375px] border-[1px] border-[#949494] text-[14px] text-[#333436] flex items-center justify-between">
+          <h1 className="text-textcolor100 text-[18px] font-semibold">
+            Language
+          </h1>
+          <div className="rounded-[10px] h-[39px] px-[10px] w-[375px] border-[1px] border-[#949494] text-[14px] text-textcolor100 flex items-center justify-between">
             <span className="text-[18px]">English (UK)</span>
             <ArrowDropDown />
           </div>
         </div>
         <div className="flex justify-between items-center">
-          <h1 className="text-[#333436] text-[18px] font-semibold">
+          <h1 className="text-textcolor100 text-[18px] font-semibold">
             Font Size
           </h1>
           <div className="rounded-[10px] h-[39px] px-[10px] w-[375px] border-[1px] border-[#949494] text-[14px] flex items-center justify-between">
@@ -78,7 +80,7 @@ export default function Preference() {
           </div>
         </div>
         <div className="flex justify-between items-center">
-          <h1 className="text-[#333436] text-[18px] font-semibold">
+          <h1 className="text-textcolor100 text-[18px] font-semibold">
             Icons Size
           </h1>
           <div className="rounded-[10px] h-[39px] px-[10px] w-[375px] border-[1px] border-[#949494] text-[14px] flex items-center justify-between">
@@ -90,5 +92,5 @@ export default function Preference() {
         </div>
       </div>
     </div>
-  );
+  )
 }

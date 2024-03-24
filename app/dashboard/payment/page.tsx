@@ -20,11 +20,13 @@ export default function AdminPayment() {
       <header className="flex gap-[30px]">
         <div className="px-[26px] py-[13px] bg-white w-[408px] h-[308px] bg-[url('/images/report-stripes.svg')] rounded-[20px] flex flex-col gap-[12px]">
           <div className="flex justify-between mb-[20px]">
-            <h1 className="text-[#333436] text-[18px]">Payments</h1>
+            <h1 className="text-textcolor100 text-[18px]">Payments</h1>
             <CashBillIcon />
           </div>
           <div className="flex mb-[28px]">
-            <h1 className="text-[#333436] text-[34px] font-semibold">3001</h1>
+            <h1 className="text-textcolor100 text-[34px] font-semibold">
+              3001
+            </h1>
             <p className="text-primary2 text-[12px] mt-[22px] ml-[2px]">
               Total Payments
             </p>
@@ -35,12 +37,12 @@ export default function AdminPayment() {
             </div>
             <div className="flex justify-between">
               <div className="flex gap-[5px]">
-                <h1 className="text-[#333436] text-[22px] font-semibold">
+                <h1 className="text-textcolor100 text-[22px] font-semibold">
                   $105,090
                 </h1>
                 <div className="flex items-center gap-[5px]">
                   <ArrowGrowthIcon />
-                  <p className="text-[#333436] text-[14px] font-semibold">
+                  <p className="text-textcolor100 text-[14px] font-semibold">
                     17%
                   </p>
                 </div>
@@ -58,12 +60,12 @@ export default function AdminPayment() {
             </div>
             <div className="flex justify-between">
               <div className="flex gap-[5px]">
-                <h1 className="text-[#333436] text-[22px] font-semibold">
+                <h1 className="text-textcolor100 text-[22px] font-semibold">
                   $105,090
                 </h1>
                 <div className="flex items-center gap-[5px]">
                   <ArrowGrowthIcon />
-                  <p className="text-[#333436] text-[14px] font-semibold">
+                  <p className="text-textcolor100 text-[14px] font-semibold">
                     24%
                   </p>
                 </div>

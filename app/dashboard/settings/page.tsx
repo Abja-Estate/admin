@@ -3,8 +3,8 @@ import {
   CalenderIcon,
   EditIcon,
   NigeriaFlagIcon,
-} from "@/components/svgs";
-import Image from "next/image";
+} from "@/components/svgs"
+import Image from "next/image"
 
 export default function Settings() {
   return (
@@ -41,7 +41,7 @@ export default function Settings() {
       <PersonalInformation />
       <ContactInformation />
     </div>
-  );
+  )
 }
 
 const PersonalInformation = () => {
@@ -60,7 +60,7 @@ const PersonalInformation = () => {
             First Name
           </label>
           <input
-            className="rounded-[10px] h-[39px] px-[16px] block w-full border-[1px] border-[#949494] text-[14px] text-[#333436]"
+            className="rounded-[10px] h-[39px] px-[16px] block w-full border-[1px] border-[#949494] text-[14px] text-textcolor100"
             value="Micheal"
             readOnly={true}
           />
@@ -70,7 +70,7 @@ const PersonalInformation = () => {
             Last Name
           </label>
           <input
-            className="rounded-[10px] h-[39px] px-[16px] block w-full border-[1px] border-[#949494] text-[14px] text-[#333436]"
+            className="rounded-[10px] h-[39px] px-[16px] block w-full border-[1px] border-[#949494] text-[14px] text-textcolor100"
             value="Ibaro"
             readOnly={true}
           />
@@ -80,7 +80,7 @@ const PersonalInformation = () => {
             Username
           </label>
           <input
-            className="rounded-[10px] h-[39px] px-[16px] block w-full border-[1px] border-[#949494] text-[14px] text-[#333436]"
+            className="rounded-[10px] h-[39px] px-[16px] block w-full border-[1px] border-[#949494] text-[14px] text-textcolor100"
             value="@michealibaro"
             readOnly={true}
           />
@@ -89,15 +89,15 @@ const PersonalInformation = () => {
           <label className="text-[18px] text-[#949494] inline-block mb-[4px]">
             Date of Birth
           </label>
-          <div className="rounded-[10px] h-[39px] px-[16px] w-full border-[1px] border-[#949494] text-[14px] text-[#333436] flex items-center justify-between gap-[10px]">
+          <div className="rounded-[10px] h-[39px] px-[16px] w-full border-[1px] border-[#949494] text-[14px] text-textcolor100 flex items-center justify-between gap-[10px]">
             <span className="flex-1">9-Sep-1994</span>
             <CalenderIcon />
           </div>
         </fieldset>
       </form>
     </div>
-  );
-};
+  )
+}
 
 const ContactInformation = () => {
   return (
@@ -115,7 +115,7 @@ const ContactInformation = () => {
             Phone Number
           </label>
           <input
-            className="rounded-[10px] h-[39px] px-[16px] block w-full border-[1px] border-[#949494] text-[14px] text-[#333436]"
+            className="rounded-[10px] h-[39px] px-[16px] block w-full border-[1px] border-[#949494] text-[14px] text-textcolor100"
             value="(+234) 70 2456 6754"
             readOnly={true}
           />
@@ -125,7 +125,7 @@ const ContactInformation = () => {
             E-Mail Address
           </label>
           <input
-            className="rounded-[10px] h-[39px] px-[16px] block w-full border-[1px] border-[#949494] text-[14px] text-[#333436]"
+            className="rounded-[10px] h-[39px] px-[16px] block w-full border-[1px] border-[#949494] text-[14px] text-textcolor100"
             value="micheal.ibaro@gmail.com"
             readOnly={true}
           />
@@ -135,7 +135,7 @@ const ContactInformation = () => {
             City
           </label>
           <input
-            className="rounded-[10px] h-[39px] px-[16px] block w-full border-[1px] border-[#949494] text-[14px] text-[#333436]"
+            className="rounded-[10px] h-[39px] px-[16px] block w-full border-[1px] border-[#949494] text-[14px] text-textcolor100"
             value="@michealibaro"
             readOnly={true}
           />
@@ -145,7 +145,7 @@ const ContactInformation = () => {
             State
           </label>
           <input
-            className="rounded-[10px] h-[39px] px-[16px] block w-full border-[1px] border-[#949494] text-[14px] text-[#333436]"
+            className="rounded-[10px] h-[39px] px-[16px] block w-full border-[1px] border-[#949494] text-[14px] text-textcolor100"
             value="Lagos"
             readOnly={true}
           />
@@ -154,10 +154,10 @@ const ContactInformation = () => {
           <label className="text-[18px] text-[#949494] inline-block mb-[4px]">
             Country
           </label>
-          <div className="rounded-[10px] h-[39px] px-[16px] w-full border-[1px] border-[#949494] text-[14px] text-[#333436] flex items-center justify-between">
+          <div className="rounded-[10px] h-[39px] px-[16px] w-full border-[1px] border-[#949494] text-[14px] text-textcolor100 flex items-center justify-between">
             <div className="flex items-center gap-[10px]">
               <NigeriaFlagIcon />
-              <span className="text-[#333436] text-[14px]">NIG</span>
+              <span className="text-textcolor100 text-[14px]">NIG</span>
             </div>
             <ArrowDropDown />
           </div>
@@ -167,12 +167,12 @@ const ContactInformation = () => {
             Address
           </label>
           <input
-            className="rounded-[10px] h-[39px] px-[16px] block w-full border-[1px] border-[#949494] text-[14px] text-[#333436]"
+            className="rounded-[10px] h-[39px] px-[16px] block w-full border-[1px] border-[#949494] text-[14px] text-textcolor100"
             value="78, Lanre Awolokun Street, Kampala"
             readOnly={true}
           />
         </fieldset>
       </form>
     </div>
-  );
-};
+  )
+}

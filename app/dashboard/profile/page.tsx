@@ -2,7 +2,11 @@ import { BriefCaseIcon, CameraIcon, LocationIcon } from "@/components/svgs"
 import Image from "next/image"
 import Link from "next/link"
 
-export default function Profile() {
+export default function Profile({
+  params,
+}: {
+  params: { landlordId: string }
+}) {
   return (
     <div className="flex gap-[32px]">
       <div className="w-[315px] flex flex-col rounded-se-[100px] bg-white">
@@ -14,7 +18,7 @@ export default function Profile() {
               height={100}
               alt="Admin"
             />
-            <figcaption className="text-[#333436] text-[18px] font-semibold pt-5">
+            <figcaption className="text-textcolor100 text-[18px] font-semibold pt-5">
               Micheal Ibaro
             </figcaption>
           </figure>
@@ -31,7 +35,7 @@ export default function Profile() {
         </div>
         <div className="flex flex-col px-[24px] py-[24px] h-[500px] gap-10 h-[35]">
           <div>
-            <h1 className="text-[#333436] text-[18px] font-semibold">Bio</h1>
+            <h1 className="text-textcolor100 text-[18px] font-semibold">Bio</h1>
             <p className="text-[#949494]">
               Super Admin of Abja Property Management Admin Dashboard, has 10+
               years of experience in the industry. He oversees the entire
@@ -53,7 +57,7 @@ export default function Profile() {
       <div className="rounded-tl-[100px] w-[900px] overflow-hidden">
         <header className="h-[300px] flex flex-col justify-between w-full bg-[url(/images/profile-cover-img.svg)] bg-cover py-10 px-[24px]">
           <div className="pt-5 flex items-center justify-between">
-            <h1 className="text-[28px] text-[#333436] font-semibold">
+            <h1 className="text-[28px] text-textcolor100 font-semibold">
               Good Morning Micheal,
             </h1>
             <button className="flex items-center gap-[5px] rounded-[4px] bg-[#B5D0B2] px-[8px] py-[4px]">
@@ -65,26 +69,26 @@ export default function Profile() {
             <div className="rounded-[20px] bg-[#EB5757] px-4 w-[166px] h-[91px] grid place-items-center box-shadow-inner">
               <div className="w-full flex gap-2 items-center justify-between">
                 <p className="text-white">Onboarding Landlords</p>
-                <h1 className="text-[40px] text-[#333436]">7</h1>
+                <h1 className="text-[40px] text-textcolor100">7</h1>
               </div>
             </div>
             <div className="rounded-[20px] bg-[#FF7440] px-4 w-[166px] h-[91px] grid place-items-center box-shadow-inner">
               <div className="w-full flex gap-2 items-center justify-between">
                 <p className="text-white">Request Approvals</p>
-                <h1 className="text-[40px] text-[#333436]">32</h1>
+                <h1 className="text-[40px] text-textcolor100">32</h1>
               </div>
             </div>
             <div className="rounded-[20px] bg-[#5F9AB7] px-4 w-[166px] h-[91px] grid place-items-center box-shadow-inner">
               <div className="w-full gap-2 flex items-center justify-between">
                 <p className="text-white">Activity Logs</p>
-                <h1 className="text-[40px] text-[#333436]">89</h1>
+                <h1 className="text-[40px] text-textcolor100">89</h1>
               </div>
             </div>
           </div>
         </header>
         <div className="h-[500px] w-full p-[24px] bg-white">
           <div className="flex items-center justify-between mb-[24px]">
-            <h1 className="text-[18px] text-[#333436] font-semibold">
+            <h1 className="text-[18px] text-textcolor100 font-semibold">
               Recent Activity Log
             </h1>
             <span className="underline text-primary2">View All</span>

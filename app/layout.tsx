@@ -26,7 +26,7 @@ export default function RootLayout({
       <html lang="en">
         <body className={nunito.className}>
           {children}
-          <Toaster />
+          <Toaster position="bottom-center" />
         </body>
       </html>
     </StoreProvider>

@@ -2,6 +2,7 @@
 import { BASE_URL } from '@/config';
 import { Actor, AddAdmin, AdminLoginT, LandLord, Package, RespData, UserData } from '@/utils/types';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
+import toast from 'react-hot-toast';
 
 // export const BURL = "https://4a1efe7e86e8-8302610227555236033.ngrok-free.app"
 // export const BURL = "https://rnaus-105-112-26-123.a.free.pinggy.online"
@@ -29,10 +30,18 @@ export const appApi = createApi({
 			// }
 			return headers;
 		},
-		responseHandler: (response) => {
-			console.log(response);
-			return Promise.resolve(response);
-		}
+
+		validateStatus: (response, result) => {
+			if (result.statusCode != 200) {
+				toast.error(result.error);
+			}
+			return response.status === 200 && result.statusCode == 200
+		},
+
+		// responseHandler: async (response) => {
+		// 	return" response.json()";
+		// }
+
 	}),
 
 	endpoints: (builder) => ({

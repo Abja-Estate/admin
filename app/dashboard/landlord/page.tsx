@@ -13,11 +13,15 @@ import {
 } from "@/redux/endpoints"
 import { LandLord } from "@/utils/types"
 import LandlordDialog from "@/components/admin-dashboard/LandlordDialog"
+import MenuLayout from "@/components/MenuLayout"
+import { cn } from "@/utils/cn"
+import { useRouter } from "next/navigation"
 
 export default function AdminLandord() {
   const { data, isLoading } = useGetLandlordsQuery("")
   const { data: requests } = useGetRequestsQuery("")
   const { data: properties } = useGetPropertiesQuery("")
+  const router = useRouter()
 
   const [filteredLandLords, setFilteredLandLords] = useState<LandLord[]>([])
 
@@ -37,6 +41,17 @@ export default function AdminLandord() {
     const newOffset = (event.selected * itemsPerPage) % filteredLandLords.length
     setItemOffset(newOffset)
   }
+
+  const statusBadges = {
+    pending: "bg-[#FFBB0C4D] text-[#FFBB0C] group-hover:bg-[#FFBB0C80]",
+    ongoing: "bg-[#26CFDA4D] text-[#26CFDA] group-hover:bg-[#26CFDA80]",
+    cancelled: "bg-[#D500004D] text-[#D50000] group-hover:bg-[#D5000080]",
+    completed: "bg-[#14FF004D] text-[#14FF00] group-hover:bg-[#14FF0080]",
+    default: "bg-[#26CFDA4D] text-[#26CFDA] group-hover:bg-[#26CFDA80]",
+  }
+
+  const [filterType, setFilterType] = useState<0 | 1 | 2>(0)
+  const handleFilter = (type: 1 | 2, val: any) => {}
 
   return (
     <>
@@ -128,10 +143,78 @@ export default function AdminLandord() {
           />
         </div>
         <div className="flex flex-wrap sm:flex-nowrap items-center gap-x-[24px] gap-y-2">
-          <button className="px-[8px] py-[4px] text-[14px] whitespace-nowrap flex gap-[8px] items-center bg-[#B5D0B2] text-primary2 rounded-[4px]">
-            <SVGIcon.FilterGreenIcon />
-            Filter
-          </button>
+          {filterType == 0 && (
+            <MenuLayout
+              itemClassName="px-5"
+              className="mt-2"
+              yPosition="left"
+              triggerEl={
+                <button className="px-[8px] py-[4px] text-[14px] whitespace-nowrap flex gap-[8px] items-center bg-[#B5D0B2] text-primary2 rounded-[4px]">
+                  <SVGIcon.FilterGreenIcon /> Filter
+                </button>
+              }
+              items={[
+                {
+                  label: "By Request Status",
+                  // onClick: (_) => setFilterType(1),
+                },
+                {
+                  label: "By Location",
+                  // onClick: (_) => setFilterType(2)
+                },
+              ]}
+            />
+          )}
+
+          {filterType == 1 && (
+            <MenuLayout
+              itemClassName="px-5"
+              className="mt-2"
+              yPosition="left"
+              triggerEl={
+                <button className="px-[8px] py-[4px] text-[14px] whitespace-nowrap flex gap-[8px] items-center bg-[#B5D0B2] text-primary2 rounded-[4px]">
+                  <SVGIcon.FilterGreenIcon /> Filter
+                </button>
+              }
+              items={[
+                { label: "pending" },
+                { label: "ongoing" },
+                { label: "cancelled" },
+                { label: "completed" },
+                { label: "default" },
+              ].map((each) => ({
+                // label: (
+                //   <span
+                //     className={cn("status-badge", statusBadges[each.label])}
+                //   >
+                //     • <span className="mx-auto"> {each.label} </span>{" "}
+                //   </span>
+                // ),
+                label: "",
+                onClick: () => {},
+              }))}
+            />
+          )}
+
+          {filterType == 2 && (
+            <MenuLayout
+              itemClassName="px-5"
+              className="mt-2"
+              yPosition="left"
+              triggerEl={
+                <button className="px-[8px] py-[4px] text-[14px] whitespace-nowrap flex gap-[8px] items-center bg-[#B5D0B2] text-primary2 rounded-[4px]">
+                  <SVGIcon.FilterGreenIcon /> Filter
+                </button>
+              }
+              items={[
+                {
+                  label: "By Request Status",
+                  onClick: (_) => setFilterType(1),
+                },
+                { label: "By Location", onClick: (_) => setFilterType(2) },
+              ]}
+            />
+          )}
           <button className="px-[8px] py-[4px] text-[14px] whitespace-nowrap flex gap-[8px] items-center bg-[#B5D0B2] text-primary2 rounded-[4px]">
             <SVGIcon.ShareIcon />
             Export
@@ -170,7 +253,7 @@ export default function AdminLandord() {
               </thead>
               <tbody>
                 {data &&
-                  currentItems.map((landlord: any, i: number) => (
+                  currentItems.map((landlord: LandLord, i: number) => (
                     <tr
                       className="bg-white text-[#4F4F4F] border-t-8 border-[#EAEDE9]"
                       key={i + "landlord"}
@@ -199,7 +282,7 @@ export default function AdminLandord() {
                       <td className="p-2">{landlord.email}</td>
                       <td className="p-2 whitespace-nowrap">
                         {
-                          landlord.history.filter(
+                          landlord?.history?.filter(
                             (each: any) => each.type == "propertyCreation"
                           ).length
                         }{" "}
@@ -207,20 +290,20 @@ export default function AdminLandord() {
                       </td>
                       <td className="p-2">
                         <Images
-                          images={landlord.history
-                            .filter((each: any) => each.type == "tenantAdded")
+                          images={landlord?.history
+                            ?.filter((each: any) => each.type == "tenantAdded")
                             .map((each: any) => each.data.selfie)}
                         />
                       </td>
                       <td className="p-2">
                         <span
-                          className={`px-3 py-1.5 w-fit min-w-28 transition duration-300 gap-3 group-hover:text-white flex items-center rounded-lg whitespace-nowrap ${
+                          className={`status-badge ${
                             landlord.active
                               ? "bg-primaryFade text-primary2 group-hover:bg-[#14FF0080]"
                               : "bg-[#D500004D] text-[#D50000] group-hover:bg-[#D5000080]"
                           }`}
                         >
-                          •{" "}
+                          •
                           <span className="mx-auto">
                             {landlord.active ? "Active" : "Not Active"}
                           </span>
@@ -231,7 +314,21 @@ export default function AdminLandord() {
                           <SVGIcon.EditGreenIcon />
                           <SVGIcon.ShareYellowIcon />
                           <SVGIcon.DeleteRedIcon />
-                          <SVGIcon.MoreVertIcon />
+
+                          <MenuLayout
+                            items={[
+                              {
+                                label: "View Profile",
+                                onClick: () => {
+                                  router.push(
+                                    `/dashboard/landlord/${landlord._id}`
+                                  )
+                                },
+                              },
+                              { label: "View Tenants" },
+                            ]}
+                            triggerEl={<SVGIcon.MoreVertIcon />}
+                          />
                         </div>
                       </td>
                     </tr>

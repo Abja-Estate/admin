@@ -98,12 +98,12 @@ export default function Tenant() {
             height={100}
           />
           <div className="py-[8px]">
-            <h1 className="text-[#333436] text-[18px] font-semibold mb-[12px]">
+            <h1 className="text-textcolor100 text-[18px] font-semibold mb-[12px]">
               Akello Buma
             </h1>
             <div className="flex items-center gap-[19px] text-[#949494] mb-[4.5px]">
               <p>@AkelloBuma</p>
-              <div className="bg-[#333436] w-[1px] h-[19px]"></div>
+              <div className="bg-textcolor100 w-[1px] h-[19px]"></div>
               <p>(+256) 567890123</p>
             </div>
             <div className="gap-[16px] flex items-center">

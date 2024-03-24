@@ -34,7 +34,7 @@ export default function RecentPayments() {
   return (
     <div className="grid grid-cols-11 gap-[23px]">
       <div className="col-span-full flex flex-col md:col-span-5">
-        <header className="bg-white px-[26px] py-[8px] mb-[8px] text-[22px] font-semibold rounded-t-[5px] text-[#333436]">
+        <header className="bg-white px-[26px] py-[8px] mb-[8px] text-[22px] font-semibold rounded-t-[5px] text-textcolor100">
           <h1>Recent Payments</h1>
         </header>
         <div className="mb-[8px] h-full">
@@ -104,7 +104,7 @@ export default function RecentPayments() {
               alt="Ratings star"
             />
             <div>
-              <h1 className="text-[14px] font-semibold text-[#333436]">
+              <h1 className="text-[14px] font-semibold text-textcolor100">
                 Reviews
               </h1>
               <p className="text-[#949494] text-[10px]">
@@ -161,7 +161,9 @@ const Rating = ({ percent, ratings }: RatingsProps) => {
         ></div>
       </div>
       <div className="flex items-center gap-[3px]">
-        <span className="text-[#333436] text-[10px] font-light">{ratings}</span>
+        <span className="text-textcolor100 text-[10px] font-light">
+          {ratings}
+        </span>
         <div className="-mt-[3.8px]">
           <StarIcon />
         </div>

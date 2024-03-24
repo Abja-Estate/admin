@@ -31,7 +31,7 @@ export default function Report() {
                 alt="Ratings star"
               />
               <div>
-                <h1 className="text-[14px] font-semibold text-[#333436]">
+                <h1 className="text-[14px] font-semibold text-textcolor100">
                   Reviews
                 </h1>
                 <p className="text-[#949494] text-[10px]">
@@ -71,22 +71,22 @@ export default function Report() {
         </div>
         <div className="px-[26px] py-[13px] bg-white w-[540px] bg-[url('/images/report-stripes.svg')] rounded-[15px] flex flex-col justify-between gap-[12px]">
           <div className="flex items-center justify-between">
-            <p className="text-[#333436] text-[18px] font-semibold">
+            <p className="text-textcolor100 text-[18px] font-semibold">
               Total Service Report
             </p>
-            <h1 className="text-[#333436] text-[34px] font-semibold">234</h1>
+            <h1 className="text-textcolor100 text-[34px] font-semibold">234</h1>
           </div>
           <div className="flex items-center justify-between">
-            <p className="text-[#333436] text-[18px] font-semibold">
+            <p className="text-textcolor100 text-[18px] font-semibold">
               Total Reviews
             </p>
-            <h1 className="text-[#333436] text-[34px] font-semibold">136</h1>
+            <h1 className="text-textcolor100 text-[34px] font-semibold">136</h1>
           </div>
           <div className="flex items-center justify-between">
-            <p className="text-[#333436] text-[18px] font-semibold">
+            <p className="text-textcolor100 text-[18px] font-semibold">
               Users In The Last 30 Mins
             </p>
-            <h1 className="text-[#333436] text-[34px] font-semibold">23</h1>
+            <h1 className="text-textcolor100 text-[34px] font-semibold">23</h1>
           </div>
         </div>
       </header>
@@ -237,7 +237,9 @@ const Rating = ({ percent, ratings }: RatingsProps) => {
         ></div>
       </div>
       <div className="flex items-center gap-[3px]">
-        <span className="text-[#333436] text-[10px] font-light">{ratings}</span>
+        <span className="text-textcolor100 text-[10px] font-light">
+          {ratings}
+        </span>
         <div className="-mt-[3.8px]">
           <StarIcon />
         </div>

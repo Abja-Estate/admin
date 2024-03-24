@@ -1,42 +1,42 @@
-"use client";
-import Image from "next/image";
-import { ChangeEvent, FormEvent, useState } from "react";
-import Input from "../input";
-import Button from "../button";
-import { BASE_URL } from "@/config";
-import toast from "react-hot-toast";
-import { useRouter } from "next/navigation";
+"use client"
+import Image from "next/image"
+import { ChangeEvent, FormEvent, useState } from "react"
+import Input from "../input"
+import Button from "../button"
+import { BASE_URL } from "@/config"
+import toast from "react-hot-toast"
+import { useRouter } from "next/navigation"
 
 interface formData {
-  password: string;
-  confirmPassword: string;
+  password: string
+  confirmPassword: string
 }
 
 export default function PasswordScreen({
   changeView,
 }: ResetPasswordViewsProps) {
-  const [loading, setLoading] = useState<boolean>(false);
-  const router = useRouter();
+  const [loading, setLoading] = useState<boolean>(false)
+  const router = useRouter()
 
   const [formData, setFormData] = useState<formData>({
     password: "",
     confirmPassword: "",
-  });
+  })
 
   const formDataHandler = (e: ChangeEvent<HTMLInputElement>) => {
     setFormData((prev) => ({
       ...prev,
       [e.target.name]: e.target.value,
-    }));
-  };
+    }))
+  }
 
   const submit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+    e.preventDefault()
 
     try {
-      const form_id = localStorage.getItem("form_id");
+      const form_id = localStorage.getItem("form_id")
 
-      console.log("form_id", form_id);
+      console.log("form_id", form_id)
 
       const response = await fetch(`${BASE_URL}/auth/admin/reset_password`, {
         method: "POST",
@@ -49,33 +49,33 @@ export default function PasswordScreen({
           password: formData.password,
           confirmPassword: formData.confirmPassword,
         }),
-      });
+      })
 
       if (response.ok) {
-        const responseData = await response.json();
+        const responseData = await response.json()
 
         if (responseData.statusCode === 200) {
-          toast.success("Password changed successful.");
-          changeView("PASSWORD");
+          toast.success("Password changed successful.")
+          changeView("PASSWORD")
         } else {
-          toast.error("Password change not successful");
+          toast.error("Password change not successful")
         }
       } else {
         // Handle non-OK responses (e.g., 4xx or 5xx status codes)
-        const errorText = await response.text();
-        console.error(`Server responded with error: ${errorText}`);
-        toast.error("An error occurred while processing the request.");
+        const errorText = await response.text()
+        console.error(`Server responded with error: ${errorText}`)
+        toast.error("An error occurred while processing the request.")
       }
     } catch (error) {
-      console.error("Error during OTP verification:", error);
-      toast.error("An error occurred while processing the request.");
+      console.error("Error during OTP verification:", error)
+      toast.error("An error occurred while processing the request.")
     } finally {
-      setLoading(false);
-      router.push("/login");
+      setLoading(false)
+      router.push("/login")
     }
-  };
+  }
 
-  const isDisabled = !(formData.password && formData.confirmPassword);
+  const isDisabled = !(formData.password && formData.confirmPassword)
 
   return (
     <div>
@@ -87,7 +87,7 @@ export default function PasswordScreen({
           height={100}
         />
         <h1 className="text-primary text-[32px] font-bold">Reset Password</h1>
-        <p className="text-[#333436] font-semibold text-[14px] text-whites">
+        <p className="text-textcolor100 font-semibold text-[14px] text-whites">
           Enter your new password
         </p>
       </header>
@@ -127,5 +127,5 @@ export default function PasswordScreen({
         </fieldset>
       </form>
     </div>
-  );
+  )
 }

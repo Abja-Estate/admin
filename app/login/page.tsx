@@ -2,12 +2,10 @@
 import { SearchIcon } from "@/components/svgs"
 import Image from "next/image"
 import Checkbox from "@/components/checkbox"
-import { ChangeEvent, FormEvent, useState } from "react"
+import { useState } from "react"
 import Link from "next/link"
-import Input from "@/components/input"
 import Button from "@/components/button"
 import { useRouter } from "next/navigation"
-import axios from "axios"
 import toast from "react-hot-toast"
 import AuthLayout from "@/components/AuthLayout"
 import FormField from "@/components/FormField"
@@ -17,9 +15,6 @@ import { useAdminLoginMutation } from "@/redux/endpoints"
 import { useFormik } from "formik"
 import { AnyObject } from "yup"
 import { AdminLoginT } from "@/utils/types"
-// import { useDispatch, useSelector } from 'react-redux';
-// import { RootState } from '../../redux/store'; // Import RootState type
-// import { login, logout } from '../../redux/authSlice';
 
 export default function AdminLogin() {
   const router = useRouter()
@@ -55,13 +50,13 @@ export default function AdminLogin() {
 
   const signIn_f = useFormik<AdminLoginT>({
     validationSchema: signInSchema,
-    initialValues: getDefault(signInInputs, formData) as AdminLoginT,
+    initialValues: getDefault(signInInputs) as AdminLoginT,
     onSubmit: async (values) => {
       const response: AnyObject = await adminLogin({
         ...values,
         actor: "admin",
       })
-      console.log(response)
+      console.log(response.json())
 
       if ("data" in response) {
         const data = response.data.data
@@ -76,10 +71,13 @@ export default function AdminLogin() {
         }
 
         localStorage.setItem("active-user", JSON.stringify(data))
-        router.push("/dashboard")
+        // router.push("/dashboard")
 
         // localStorage.setItem("token", response.data.access_token)
-      } else if (response.error && "data" in response.error) {
+      } else if (response.error) {
+        if (response.error.status == "FETCH_ERROR") {
+          toast.error("Please, check your connection.")
+        }
         // dispatch(
         //   openRespDialog({
         //     self: true,
@@ -104,7 +102,7 @@ export default function AdminLogin() {
             draggable={false}
           />
           <h1 className="text-primary text-[32px] font-bold">Welcome Back!</h1>
-          <p className="text-[#333436] text-center font-semibold">
+          <p className="text-textcolor100 text-center font-semibold">
             Fill in the details below to login into your Abja Property
             Management account.{" "}
           </p>
@@ -113,9 +111,11 @@ export default function AdminLogin() {
           className="flex flex-col mb-10 h-full gap-[32px] w-full max-w-[500px] mx-auto"
           onSubmit={signIn_f.handleSubmit}
         >
+          {/* {JSON.stringify(signIn_f)} */}
           {signInInputs.map((each) => (
             <FormField formik={signIn_f} key={each.name} {...each} />
           ))}
+
           <fieldset>
             <div className="flex items-center gap-[16px] mb-[8px]">
               <Checkbox
@@ -123,7 +123,7 @@ export default function AdminLogin() {
                 checked={checked}
                 onClick={toggleHandler}
               />
-              <p className="text-[#333436]">Remember Me</p>
+              <p className="text-textcolor100">Remember Me</p>
             </div>
             <p className="text-fade">Save my login details for next time.</p>
           </fieldset>
@@ -154,7 +154,7 @@ export default function AdminLogin() {
             <fieldset>
               <Button
                 type="submit"
-                disabled={!signIn_f.isValid}
+                // disabled={!signIn_f.isValid}
                 loading={isLoading}
               >
                 Login

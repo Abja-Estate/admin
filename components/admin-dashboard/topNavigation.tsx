@@ -160,7 +160,7 @@ const Activity = ({ isOpen, closeModal }) => {
       closeModal={closeModal}
       modalStyles="h-[100vh] max-h-[70vh] max-w-[452px] flex flex-col gap-10 py-[32px]"
     >
-      <header className="bg-[#F6F8F6] p-2 flex gap-4 w-full rounded-[4px] mx-auto">
+      <header className="bg-white80 p-2 flex gap-4 w-full rounded-[4px] mx-auto">
         <button
           onClick={() => toggleActiveTab("NOTIFICATION")}
           className={cn(
@@ -280,7 +280,7 @@ const ActivityLog = () => {
                 draggable={false}
               />
               <p className="text-[.4rem] text-[#949494]">Admin II</p>
-              <p className="text-[.5rem] text-[#333436]">Steph Nze</p>
+              <p className="text-[.5rem] text-textcolor100">Steph Nze</p>
             </div>
             <div>
               <div className="flex gap-2">

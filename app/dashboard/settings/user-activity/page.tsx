@@ -1,10 +1,10 @@
-"use client";
-import RadioInput from "@/components/inputs/radioInput";
-import { DeleteIcon } from "@/components/svgs";
-import SwitchToggle from "@/components/switchToggle";
-import clsx from "clsx";
-import Image from "next/image";
-import { useState } from "react";
+"use client"
+import RadioInput from "@/components/inputs/radioInput"
+import { DeleteIcon } from "@/components/svgs"
+import SwitchToggle from "@/components/switchToggle"
+import clsx from "clsx"
+import Image from "next/image"
+import { useState } from "react"
 
 export default function UserActivity() {
   return (
@@ -33,7 +33,7 @@ export default function UserActivity() {
       <ServiceProviders />
       <PendingAdminInvites />
     </div>
-  );
+  )
 }
 
 const Admin = () => {
@@ -62,14 +62,14 @@ const Admin = () => {
               height={48}
               draggable={false}
             />
-            <figcaption className="text-[#333436] text-[14px]">
+            <figcaption className="text-textcolor100 text-[14px]">
               Erica Daniels
             </figcaption>
           </figure>
-          <p className="text-[#333436] text-[14px]">Admin 1</p>
-          <p className="text-[#333436] text-[14px]">07 Aug 2022</p>
-          <p className="text-[#333436] text-[14px]">2 days ago</p>
-          <p className="text-[#333436] text-[14px]">...</p>
+          <p className="text-textcolor100 text-[14px]">Admin 1</p>
+          <p className="text-textcolor100 text-[14px]">07 Aug 2022</p>
+          <p className="text-textcolor100 text-[14px]">2 days ago</p>
+          <p className="text-textcolor100 text-[14px]">...</p>
           <div>
             <DeleteIcon />
           </div>
@@ -83,14 +83,14 @@ const Admin = () => {
               height={48}
               draggable={false}
             />
-            <figcaption className="text-[#333436] text-[14px]">
+            <figcaption className="text-textcolor100 text-[14px]">
               Erica Daniels
             </figcaption>
           </figure>
-          <p className="text-[#333436] text-[14px]">Admin 2</p>
-          <p className="text-[#333436] text-[14px]">07 Aug 2022</p>
-          <p className="text-[#333436] text-[14px]">2 days ago</p>
-          <p className="text-[#333436] text-[14px]">...</p>
+          <p className="text-textcolor100 text-[14px]">Admin 2</p>
+          <p className="text-textcolor100 text-[14px]">07 Aug 2022</p>
+          <p className="text-textcolor100 text-[14px]">2 days ago</p>
+          <p className="text-textcolor100 text-[14px]">...</p>
           <div>
             <DeleteIcon />
           </div>
@@ -104,14 +104,14 @@ const Admin = () => {
               height={48}
               draggable={false}
             />
-            <figcaption className="text-[#333436] text-[14px]">
+            <figcaption className="text-textcolor100 text-[14px]">
               Erica Daniels
             </figcaption>
           </figure>
-          <p className="text-[#333436] text-[14px]">Admin 3</p>
-          <p className="text-[#333436] text-[14px]">07 Aug 2022</p>
-          <p className="text-[#333436] text-[14px]">2 days ago</p>
-          <p className="text-[#333436] text-[14px]">...</p>
+          <p className="text-textcolor100 text-[14px]">Admin 3</p>
+          <p className="text-textcolor100 text-[14px]">07 Aug 2022</p>
+          <p className="text-textcolor100 text-[14px]">2 days ago</p>
+          <p className="text-textcolor100 text-[14px]">...</p>
           <div>
             <DeleteIcon />
           </div>
@@ -123,8 +123,8 @@ const Admin = () => {
         </button>
       </div>
     </div>
-  );
-};
+  )
+}
 
 const Landlords = () => {
   return (
@@ -152,14 +152,14 @@ const Landlords = () => {
               height={48}
               draggable={false}
             />
-            <figcaption className="text-[#333436] text-[14px]">
+            <figcaption className="text-textcolor100 text-[14px]">
               Erica Daniels
             </figcaption>
           </figure>
-          <p className="text-[#333436] text-[14px]">Admin 1</p>
-          <p className="text-[#333436] text-[14px]">07 Aug 2022</p>
-          <p className="text-[#333436] text-[14px]">2 days ago</p>
-          <p className="text-[#333436] text-[14px]">...</p>
+          <p className="text-textcolor100 text-[14px]">Admin 1</p>
+          <p className="text-textcolor100 text-[14px]">07 Aug 2022</p>
+          <p className="text-textcolor100 text-[14px]">2 days ago</p>
+          <p className="text-textcolor100 text-[14px]">...</p>
           <div>
             <DeleteIcon />
           </div>
@@ -172,14 +172,14 @@ const Landlords = () => {
               width={48}
               height={48}
             />
-            <figcaption className="text-[#333436] text-[14px]">
+            <figcaption className="text-textcolor100 text-[14px]">
               Erica Daniels
             </figcaption>
           </figure>
-          <p className="text-[#333436] text-[14px]">Admin 2</p>
-          <p className="text-[#333436] text-[14px]">07 Aug 2022</p>
-          <p className="text-[#333436] text-[14px]">2 days ago</p>
-          <p className="text-[#333436] text-[14px]">...</p>
+          <p className="text-textcolor100 text-[14px]">Admin 2</p>
+          <p className="text-textcolor100 text-[14px]">07 Aug 2022</p>
+          <p className="text-textcolor100 text-[14px]">2 days ago</p>
+          <p className="text-textcolor100 text-[14px]">...</p>
           <div>
             <DeleteIcon />
           </div>
@@ -193,22 +193,22 @@ const Landlords = () => {
               height={48}
               draggable={false}
             />
-            <figcaption className="text-[#333436] text-[14px]">
+            <figcaption className="text-textcolor100 text-[14px]">
               Erica Daniels
             </figcaption>
           </figure>
-          <p className="text-[#333436] text-[14px]">Admin 3</p>
-          <p className="text-[#333436] text-[14px]">07 Aug 2022</p>
-          <p className="text-[#333436] text-[14px]">2 days ago</p>
-          <p className="text-[#333436] text-[14px]">...</p>
+          <p className="text-textcolor100 text-[14px]">Admin 3</p>
+          <p className="text-textcolor100 text-[14px]">07 Aug 2022</p>
+          <p className="text-textcolor100 text-[14px]">2 days ago</p>
+          <p className="text-textcolor100 text-[14px]">...</p>
           <div>
             <DeleteIcon />
           </div>
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
 const ServiceProviders = () => {
   return (
@@ -235,14 +235,14 @@ const ServiceProviders = () => {
               width={48}
               height={48}
             />
-            <figcaption className="text-[#333436] text-[14px]">
+            <figcaption className="text-textcolor100 text-[14px]">
               Erica Daniels
             </figcaption>
           </figure>
-          <p className="text-[#333436] text-[14px]">Admin 1</p>
-          <p className="text-[#333436] text-[14px]">07 Aug 2022</p>
-          <p className="text-[#333436] text-[14px]">2 days ago</p>
-          <p className="text-[#333436] text-[14px]">...</p>
+          <p className="text-textcolor100 text-[14px]">Admin 1</p>
+          <p className="text-textcolor100 text-[14px]">07 Aug 2022</p>
+          <p className="text-textcolor100 text-[14px]">2 days ago</p>
+          <p className="text-textcolor100 text-[14px]">...</p>
           <div>
             <DeleteIcon />
           </div>
@@ -256,14 +256,14 @@ const ServiceProviders = () => {
               height={48}
               draggable={false}
             />
-            <figcaption className="text-[#333436] text-[14px]">
+            <figcaption className="text-textcolor100 text-[14px]">
               Erica Daniels
             </figcaption>
           </figure>
-          <p className="text-[#333436] text-[14px]">Admin 2</p>
-          <p className="text-[#333436] text-[14px]">07 Aug 2022</p>
-          <p className="text-[#333436] text-[14px]">2 days ago</p>
-          <p className="text-[#333436] text-[14px]">...</p>
+          <p className="text-textcolor100 text-[14px]">Admin 2</p>
+          <p className="text-textcolor100 text-[14px]">07 Aug 2022</p>
+          <p className="text-textcolor100 text-[14px]">2 days ago</p>
+          <p className="text-textcolor100 text-[14px]">...</p>
           <div>
             <DeleteIcon />
           </div>
@@ -277,22 +277,22 @@ const ServiceProviders = () => {
               height={48}
               draggable={false}
             />
-            <figcaption className="text-[#333436] text-[14px]">
+            <figcaption className="text-textcolor100 text-[14px]">
               Erica Daniels
             </figcaption>
           </figure>
-          <p className="text-[#333436] text-[14px]">Admin 3</p>
-          <p className="text-[#333436] text-[14px]">07 Aug 2022</p>
-          <p className="text-[#333436] text-[14px]">2 days ago</p>
-          <p className="text-[#333436] text-[14px]">...</p>
+          <p className="text-textcolor100 text-[14px]">Admin 3</p>
+          <p className="text-textcolor100 text-[14px]">07 Aug 2022</p>
+          <p className="text-textcolor100 text-[14px]">2 days ago</p>
+          <p className="text-textcolor100 text-[14px]">...</p>
           <div>
             <DeleteIcon />
           </div>
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
 const PendingAdminInvites = () => {
   return (
@@ -311,7 +311,9 @@ const PendingAdminInvites = () => {
             </div>
             <div>
               <h1 className="text-[18px] font-semibold">Kierian Okeke</h1>
-              <p className="text-[12px] text-[#333436]">kieokeke@gmail.com</p>
+              <p className="text-[12px] text-textcolor100">
+                kieokeke@gmail.com
+              </p>
             </div>
           </div>
           <div className="bg-[#FFBB0C4D] w-[120px] h-[29px] rounded-[8px] px-[14px] py-[4px] flex gap-[16px] items-center">
@@ -336,7 +338,9 @@ const PendingAdminInvites = () => {
             </div>
             <div>
               <h1 className="text-[18px] font-semibold">Adam Ramsey</h1>
-              <p className="text-[12px] text-[#333436]">adamramsey@gmail.com</p>
+              <p className="text-[12px] text-textcolor100">
+                adamramsey@gmail.com
+              </p>
             </div>
           </div>
           <div className="bg-[#FFBB0C4D] w-[120px] h-[29px] rounded-[8px] px-[14px] py-[4px] flex gap-[16px] items-center">
@@ -356,5 +360,5 @@ const PendingAdminInvites = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}

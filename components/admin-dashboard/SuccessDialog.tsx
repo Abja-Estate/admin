@@ -32,7 +32,7 @@ export default function SuccessDialog({ ...props }: { className?: string }) {
         {...props}
       >
         <form className="w-screen max-w-2xl">
-          <div className="flex gap-2 md:gap-4 border-b pb-3 border-[#333436] items-center">
+          <div className="flex gap-2 md:gap-4 border-b pb-3 border-textcolor100 items-center">
             <h3 className="text-fade">Filled By:</h3>
             <h3>Admin 1</h3>
             <h3>Felix Adegboyega</h3>
@@ -40,7 +40,7 @@ export default function SuccessDialog({ ...props }: { className?: string }) {
           <div className="my-4 grid grid-cols-1 md:grid-cols-2 gap-x-7 gap-y-3">
             <MemoSuccessHouse />
           </div>
-          <div className="pt-4 px-4 border-t border-[#333436] flex items-center flex-wrap gap-4 justify-evenly">
+          <div className="pt-4 px-4 border-t border-textcolor100 flex items-center flex-wrap gap-4 justify-evenly">
             <button type="button" className="outlinebtn">
               Add Unit
             </button>

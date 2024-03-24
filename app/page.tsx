@@ -1,10 +1,10 @@
-import { ArrowLeftIcon } from "@/components/svgs";
-import authImage1 from "/public/images/auth-img-1.png";
-import authImage2 from "/public/images/auth-img-2.svg";
-import authImage3 from "/public/images/auth-img-3.svg";
-import Image from "next/image";
-import adminUserData from "@/data/admin-user.json";
-import Link from "next/link";
+import { ArrowLeftIcon } from "@/components/svgs"
+import authImage1 from "/public/images/auth-img-1.png"
+import authImage2 from "/public/images/auth-img-2.svg"
+import authImage3 from "/public/images/auth-img-3.svg"
+import Image from "next/image"
+import adminUserData from "@/data/admin-user.json"
+import Link from "next/link"
 
 export default function Admin() {
   return (
@@ -48,7 +48,7 @@ export default function Admin() {
             <h1 className="text-primary text-[32px] font-bold">
               Welcome Back!
             </h1>
-            <p className="text-[#333436] font-semibold">
+            <p className="text-textcolor100 font-semibold">
               Click to Login as the Admin you identify{" "}
             </p>
           </header>
@@ -64,7 +64,7 @@ export default function Admin() {
                   className="mb-[8px]"
                 />
                 <h2 className="text-fade text-[12px]">{user?.role}</h2>
-                <h1 className="text-[#333436] font-semibold text-[14px]">
+                <h1 className="text-textcolor100 font-semibold text-[14px]">
                   {user?.name}
                 </h1>
               </div>
@@ -80,5 +80,5 @@ export default function Admin() {
         </div>
       </div>
     </div>
-  );
+  )
 }

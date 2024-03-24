@@ -32,6 +32,9 @@ export interface AdminLoginT {
 export interface LandLord {
 	name: string,
 	surname: string,
+	active?: boolean,
+	history?: any[],
+	_id: string,
 	phone: string,
 	selfie: string,
 	email: string,

@@ -113,26 +113,26 @@ export default function Requests() {
           {!loading && requests?.length && (
             <table className="w-full">
               <thead>
-                <tr className="bg-[#F6F8F6] border-t-4 border-[#D4DBD3] border-b-2">
-                  <th className="text-[#333436] px-3 py-2 font-normal text-left">
+                <tr className="bg-white80 border-t-4 border-[#D4DBD3] border-b-2">
+                  <th className="text-textcolor100 px-3 py-2 font-normal text-left">
                     #
                   </th>
-                  <th className="text-[#333436] px-3 py-2 font-normal text-left">
+                  <th className="text-textcolor100 px-3 py-2 font-normal text-left">
                     Name of Lanlord
                   </th>
-                  <th className="text-[#333436] px-3 py-2 font-normal text-left">
+                  <th className="text-textcolor100 px-3 py-2 font-normal text-left">
                     Description
                   </th>
-                  <th className="text-[#333436] px-3 py-2 font-normal text-left">
+                  <th className="text-textcolor100 px-3 py-2 font-normal text-left">
                     Start Date
                   </th>
-                  <th className="text-[#333436] px-3 py-2 font-normal text-left">
+                  <th className="text-textcolor100 px-3 py-2 font-normal text-left">
                     Due Date
                   </th>
-                  <th className="text-[#333436] px-3 py-2 font-normal text-left">
+                  <th className="text-textcolor100 px-3 py-2 font-normal text-left">
                     Status
                   </th>
-                  <th className="text-[#333436] px-3 py-2 font-normal text-left">
+                  <th className="text-textcolor100 px-3 py-2 font-normal text-left">
                     Assigned Personnel
                   </th>
                 </tr>
@@ -238,120 +238,6 @@ export default function Requests() {
       <Messages />
     </div>
   )
-  // return (
-  //   <div className="flex gap-[27px]">
-  //     <div className="flex-1 bg-white rounded-[5px] py-[10px] px-[5px]">
-  //       <header className="py-[8px] px-[16px] flex justify-between items-center">
-  //         <h1 className="text-[22px] font-semibold">Requests</h1>
-  //         <div className="flex gap-[8px] items-center">
-  //           <button className="border-[1px] border-[#7F947B] rounded-[6px] w-[24px] h-[24px] grid place-items-center">
-  //             <ChevronLeftIcon />
-  //           </button>
-  //           <h1 className="text-primary font-semibold">MAr 2024</h1>
-  //           <button className="border-[1px] border-[#7F947B] rounded-[6px] w-[24px] h-[24px] grid place-items-center">
-  //             <ChevronRightIcon />
-  //           </button>
-  //         </div>
-  //       </header>
-  //       <div className="mt-[30px] text-[14px]">
-  //         <header className="h-[44px] bg-primary2 w-full p-[10px] items-center gap-[20px] text-white grid grid-cols-[20px_60px_1.2fr_1fr_1fr_1.4fr_0.8fr_0.9fr_1fr_0.82fr] mb-2">Frame 427318953
-  //           <div>
-  //             <div className="border-[1px] border-white rounded-[4px] w-[20px] h-[20px]"></div>
-  //           </div>
-  //           <p>Tenant</p>
-  //           <p>Address</p>
-  //           <p>Day</p>
-  //           <p>Service</p>
-  //           <p>Request Status</p>
-  //           <p>Priority</p>
-  //           <p>Action</p>
-  //         </header>
-  //         <div className="flex flex-col gap-2">
-  //           {requests &&
-  //             requests?.map((request: any, i: number) => (
-  //               <div
-  //                 key={i}
-  //                 className="bg-white w-full p-[10px] gap-[20px] grid grid-cols-[20px_60px_1.2fr_1fr_1fr_1.4fr_0.8fr_0.9fr_1fr_0.82fr] mb-2"
-  //               >
-  //                 <div>
-  //                   <div className="border-[1px] border-[#828282] rounded-[4px] w-[20px] h-[20px]"></div>
-  //                 </div>
-  //                 <div>
-  //                   <div className="flex items-center gap-[5px] mb-[2px]">
-  //                     <Image
-  //                       src="/images/landlord-emoji.svg"
-  //                       alt="Landlord Emoji"
-  //                       width={24}
-  //                       draggable={false}
-  //                       height={24}
-  //                     />
-  //                     <p className="text-[#4f4f4f]">{request?.fullName}</p>
-  //                   </div>
-  //                   <p className="text-[10px] text-[#949494]">
-  //                     {request?.phone}
-  //                   </p>
-  //                 </div>
-  //                 <p>{request?.propertyLocation}</p>
-  //                 <p>{request?.day}</p>
-  //                 <p>{request?.agent}</p>
-  //                 <div className="bg-[#B5D0B2] rounded-[8px] px-[8px] py-[4px] flex gap-[8px] items-center h-fit">
-  //                   <span className="h-[4px] w-[4px] bg-primary2 rounded-[100%]"></span>
-  //                   <p className="text-[10px] text-primary2">
-  //                     {request?.status}
-  //                   </p>
-  //                 </div>
-  //                 <div className="bg-[#FCE6E6] rounded-[8px] px-[8px] py-[4px] flex gap-[8px] items-center h-fit">
-  //                   <TagIcon />
-  //                   <p className="text-[10px] text-[#EB5757]">
-  //                     {request?.priority}
-  //                   </p>
-  //                 </div>
-  //                 <div className="flex items-center gap-2 h-fit">
-  //                   <InformationIcon />
-  //                   <DeleteRedIcon />
-  //                   <MoreVertIcon />
-  //                 </div>
-  //               </div>
-  //             ))}
-  //         </div>
-  //         <div className="flex mt-[30px] items-center justify-between">
-  //           <button className="border-[#828282] text-[#828282] rounded-[6px] px-[8px] py-[4px] border-[1px] flex gap-2 items-center">
-  //             <ChevronLeftIconIcon />
-  //             Previous
-  //           </button>
-  //           <div className="flex items-center gap-2">
-  //             <button className="w-[27px] h-[27px] rounded-[6px] bg-[#B5D0B2] text-primary2 grid place-items-center">
-  //               1
-  //             </button>
-  //             <button className="w-[27px] h-[27px] rounded-[6px] bg-white text-[#828282] grid place-items-center">
-  //               2
-  //             </button>
-  //             <button className="w-[27px] h-[27px] rounded-[6px] bg-white text-[#828282] grid place-items-center">
-  //               3
-  //             </button>
-  //             <button className="w-[27px] h-[27px] rounded-[6px] bg-white text-[#828282] grid place-items-center">
-  //               ...
-  //             </button>
-  //             <button className="w-[27px] h-[27px] rounded-[6px] bg-white text-[#828282] grid place-items-center">
-  //               8
-  //             </button>
-  //             <button className="w-[27px] h-[27px] rounded-[6px] bg-white text-[#828282] grid place-items-center">
-  //               9
-  //             </button>
-  //             <button className="w-[27px] h-[27px] rounded-[6px] bg-white text-[#828282] grid place-items-center">
-  //               10
-  //             </button>
-  //           </div>
-  //           <button className="text-primary2 bg-[#B5D0B2] rounded-[6px] px-[8px] py-[4px] border-[1px] flex gap-5 items-center">
-  //             Next
-  //             <ChevronRightGreenIcon />
-  //           </button>
-  //         </div>
-  //       </div>
-  //     </div>
-  //     <Messages />
-  //   </div>
-  // )
 }
 
 const Messages = () => {
@@ -374,7 +260,7 @@ const Messages = () => {
           <MoreVertIcon />
         </div>
       </header>
-      <div className="bg-[#F6F8F6] h-full rounded-b-md py-[4px] px-[8px]">
+      <div className="bg-white80 h-full rounded-b-md py-[4px] px-[8px]">
         {!msgs.length && (
           <div className="flex h-full py-10 gap-3 items-center justify-center flex-col">
             <NoRecord className="w-20" />
@@ -423,7 +309,7 @@ const MessageOverview = ({ img, username }: MessageOverviewProps) => {
       </figure>
       <div className="w-full">
         <header className="flex items-center justify-between">
-          <h1 className="text-[#333436] group-hover:text-white font-semibold">
+          <h1 className="text-textcolor100 group-hover:text-white font-semibold">
             {username}
           </h1>
           <p className="text-[#949494] group-hover:text-white text-[10px]">

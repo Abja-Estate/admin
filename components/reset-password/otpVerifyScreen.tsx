@@ -1,27 +1,27 @@
-"use client";
-import Image from "next/image";
-import { FormEvent, useState } from "react";
-import OTPInput from "react-otp-input";
-import Button from "../button";
-import { BASE_URL } from "@/config";
-import toast from "react-hot-toast";
+"use client"
+import Image from "next/image"
+import { FormEvent, useState } from "react"
+import OTPInput from "react-otp-input"
+import Button from "../button"
+import { BASE_URL } from "@/config"
+import toast from "react-hot-toast"
 
 export default function OtpVerifyScreen({
   changeView,
 }: ResetPasswordViewsProps) {
-  const [loading, setLoading] = useState<boolean>(false);
-  const [countdown, setCountdown] = useState<number>(0);
-  const [canResend, setCanResend] = useState<boolean>(true);
+  const [loading, setLoading] = useState<boolean>(false)
+  const [countdown, setCountdown] = useState<number>(0)
+  const [canResend, setCanResend] = useState<boolean>(true)
 
-  const [otp, setOtp] = useState<any>("");
+  const [otp, setOtp] = useState<any>("")
 
   const submit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+    e.preventDefault()
 
     try {
-      const form_email = localStorage.getItem("form_email");
+      const form_email = localStorage.getItem("form_email")
 
-      console.log("form_email", form_email);
+      console.log("form_email", form_email)
 
       const response = await fetch(`${BASE_URL}/auth/admin/verify_otp`, {
         method: "POST",
@@ -33,75 +33,75 @@ export default function OtpVerifyScreen({
           email: form_email,
           otp: otp,
         }),
-      });
+      })
 
       if (response.ok) {
-        const responseData = await response.json();
+        const responseData = await response.json()
 
         if (responseData.statusCode === 200) {
-          toast.success("Otp confirmation successful.");
+          toast.success("Otp confirmation successful.")
 
-          changeView("PASSWORD");
+          changeView("PASSWORD")
         } else {
-          toast.error("Invalid OTP, please check");
+          toast.error("Invalid OTP, please check")
         }
       } else {
         // Handle non-OK responses (e.g., 4xx or 5xx status codes)
-        const errorText = await response.text();
-        console.error(`Server responded with error: ${errorText}`);
-        toast.error("An error occurred while processing the request.");
+        const errorText = await response.text()
+        console.error(`Server responded with error: ${errorText}`)
+        toast.error("An error occurred while processing the request.")
       }
     } catch (error) {
-      console.error("Error during OTP verification:", error);
-      toast.error("An error occurred while processing the request.");
+      console.error("Error during OTP verification:", error)
+      toast.error("An error occurred while processing the request.")
     } finally {
-      setLoading(false);
+      setLoading(false)
     }
-  };
+  }
 
   // resend otp, countdown
 
   //4 mins countdown
   const startCountDown = () => {
-    setCanResend(false);
+    setCanResend(false)
 
-    setCountdown(240); // 240 seconds = 4 mins
+    setCountdown(240) // 240 seconds = 4 mins
 
     const interval = setInterval(() => {
-      setCountdown((prevCountdown: number) => prevCountdown - 1);
+      setCountdown((prevCountdown: number) => prevCountdown - 1)
 
       if (countdown === 0) {
-        clearInterval(interval);
-        setCanResend(true);
+        clearInterval(interval)
+        setCanResend(true)
       }
-    }, 1000);
-  };
+    }, 1000)
+  }
 
-  const isDisabled = otp.length < 5;
+  const isDisabled = otp.length < 5
 
   // otp resend
   const startCountdown = () => {
-    setCanResend(false);
-    setCountdown(240); // 240 seconds = 4 minutes
+    setCanResend(false)
+    setCountdown(240) // 240 seconds = 4 minutes
 
     const interval = setInterval(() => {
-      setCountdown((prevCountdown) => prevCountdown - 1);
+      setCountdown((prevCountdown) => prevCountdown - 1)
 
       if (countdown === 0) {
-        clearInterval(interval);
-        setCanResend(true);
+        clearInterval(interval)
+        setCanResend(true)
       }
-    }, 1000);
-  };
+    }, 1000)
+  }
 
   const resendOtp = async () => {
     if (!canResend) {
-      return;
+      return
     }
 
     try {
       // For example:
-      const form_email = localStorage.getItem("form_email");
+      const form_email = localStorage.getItem("form_email")
 
       const response = await fetch(`${BASE_URL}/auth/admin/verify_otp`, {
         method: "POST",
@@ -113,27 +113,27 @@ export default function OtpVerifyScreen({
           email: form_email,
           otp: otp,
         }),
-      });
+      })
 
       if (response.ok) {
-        const responseData = await response.json();
+        const responseData = await response.json()
 
         if (responseData.statusCode === 200) {
-          toast.success("OTP resent successfully.");
-          startCountdown(); // Start the countdown after successful OTP resend
+          toast.success("OTP resent successfully.")
+          startCountdown() // Start the countdown after successful OTP resend
         } else {
-          toast.error("Failed to resend OTP.");
+          toast.error("Failed to resend OTP.")
         }
       } else {
-        const errorText = await response.text();
-        console.error(`Server responded with error: ${errorText}`);
-        toast.error("An error occurred while resending OTP.");
+        const errorText = await response.text()
+        console.error(`Server responded with error: ${errorText}`)
+        toast.error("An error occurred while resending OTP.")
       }
     } catch (error) {
-      console.error("Error during OTP resend:", error);
-      toast.error("An error occurred while resending OTP.");
+      console.error("Error during OTP resend:", error)
+      toast.error("An error occurred while resending OTP.")
     }
-  };
+  }
 
   return (
     <div>
@@ -145,7 +145,7 @@ export default function OtpVerifyScreen({
           height={100}
         />
         <h1 className="text-primary text-[32px] font-bold">OTP Verification</h1>
-        <p className="font-semibold text-[14px] text-[#333436]">
+        <p className="font-semibold text-[14px] text-textcolor100">
           We&rsquo;ve sent a code to your email and phone number. <br />
           Please input the code we have sent.
         </p>
@@ -187,5 +187,5 @@ export default function OtpVerifyScreen({
         </fieldset>
       </form>
     </div>
-  );
+  )
 }

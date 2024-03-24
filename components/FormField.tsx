@@ -27,9 +27,7 @@ const FormField = ({ autocomplete = true, inputProps, ...props }: Desc) => {
   const [selected, setSelected] = useState<string | number | null>(null)
 
   return (
-    <div
-      className={cn(!props.t ? "flex flex-col h-160" : "flex flex-col h-20")}
-    >
+    <div className={cn(!props.t ? "flex flex-col h-16" : "flex flex-col h-20")}>
       <label
         className={cn(
           !props.t
@@ -141,6 +139,11 @@ const FormField = ({ autocomplete = true, inputProps, ...props }: Desc) => {
             autoComplete={autocomplete ? "on" : "off"}
             {...(props.min ? { min: props.min } : {})}
             value={props.value ?? props?.formik?.values[props.name]}
+            onBlur={() => {
+              if (props.formik) {
+                props.formik.handleBlur
+              }
+            }}
             onChange={
               props.formik ? props.formik.handleChange : inputProps?.onChange
             }
@@ -179,16 +182,13 @@ const FormField = ({ autocomplete = true, inputProps, ...props }: Desc) => {
       </div>
       {!props.t ? (
         <>
-          {
-            // props.formik &&
+          {props.formik &&
             props.formik.touched[props.name] &&
-              props?.formik.errors[props.name] && (
-                <div className="px-4 pt-1 text-[#D90001] text-sm">
-                  {props?.formik.errors[props.name] as ReactNode}{" "}
-                  {JSON.stringify(props.formik)}
-                </div>
-              )
-          }
+            props?.formik.errors[props.name] && (
+              <div className="px-4 pt-1 text-[#D90001] text-sm">
+                {props?.formik.errors[props.name] as ReactNode}{" "}
+              </div>
+            )}
         </>
       ) : (
         <>
