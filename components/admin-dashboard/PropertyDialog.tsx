@@ -1,6 +1,4 @@
-import { ReactNode, useState } from "react"
 import DialogLayout from "../DialogLayout"
-import { Input } from "@/utils/types"
 import FormField from "../FormField"
 import MemoFitness from "../svgs/Fitness"
 import MemoFootball from "../svgs/Football"
@@ -12,6 +10,7 @@ import MemoLaundry from "../svgs/Laundry"
 import Checkbox from "../checkbox"
 import { useAppDispatch } from "@/redux/hooks"
 import { propertyInputs } from "@/utils/schema"
+import MemoUploadBox from "./UploadBox"
 
 export default function PropertyDialog({
   setIsOpen,
@@ -74,6 +73,10 @@ export default function PropertyDialog({
                   <span className="text-xs">{each.label}</span>
                 </div>
               ))}
+            </div>
+
+            <div className="col-span-full py-4">
+              <MemoUploadBox />
             </div>
           </div>
           <div className="pt-4 px-4 border-t border-textcolor100 flex items-center flex-wrap gap-4 justify-evenly">
