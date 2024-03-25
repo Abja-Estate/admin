@@ -19,7 +19,7 @@ interface Desc {
   custom?: JSX.Element
   value?: string | number
   icon?: JSX.Element
-  affix?: JSX.Element
+  suffix?: JSX.Element
 }
 
 const FormField = ({ autocomplete = true, inputProps, ...props }: Desc) => {
@@ -27,12 +27,15 @@ const FormField = ({ autocomplete = true, inputProps, ...props }: Desc) => {
   const [selected, setSelected] = useState<string | number | null>(null)
 
   return (
-    <div className={cn(!props.t ? "flex flex-col h-16" : "flex flex-col h-20")}>
+    <fieldset
+      className={cn(
+        !props.t ? "flex flex-col" : "flex flex-col",
+        props.type == "textarea" ? "h-fit" : !props.t ? "h-16" : "h-20"
+      )}
+    >
       <label
         className={cn(
-          !props.t
-            ? "inline-block text-primary font-medium mb-[16px]"
-            : "text-fade"
+          !props.t ? "inline-block text-primary font-medium mb-4" : "text-fade"
         )}
       >
         {props.label}
@@ -40,8 +43,9 @@ const FormField = ({ autocomplete = true, inputProps, ...props }: Desc) => {
       <div
         className={cn(
           !props.t
-            ? "flex justify-between items-center w-full border-b-[1px] border-b-primary px-[16px] h-[42px] outline-none font-medium gap-3"
-            : "flex border-fade mt-2 border h-10 min-h-10 rounded-lg items-center gap-2"
+            ? "flex justify-between items-center w-full border-b-[1px] border-b-primary px-[16px] outline-none font-medium gap-3"
+            : "flex border-fade mt-2 border min-h-10 rounded-lg items-center gap-2",
+          props.type == "textarea" ? "" : !props.t ? "h-[42px]" : "h-10"
         )}
       >
         {props.type == "select" ? (
@@ -132,6 +136,30 @@ const FormField = ({ autocomplete = true, inputProps, ...props }: Desc) => {
               </div>
             </Listbox>
           </>
+        ) : props.type == "textarea" ? (
+          <textarea
+            {...inputProps}
+            disabled={props.disabled}
+            autoComplete={autocomplete ? "on" : "off"}
+            {...(props.min ? { min: props.min } : {})}
+            value={props.value ?? props?.formik?.values[props.name]}
+            onBlur={() => {
+              if (props.formik) {
+                props.formik.handleBlur
+              }
+            }}
+            onChange={
+              props.formik ? props.formik.handleChange : inputProps?.onChange
+            }
+            name={props.name}
+            placeholder={props.placeholder ?? ""}
+            className={cn(
+              !props.t
+                ? "w-full outline-none py-1"
+                : "w-full h-full outline-none rounded-lg px-3",
+              !props.value && !props?.formik?.values[props.name] && "text-fade"
+            )}
+          ></textarea>
         ) : (
           <input
             {...inputProps}
@@ -161,6 +189,8 @@ const FormField = ({ autocomplete = true, inputProps, ...props }: Desc) => {
             )}
           />
         )}
+
+        {props.suffix}
         {props.type == "password" &&
           (type == "password" ? (
             <button
@@ -201,7 +231,7 @@ const FormField = ({ autocomplete = true, inputProps, ...props }: Desc) => {
             )}
         </>
       )}
-    </div>
+    </fieldset>
   )
 }
 

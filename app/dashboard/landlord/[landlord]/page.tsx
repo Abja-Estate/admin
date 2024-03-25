@@ -1,6 +1,8 @@
 "use client"
+import { LandlordProfileHead } from "@/components/admin-dashboard/LandlordProfileHead"
 import PropertyDialog from "@/components/admin-dashboard/PropertyDialog"
 import StatusBadge from "@/components/admin-dashboard/StatusBadge"
+import UnitDialog from "@/components/admin-dashboard/UnitDialog"
 import { EditGreenIcon, LocationIcon } from "@/components/svgs"
 import Image from "next/image"
 import Link from "next/link"
@@ -8,53 +10,23 @@ import { useState } from "react"
 
 export default function Profile({ params }: { params: { landlord: string } }) {
   const [propertyDialog, setPropertyDialog] = useState(false)
+  const [unitDialog, setUnitDialog] = useState(false)
+  const [currentProperty, setCurrentProperty] = useState<any>(null)
 
   return (
     <div>
-      <div className="lg:-mt-2 flex items-center gap-5">
-        <Link href="/landlord">
+      <div className="lg:-mt-2 flex flex-wrap items-center gap-x-5">
+        <Link href="/dashboard/landlord">
           <span className="text-textcolor100 text-[22px]">Landlords /</span>
         </Link>
-        <Link href="/landlord">
+        <button>
           <span className="text-primary2 font-bold text-[22px]">
             Landlord&rsquo;s Profile /
           </span>
-        </Link>
+        </button>
       </div>
       <div className="bg-white mt-4 ">
-        <div className="w-full border-b border-primary flex items-center justify-between py-[16px] px-5 bg-white">
-          <div className="flex gap-[20px]">
-            <Image
-              src="/images/tenant-profile-img.svg"
-              alt="Tenant Profile"
-              width={100}
-              height={100}
-            />
-            <div className="py-[8px]">
-              <h1 className="text-textcolor100 font-semibold mb-[12px]">
-                Akello Buma
-              </h1>
-              <div className="flex text-sm items-center gap-[19px] text-[#949494] mb-[4.5px]">
-                <p>@AkelloBuma</p>
-                <div className="bg-textcolor100 w-[1px] h-[19px]"></div>
-                <p>(+256) 567890123</p>
-              </div>
-              <div className="gap-[16px] flex items-center">
-                <LocationIcon />
-                <p className="text-[#949494] text-[14px]">Kampala, Uganda</p>
-              </div>
-            </div>
-          </div>
-          <div>
-            <Link
-              href={`/dashboard/landlord/${params.landlord}/edit`}
-              className="flex bg-primaryFade text-primary2 text-sm items-center gap-3 justify-center rounded-md py-1.5 px-2"
-            >
-              <EditGreenIcon />
-              View Profile
-            </Link>
-          </div>
-        </div>
+        <LandlordProfileHead showEditbtn id={params.landlord} />
         <div className="grid grid-cols-1 xl:grid-cols-2 ">
           <div className="xl:border-r flex flex-col border-primary py-5 px-6">
             <div className="flex flex-col gap-4">
@@ -242,7 +214,12 @@ export default function Profile({ params }: { params: { landlord: string } }) {
                         </td>
                         <td className="p-3 text-center">{each.tenants}</td>
                         <td className="p-3 text-center">
-                          <button className="">
+                          <button
+                            onClick={() => {
+                              setCurrentProperty(each)
+                              setUnitDialog(true)
+                            }}
+                          >
                             <svg
                               width="14"
                               height="15"
@@ -325,6 +302,11 @@ export default function Profile({ params }: { params: { landlord: string } }) {
       </div>
 
       <PropertyDialog isOpen={propertyDialog} setIsOpen={setPropertyDialog} />
+      <UnitDialog
+        property={currentProperty}
+        isOpen={unitDialog}
+        setIsOpen={setUnitDialog}
+      />
     </div>
   )
 }

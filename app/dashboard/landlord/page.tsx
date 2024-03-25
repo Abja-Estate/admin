@@ -7,21 +7,30 @@ import MemoNoRecord from "@/components/NoRecord"
 import Loading from "@/components/Loading"
 import ReactPaginate from "react-paginate"
 import {
+  useDeleteAdminMutation,
+  useDeleteLandlordMutation,
   useGetLandlordsQuery,
   useGetPropertiesQuery,
   useGetRequestsQuery,
 } from "@/redux/endpoints"
-import { LandLord } from "@/utils/types"
+import { AreYouSureProps, LandLord } from "@/utils/types"
 import LandlordDialog from "@/components/admin-dashboard/LandlordDialog"
 import MenuLayout from "@/components/MenuLayout"
 import { cn } from "@/utils/cn"
 import { useRouter } from "next/navigation"
+import StatusBadge from "@/components/admin-dashboard/StatusBadge"
+import AreYouSure from "@/components/AreYouSure"
+import { AnyObject } from "yup"
+import toast from "react-hot-toast"
+import { months } from "@/utils/constants"
 
 export default function AdminLandord() {
   const { data, isLoading } = useGetLandlordsQuery("")
   const { data: requests } = useGetRequestsQuery("")
   const { data: properties } = useGetPropertiesQuery("")
+  const [deleteALandlord] = useDeleteLandlordMutation()
   const router = useRouter()
+  const [cDIO, setCDIO] = useState<AreYouSureProps>({ status: false })
 
   const [filteredLandLords, setFilteredLandLords] = useState<LandLord[]>([])
 
@@ -30,6 +39,41 @@ export default function AdminLandord() {
       setFilteredLandLords(data)
     }
   }, [data])
+
+  const deleteLandlordCaution = (data: any) => {
+    setCDIO({
+      status: true,
+      data,
+      type: "deleteUser",
+      action: deleteLandlord,
+      desc: `Are you sure you want to delete this user?`,
+    })
+  }
+
+  const deleteLandlord = async (_landlord: any) => {
+    const response: AnyObject = await deleteALandlord(_landlord._id)
+    if (response.data) {
+      // dispatch(
+      //   openRespDialog({
+      //     self: false,
+      //     type: "success",
+      //     desc: response.data.message,
+      //     title: "Deleted!",
+      //   })
+      // )
+      toast.success("Landlord Deleted")
+    } else if (response.error) {
+      toast.error("An error occured")
+      // dispatch(
+      //   openRespDialog({
+      //     self: false,
+      //     type: "error",
+      //     desc: response.error.message,
+      //     title: "Oops!",
+      //   })
+      // )
+    }
+  }
 
   // for pagination
   const [itemOffset, setItemOffset] = useState(0)
@@ -42,16 +86,14 @@ export default function AdminLandord() {
     setItemOffset(newOffset)
   }
 
-  const statusBadges = {
-    pending: "bg-[#FFBB0C4D] text-[#FFBB0C] group-hover:bg-[#FFBB0C80]",
-    ongoing: "bg-[#26CFDA4D] text-[#26CFDA] group-hover:bg-[#26CFDA80]",
-    cancelled: "bg-[#D500004D] text-[#D50000] group-hover:bg-[#D5000080]",
-    completed: "bg-[#14FF004D] text-[#14FF00] group-hover:bg-[#14FF0080]",
-    default: "bg-[#26CFDA4D] text-[#26CFDA] group-hover:bg-[#26CFDA80]",
-  }
-
   const [filterType, setFilterType] = useState<0 | 1 | 2>(0)
   const handleFilter = (type: 1 | 2, val: any) => {}
+
+  const cd = new Date()
+  const [cdate, setcdate] = useState({
+    month: cd.getMonth(),
+    year: cd.getFullYear(),
+  })
 
   return (
     <>
@@ -221,7 +263,7 @@ export default function AdminLandord() {
           </button>
           <button className="px-[8px] py-[4px] text-[14px] whitespace-nowrap flex gap-[8px] items-center bg-[#B5D0B2] text-primary2 rounded-[4px]">
             <SVGIcon.CalenderOutlineIcon />
-            Sept 2023
+            {months[cdate.month].slice(0, 3)} {cdate.year}
           </button>
         </div>
       </div>
@@ -296,24 +338,27 @@ export default function AdminLandord() {
                         />
                       </td>
                       <td className="p-2">
-                        <span
-                          className={`status-badge ${
-                            landlord.active
-                              ? "bg-primaryFade text-primary2 group-hover:bg-[#14FF0080]"
-                              : "bg-[#D500004D] text-[#D50000] group-hover:bg-[#D5000080]"
-                          }`}
-                        >
-                          •
-                          <span className="mx-auto">
-                            {landlord.active ? "Active" : "Not Active"}
-                          </span>
-                        </span>
+                        <StatusBadge
+                          status={landlord.active ? "completed" : "failed"}
+                          text={landlord.active ? "Active" : "Not active"}
+                        />
                       </td>
                       <td className="p-2">
                         <div className="flex items-center gap-2 xl:gap-4 h-fit">
-                          <SVGIcon.EditGreenIcon />
+                          <Link
+                            href={`/dashboard/landlord/${landlord._id}/edit`}
+                          >
+                            <SVGIcon.EditGreenIcon />
+                          </Link>
                           <SVGIcon.ShareYellowIcon />
-                          <SVGIcon.DeleteRedIcon />
+
+                          <button
+                            onClick={() => {
+                              deleteLandlordCaution(landlord)
+                            }}
+                          >
+                            <SVGIcon.DeleteRedIcon />
+                          </button>
 
                           <MenuLayout
                             items={[
@@ -325,7 +370,14 @@ export default function AdminLandord() {
                                   )
                                 },
                               },
-                              { label: "View Tenants" },
+                              {
+                                label: "View Tenants",
+                                onClick: () => {
+                                  router.push(
+                                    `/dashboard/landlord/${landlord._id}/tenants`
+                                  )
+                                },
+                              },
                             ]}
                             triggerEl={<SVGIcon.MoreVertIcon />}
                           />
@@ -363,6 +415,8 @@ export default function AdminLandord() {
           />
         </div>
       </div>
+
+      <AreYouSure aYSD={cDIO} setAYSD={setCDIO} />
     </>
   )
 }

@@ -11,15 +11,57 @@ import MemoPower from "../svgs/Power"
 import MemoLaundry from "../svgs/Laundry"
 import Checkbox from "../checkbox"
 import { useAppDispatch } from "@/redux/hooks"
-import { propertyInputs } from "@/utils/schema"
+import { openRespDialog } from "@/redux/adminSlice"
 
-export default function PropertyDialog({
+export const landlordInputs: Input[] = [
+  {
+    label: "Property Name",
+    name: "name",
+    type: "text",
+    placeholder: "ex: The Spring Lodge",
+  },
+  {
+    label: "Location",
+    name: "location",
+    type: "text",
+    placeholder: "ex: 42, Awolokun, Gbagada",
+  },
+  {
+    label: "Email",
+    name: "email",
+    type: "email",
+    placeholder: "Email Address",
+  },
+  { label: "Address", name: "adress", type: "text", placeholder: "Address" },
+  {
+    label: "Start Date",
+    name: "start_date",
+    type: "date",
+    placeholder: "Date",
+  },
+  {
+    label: "Subscription Plan",
+    name: "plan",
+    type: "select",
+    options: [
+      { label: "Free Plan $0", value: "1" },
+      { label: "Brinze Plan $25", value: "2" },
+    ],
+    placeholder: "Plan",
+  },
+]
+
+export default function UnitDialog({
   setIsOpen,
   isOpen,
+  property,
+  unit,
   ...props
 }: {
   className?: string
   isOpen: boolean
+  property: any
+  unit?: any
   setIsOpen: Function
 }) {
   const dispatch = useAppDispatch()
@@ -40,26 +82,24 @@ export default function PropertyDialog({
   }
 
   const _features = [
-    { value: "football", label: "Football" },
     { value: "wifi", label: "Wi Fi" },
-    { value: "pool", label: "Pool" },
-    { value: "garden", label: "Garden" },
     { value: "power", label: "24 hrs Power" },
-    { value: "fitness", label: "Fitness" },
-    { value: "laundry", label: "Laundry" },
   ]
 
   return (
     <>
       <DialogLayout setIsOpen={setIsOpen} isOpen={isOpen} noToggle {...props}>
         <form className="w-screen max-w-2xl">
+          <div className="-mt-3 mb-2">
+            <h3 className="text-lg">{unit ? "Edit Unit" : "Add Unit"}</h3>
+          </div>
           <div className="flex gap-2 md:gap-4 border-b pb-3 border-textcolor100 items-center">
             <h3 className="text-fade">Filled By:</h3>
             <h3>Admin 1</h3>
             <h3>Micheal Ibaro</h3>
           </div>
           <div className="my-4 grid grid-cols-1 md:grid-cols-2 gap-x-7 gap-y-3">
-            {propertyInputs.map((each, i) => (
+            {landlordInputs.map((each, i) => (
               <FormField key={i + "field"} {...each} t />
             ))}
             <div className="col-span-full flex flex-wrap gap-x-5 gap-y-2 items-center">

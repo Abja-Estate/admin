@@ -35,7 +35,7 @@ export default function SuccessDialog({ ...props }: { className?: string }) {
           <div className="flex gap-2 md:gap-4 border-b pb-3 border-textcolor100 items-center">
             <h3 className="text-fade">Filled By:</h3>
             <h3>Admin 1</h3>
-            <h3>Felix Adegboyega</h3>
+            <h3>Micheal Ibaro</h3>
           </div>
           <div className="my-4 grid grid-cols-1 md:grid-cols-2 gap-x-7 gap-y-3">
             <MemoSuccessHouse />

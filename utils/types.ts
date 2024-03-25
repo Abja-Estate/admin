@@ -1,3 +1,5 @@
+import { AnyObject } from "yup"
+
 export type UserData = {
 	id: string,
 	name: string,
@@ -46,6 +48,14 @@ export interface LandLord {
 
 export interface Package {
 
+}
+
+export interface AreYouSureProps {
+	status: boolean,
+	desc?: string | JSX.Element,
+	data?: AnyObject,
+	action?: (data?: any) => (void | Promise<void>),
+	type?: 'deleteUser'
 }
 
 export interface RespData<T> {

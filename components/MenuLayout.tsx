@@ -20,14 +20,12 @@ export default function MenuLayout(props: Props) {
   return (
     <div className="relative">
       <Menu as="div" className=" inline-block text-left">
-        <div>
-          <Menu.Button
-            disabled={props.disabled}
-            className="inline-flex w-full justify-center text-sm font-medium text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-prmorange rounded-md"
-          >
-            {props.triggerEl}
-          </Menu.Button>
-        </div>
+        <Menu.Button
+          disabled={props.disabled}
+          className="inline-flex w-full justify-center text-sm font-medium text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-prmorange rounded-md"
+        >
+          {props.triggerEl}
+        </Menu.Button>
         <Transition
           as={Fragment}
           enter="transition ease-out duration-100"

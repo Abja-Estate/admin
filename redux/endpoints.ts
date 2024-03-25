@@ -69,6 +69,10 @@ export const appApi = createApi({
 			query: (body,) => ({ url: `auth/${body.actor}/register`, method: "POST", body }),
 			transformResponse: (response: any) => response.data,
 		}),
+		deleteAdmin: builder.mutation<any, any>({
+			query: (body,) => ({ url: `auth/${body.actor}/`, method: "DELETE", body }),
+			transformResponse: (response: any) => response.data,
+		}),
 
 
 
@@ -99,6 +103,10 @@ export const appApi = createApi({
 		updateLandlord: builder.mutation<any, LandLord>({
 			query: (body) => ({ url: `/admin/update_landlord`, method: "POST", body }),
 			invalidatesTags: ['Landlord']
+		}),
+		deleteLandlord: builder.mutation<any, any>({
+			query: (body,) => ({ url: `auth/${body.actor}/landlord`, method: "DELETE", body }),
+			transformResponse: (response: any) => response.data,
 		}),
 
 
@@ -156,6 +164,8 @@ export const {
 	useAdminVerifyOTPMutation,
 	useCreatePackageMutation,
 	useGetLandlordPropertiesMutation,
+	useDeleteLandlordMutation,
 	useGetPackagesQuery,
 	useGetTenantsQuery,
+	useDeleteAdminMutation
 } = appApi

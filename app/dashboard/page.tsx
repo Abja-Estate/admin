@@ -17,6 +17,7 @@ import {
 } from "@/redux/endpoints"
 import SuccessDialog from "@/components/admin-dashboard/SuccessDialog"
 import { useAppSelector } from "@/redux/hooks"
+import toast from "react-hot-toast"
 
 export default function AdminDashboard() {
   // useEffect(() => {
@@ -29,7 +30,7 @@ export default function AdminDashboard() {
 
   useEffect(() => {
     const ws = new WebSocket(
-      `wss://casmara-request-app-api.onrender.com/ws/admin?apiKey=${apiKey}&id=${id}`
+      `wss://casmara-request-app-api.onrender.com/ws/admin?apiKey=Ayoseun&id=abja2024Admin`
     )
 
     const sendBroadcastData = {
@@ -40,6 +41,25 @@ export default function AdminDashboard() {
 
     ws.onopen = function (event) {
       ws.send(JSON.stringify(sendBroadcastData))
+    }
+
+    ws.onmessage = function (event) {
+      // const json = JSON.parse(event.data);
+      // try {
+      //   if ((json.event = "data")) {
+      //     setBids(json.data.bids.slice(0, 5));
+      //   }
+      // } catch (err) {
+      //   console.log(err);
+      // }
+
+      if (
+        // !event.data.toLowerCase().includes("yo, admin") &&
+        !event.data.toLowerCase().includes("delivered.") &&
+        !event.data.toLowerCase().includes("connected")
+      ) {
+        toast(event.data)
+      }
     }
   }, [apiKey, id])
 
