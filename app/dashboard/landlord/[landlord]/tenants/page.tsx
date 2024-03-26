@@ -33,7 +33,7 @@ export default function Tenant({ params }: { params: { tenant: string } }) {
   )
   const [deleteATenant] = useDeleteTenantMutation()
   const [currentTenant, setCurrentTenant] = useState<any>(null)
-  const [tenantIsOpen, setTenantIsOpen] = useState(false)
+  const [tenantIsOpen, setTenantIsOpen] = useState(true)
   const [cDIO, setCDIO] = useState<AreYouSureProps>({ status: false })
 
   // for pagination

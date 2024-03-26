@@ -58,10 +58,10 @@
   @apply flex border border-[#7F947B] rounded-lg h-8 text-xs hover:bg-[#2A4C23] hover:text-white transition duration-300 px-2 py-1.5 items-center gap-2;
 }
 .outlinebtn {
-  @apply flex items-center justify-center border border-primary rounded-lg w-full max-w-56 px-3 py-2 text-primary hover:bg-slate-100 transition duration-300 focus-visible:ring-2 ring-primaryFade outline-none whitespace-nowrap;
+  @apply flex items-center justify-center border border-primary rounded-lg w-full max-w-56 px-3 py-2 text-primary hover:bg-slate-100 transition duration-300 focus-visible:ring-2 ring-primaryFade outline-none whitespace-nowrap gap-2;
 }
 .filledbtn {
-  @apply flex items-center justify-center border bg-primary rounded-lg w-full max-w-56 px-3 py-2 text-white hover:opacity-90 border-primary transition duration-300 focus-visible:ring-2 ring-primaryFade outline-none whitespace-nowrap;
+  @apply flex items-center justify-center border bg-primary rounded-lg w-full max-w-56 px-3 py-2 text-white hover:opacity-90 border-primary transition duration-300 focus-visible:ring-2 ring-primaryFade outline-none whitespace-nowrap gap-2;
 }
 
 .status-badge {
