@@ -46,6 +46,16 @@ export interface LandLord {
 	confirmPassword?: string
 }
 
+export interface Tenant {
+	email: string;
+	phone: string;
+	password: string;
+	confirmPassword: string;
+	name: string;
+	surname: string;
+	accessCode: string;
+}
+
 export interface Package {
 
 }

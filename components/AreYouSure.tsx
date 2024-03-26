@@ -2,6 +2,7 @@ import { AreYouSureProps } from "@/utils/types"
 import DialogLayout from "./DialogLayout"
 import Image from "next/image"
 import CustomImage from "./CustomImage"
+import placeholderImg from "@/public/images/landlord-emoji.svg"
 
 const AreYouSure = ({
   aYSD,
@@ -25,7 +26,7 @@ const AreYouSure = ({
           <div className="flex items-center gap-[5px] mb-[2px]">
             <CustomImage
               src={aYSD?.data?.selfie}
-              fallbackSrc="/public/images/landlord-emoji.svg"
+              fallbackSrc={placeholderImg}
               alt="Landlord Emoji"
               className="rounded-full object-cover"
               width={24}

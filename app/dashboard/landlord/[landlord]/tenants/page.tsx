@@ -1,8 +1,8 @@
 "use client"
 import AvatarStack from "@/components/admin-dashboard/AvatarStack"
-import LandlordsHeader from "@/components/admin-dashboard/LandlordsHeader"
 import Pagination from "@/components/admin-dashboard/Pagination"
 import StatusBadge from "@/components/admin-dashboard/StatusBadge"
+import TenantDetailsDialog from "@/components/admin-dashboard/TenantDetailsDialog"
 import {
   AddGreenIcon,
   ArrowGrowthWhiteIcon,
@@ -20,11 +20,21 @@ import Image from "next/image"
 import Link from "next/link"
 import { useState } from "react"
 import ReactPaginate from "react-paginate"
+import { AreYouSureProps } from "@/utils/types"
+import { AnyObject } from "yup"
+import toast from "react-hot-toast"
+import { useDeleteTenantMutation } from "@/redux/endpoints"
+import LandlordsHeader from "@/components/admin-dashboard/LandlordsHeader"
+import AreYouSure from "@/components/AreYouSure"
 
-export default function Tenant({ params }: { params: { landlord: string } }) {
+export default function Tenant({ params }: { params: { tenant: string } }) {
   const [filteredTenants, setfilteredTenants] = useState<any[]>(
     new Array(64).fill(0)
   )
+  const [deleteATenant] = useDeleteTenantMutation()
+  const [currentTenant, setCurrentTenant] = useState<any>(null)
+  const [tenantIsOpen, setTenantIsOpen] = useState(false)
+  const [cDIO, setCDIO] = useState<AreYouSureProps>({ status: false })
 
   // for pagination
   const [itemOffset, setItemOffset] = useState(0)
@@ -37,16 +47,51 @@ export default function Tenant({ params }: { params: { landlord: string } }) {
     setItemOffset(newOffset)
   }
 
+  const deleteTenantCaution = (data: any) => {
+    setCDIO({
+      status: true,
+      data,
+      type: "deleteUser",
+      action: deleteTenant,
+      desc: `Are you sure you want to delete this user?`,
+    })
+  }
+
+  const deleteTenant = async (_tenant: any) => {
+    const response: AnyObject = await deleteATenant(_tenant._id)
+    if (response.data) {
+      // dispatch(
+      //   openRespDialog({
+      //     self: false,
+      //     type: "success",
+      //     desc: response.data.message,
+      //     title: "Deleted!",
+      //   })
+      // )
+      toast.success("Tenant Deleted")
+    } else if (response.error) {
+      toast.error("An error occured")
+      // dispatch(
+      //   openRespDialog({
+      //     self: false,
+      //     type: "error",
+      //     desc: response.error.message,
+      //     title: "Oops!",
+      //   })
+      // )
+    }
+  }
+
   return (
     <>
       <LandlordsHeader />
       <div className="my-[24px] flex flex-wrap items-center gap-2">
-        <Link href="/dashboard/landlord">
-          <span className="text-[22px] whitespace-nowrap">Landlords /</span>
+        <Link href="/dashboard/tenant">
+          <span className="text-[22px] whitespace-nowrap">Tenants /</span>
         </Link>
         <Link href="#">
           <span className="text-primary2 whitespace-nowrap font-bold text-[22px]">
-            Landlord&rsquo;s Tenant /
+            Tenant&rsquo;s Tenant /
           </span>
         </Link>
       </div>
@@ -75,7 +120,7 @@ export default function Tenant({ params }: { params: { landlord: string } }) {
         </div>
         <div>
           <Link
-            href={`/dashboard/landlord/${params.landlord}`}
+            href={`/dashboard/tenant/${params.tenant}`}
             className="text-white w-[140px] h-[38px] grid place-items-center rounded-[6px] bg-[#2A4C23]"
           >
             View Profile
@@ -89,7 +134,7 @@ export default function Tenant({ params }: { params: { landlord: string } }) {
               <td className="p-3">
                 <div className="border-[1px] border-white rounded-[4px] w-[20px] h-[20px]"></div>
               </td>
-              <td className="p-3">Landlord</td>
+              <td className="p-3">Tenant</td>
               <td className="p-3">Address</td>
               <td className="p-3">Email Address</td>
               <td className="p-3">Properties</td>
@@ -111,8 +156,8 @@ export default function Tenant({ params }: { params: { landlord: string } }) {
                 <td className="p-3">
                   <div className="flex items-center gap-[5px] mb-[2px]">
                     <Image
-                      src="/images/landlord-emoji.svg"
-                      alt="Landlord Emoji"
+                      src="/images/tenant-emoji.svg"
+                      alt="Tenant Emoji"
                       width={24}
                       height={24}
                     />
@@ -133,9 +178,22 @@ export default function Tenant({ params }: { params: { landlord: string } }) {
                 </td>
                 <td className="p-3">
                   <span className="flex items-center gap-3">
-                    <InformationIcon />
+                    <button
+                      onClick={() => {
+                        setCurrentTenant(each)
+                        setTenantIsOpen(true)
+                      }}
+                    >
+                      <InformationIcon />
+                    </button>
                     <ShareYellowIcon />
-                    <DeleteRedIcon />
+                    <button
+                      onClick={() => {
+                        deleteTenantCaution(each)
+                      }}
+                    >
+                      <DeleteRedIcon />
+                    </button>
                   </span>
                 </td>
               </tr>
@@ -147,6 +205,13 @@ export default function Tenant({ params }: { params: { landlord: string } }) {
       <div className="flex bg-bgprimaryfade py-3 items-center justify-between">
         <Pagination handlePageClick={handlePageClick} pageCount={pageCount} />
       </div>
+
+      <TenantDetailsDialog
+        tenant={currentTenant}
+        open={tenantIsOpen}
+        setOpen={setTenantIsOpen}
+      />
+      <AreYouSure aYSD={cDIO} setAYSD={setCDIO} />
     </>
   )
 }

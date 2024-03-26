@@ -133,6 +133,10 @@ export const appApi = createApi({
 			transformResponse: (response: any) => response.data,
 			providesTags: ['Rent']
 		}),
+		deleteTenant: builder.mutation<any, any>({
+			query: (body,) => ({ url: `auth/${body.actor}/tenant`, method: "DELETE", body }),
+			transformResponse: (response: any) => response.data,
+		}),
 
 
 		// properties
@@ -166,6 +170,7 @@ export const {
 	useGetLandlordPropertiesMutation,
 	useDeleteLandlordMutation,
 	useGetPackagesQuery,
+	useDeleteTenantMutation,
 	useGetTenantsQuery,
 	useDeleteAdminMutation
 } = appApi
