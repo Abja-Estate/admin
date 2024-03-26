@@ -1,7 +1,7 @@
 import { ReactNode, useState } from "react"
 import DialogLayout from "../DialogLayout"
 import { Input } from "@/utils/types"
-import FormField from "../FormField"
+import FormField from "../inputs/FormField"
 import PropertyDialog from "./PropertyDialog"
 
 export const landlordInputs: Input[] = [

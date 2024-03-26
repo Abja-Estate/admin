@@ -1,11 +1,14 @@
 "use client"
+import Loading from "@/components/Loading"
+import MemoNoRecord from "@/components/NoRecord"
+import Pagination from "@/components/admin-dashboard/Pagination"
+import MemoPriorityBadge from "@/components/admin-dashboard/PriorityBadge"
+import ProfileInTD from "@/components/admin-dashboard/ProfileInTD"
+import StatusBadge from "@/components/admin-dashboard/StatusBadge"
 import {
   AddGreenIcon,
-  ArrowGrowthIcon,
   ArrowGrowthWhiteIcon,
   CalenderOutlineIcon,
-  ChevronLeftIconIcon,
-  ChevronRightGreenIcon,
   DeleteRedIcon,
   DoubleCheckWhiteIcon,
   FilterGreenIcon,
@@ -16,54 +19,44 @@ import {
   RequestIcon,
   SearchIcon,
   ShareIcon,
-  ShareYellowIcon,
   TagIcon,
   TaskCompleteWhiteIcon,
 } from "@/components/svgs"
-import { BASE_URL } from "@/config"
-import { fetchAdminRequests } from "@/utils/api"
+import { useGetRequestsQuery } from "@/redux/endpoints"
+import { months } from "@/utils/constants"
 import Image from "next/image"
 import { useEffect, useState } from "react"
 
 export default function Request() {
-  const [requests, setRequests] = useState<any>([])
+  const { data: requests, isLoading: loading } = useGetRequestsQuery("")
+  const [fRequests, setFRequests] = useState<any>([])
 
   useEffect(() => {
-    const fetchRequests = async (
-      url: string,
-      requestStateSetter: React.Dispatch<any>
-    ) => {
-      try {
-        const response = await fetchAdminRequests(
-          `${BASE_URL}/service/admin/${url}`
-        )
-        if (response.statusCode === 200) {
-          console.log("data", response.data)
-          // Define an empty array to store all requests
-          let allRequests: any[] = []
-
-          // Iterate over the data array
-          response.data.data.forEach((entry: any) => {
-            // Iterate over the requests array inside each object
-            entry.requests.forEach((request: any) => {
-              // Push the request into the allRequests array
-              allRequests.push(request)
-            })
-          })
-
-          // Now allRequests contains all the requests combined into a single array
-          console.log("hi", allRequests)
-          requestStateSetter(allRequests)
-        } else {
-          console.error("Error fetching landlords:", response.error)
-        }
-      } catch (error) {
-        console.error("Error fetching landlords:", error)
-      }
+    if (requests) {
+      setFRequests(
+        requests
+          .filter((each) => each.requests.length)
+          .map((each) => each.requests[0])
+      )
     }
+  }, [requests])
 
-    fetchRequests("all_requests", setRequests)
-  }, [BASE_URL])
+  // for pagination
+  const [itemOffset, setItemOffset] = useState(0)
+  const [itemsPerPage, setItemsPerPage] = useState(4)
+  const endOffset = itemOffset + itemsPerPage
+  const currentItems = fRequests?.slice(itemOffset, endOffset)
+  const pageCount = Math.ceil(fRequests?.length / itemsPerPage)
+  const handlePageClick = (event: { selected: number }) => {
+    const newOffset = (event.selected * itemsPerPage) % fRequests?.length
+    setItemOffset(newOffset)
+  }
+
+  const cd = new Date()
+  const [cdate, setcdate] = useState({
+    month: cd.getMonth(),
+    year: cd.getFullYear(),
+  })
   return (
     <>
       <header>
@@ -181,26 +174,101 @@ export default function Request() {
           </button>
           <button className="px-[8px] py-[4px] text-[14px] flex gap-[8px] items-center bg-[#B5D0B2] text-primary2 rounded-[4px]">
             <CalenderOutlineIcon />
-            Sept 2023
+            {months[cdate.month].slice(0, 3)} {cdate.year}
           </button>
         </div>
       </div>
       <div className="mt-[30px] text-[14px]">
-        <header className="h-[44px] bg-primary2 w-full p-[10px] items-center gap-[20px] text-white grid grid-cols-[20px_60px_1.2fr_1fr_1fr_1.4fr_0.8fr_0.9fr_1fr_0.82fr] mb-2">
-          <div>
-            <div className="border-[1px] border-white rounded-[4px] w-[20px] h-[20px]"></div>
+        {!requests?.length && !loading && (
+          <div className="flex h-full gap-3 bg-white rounded-lg px-4 py-10 items-center justify-center flex-col">
+            <MemoNoRecord className="w-1/5" />
+            <p className="text-primary text-sm lg:text-lg">
+              No Requests received yet
+            </p>
           </div>
-          <p>Tenant</p>
-          <p>Address</p>
-          <p>Day</p>
-          <p>Service</p>
-          <p>Request Status</p>
-          <p>Priority</p>
-          <p>Action</p>
-        </header>
+        )}
+
+        {loading && <Loading />}
+
+        <div className="overflow-auto">
+          <table className="w-full">
+            <thead>
+              <tr className="bg-primary2 text-white">
+                <td className="p-3">
+                  <div className="border-[1px] border-white rounded-[4px] w-[20px] h-[20px]"></div>
+                </td>
+                <td className="p-3">ID</td>
+                <td className="p-3">Landlord</td>
+                <td className="p-3">Address</td>
+                <td className="p-3">Tenant</td>
+                <td className="p-3">Service Personnel</td>
+                <td className="p-3">Service</td>
+                <td className="p-3">Request Status</td>
+                <td className="p-3">Priority</td>
+                <td className="p-3">Action</td>
+              </tr>
+            </thead>
+
+            <tbody>
+              {Array(10)
+                .fill(0)
+                .map((each, i) => (
+                  <tr
+                    key={i + "request"}
+                    className="bg-white border-y-8 border-bgprimaryfade"
+                  >
+                    <td className="p-3">
+                      <div className="border-[1px] border-[#828282] rounded-[4px] w-[20px] h-[20px]"></div>
+                    </td>
+                    <td className="p-3">89678</td>
+                    <td className="p-3">
+                      <ProfileInTD
+                        image="/images/landlord-emoji.svg"
+                        name="Hello"
+                        surname="Lastname"
+                        phone="(+256) 567890123"
+                      />
+                    </td>
+                    <td className="p-3">{"request propertyLocation"}</td>
+                    <td className="p-3">
+                      <ProfileInTD
+                        image="/images/tenant-emoji.svg"
+                        name="Hello"
+                        surname="Lastname"
+                        phone="(+256) 567890123"
+                      />
+                    </td>
+                    <td className="p-3">
+                      <ProfileInTD
+                        image="/images/tenant-emoji.svg"
+                        name="Hello"
+                        surname="Lastname"
+                        phone="(+256) 567890123"
+                      />
+                    </td>
+                    <td className="p-3">Electrician</td>
+                    <td className="p-3">
+                      <StatusBadge status="ongoing" />
+                    </td>
+                    <td className="p-3">
+                      <MemoPriorityBadge status="Medium Priority" />
+                    </td>
+                    <td className="p-3">
+                      <div className="flex items-center gap-2 h-fit">
+                        <InformationIcon />
+                        <DeleteRedIcon />
+                        <MoreVertIcon />
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+            </tbody>
+          </table>
+        </div>
         <div className="flex flex-col gap-2">
-          {requests &&
-            requests.map((request: any, i: number) => (
+          {!loading &&
+            requests?.length &&
+            currentItems.map((request: any, i: number) => (
               <div
                 key={i}
                 className="bg-white w-full p-[10px] gap-[20px] grid grid-cols-[20px_60px_1.2fr_1fr_1fr_1.4fr_0.8fr_0.9fr_1fr_0.82fr] mb-2"
@@ -234,46 +302,11 @@ export default function Request() {
                     {request?.priority}
                   </p>
                 </div>
-                <div className="flex items-center gap-2 h-fit">
-                  <InformationIcon />
-                  <DeleteRedIcon />
-                  <MoreVertIcon />
-                </div>
               </div>
             ))}
         </div>
-        <div className="flex mt-[30px] items-center justify-between">
-          <button className="border-[#828282] text-[#828282] rounded-[6px] px-[8px] py-[4px] border-[1px] flex gap-2 items-center">
-            <ChevronLeftIconIcon />
-            Previous
-          </button>
-          <div className="flex items-center gap-2">
-            <button className="w-[27px] h-[27px] rounded-[6px] bg-[#B5D0B2] text-primary2 grid place-items-center">
-              1
-            </button>
-            <button className="w-[27px] h-[27px] rounded-[6px] bg-white text-[#828282] grid place-items-center">
-              2
-            </button>
-            <button className="w-[27px] h-[27px] rounded-[6px] bg-white text-[#828282] grid place-items-center">
-              3
-            </button>
-            <button className="w-[27px] h-[27px] rounded-[6px] bg-white text-[#828282] grid place-items-center">
-              ...
-            </button>
-            <button className="w-[27px] h-[27px] rounded-[6px] bg-white text-[#828282] grid place-items-center">
-              8
-            </button>
-            <button className="w-[27px] h-[27px] rounded-[6px] bg-white text-[#828282] grid place-items-center">
-              9
-            </button>
-            <button className="w-[27px] h-[27px] rounded-[6px] bg-white text-[#828282] grid place-items-center">
-              10
-            </button>
-          </div>
-          <button className="text-primary2 bg-[#B5D0B2] rounded-[6px] px-[8px] py-[4px] border-[1px] flex gap-5 items-center">
-            Next
-            <ChevronRightGreenIcon />
-          </button>
+        <div className="flex bg-bgprimaryfade py-3 items-center justify-between">
+          <Pagination handlePageClick={handlePageClick} pageCount={pageCount} />
         </div>
       </div>
     </>

@@ -21,12 +21,12 @@ const StatusBadge = ({
           : status == "pending"
           ? "bg-[#FFBB0C4D] text-[#FFBB0C]"
           : status == "ongoing"
-          ? "bg-[#26CFDA4D] text-[#26CFDA]"
+          ? "bg-[#D5EBF8] text-[#0174C7]"
           : status == "cancelled" || status == "failed"
           ? "bg-[#D500004D] text-[#D50000]"
           : status == "completed"
           ? "bg-primaryFade text-primary2"
-          : "bg-[#26CFDA4D] text-[#26CFDA]"
+          : "bg-[#EAEAEA] text-[#949494]"
       )}
     >
       • <span className="mx-auto capitalize">{text ?? status}</span>

@@ -86,12 +86,12 @@ export default function Tenant({ params }: { params: { tenant: string } }) {
     <>
       <LandlordsHeader />
       <div className="my-[24px] flex flex-wrap items-center gap-2">
-        <Link href="/dashboard/tenant">
-          <span className="text-[22px] whitespace-nowrap">Tenants /</span>
+        <Link href="/dashboard/landlord">
+          <span className="text-[22px] whitespace-nowrap">Landlords /</span>
         </Link>
         <Link href="#">
           <span className="text-primary2 whitespace-nowrap font-bold text-[22px]">
-            Tenant&rsquo;s Tenant /
+            Landlords&rsquo;s Tenant /
           </span>
         </Link>
       </div>

@@ -1,6 +1,6 @@
 "use client"
 import RadioInput from "@/components/inputs/radioInput"
-import SwitchToggle from "@/components/switchToggle"
+import SwitchToggle from "@/components/inputs/switchToggle"
 import clsx from "clsx"
 import { useState } from "react"
 

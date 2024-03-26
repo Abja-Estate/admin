@@ -1,6 +1,6 @@
 import Image from "next/image"
 import { ChangeEvent, FormEvent, useState } from "react"
-import Input from "../input"
+import Input from "../inputs/input"
 import Button from "../button"
 import toast from "react-hot-toast"
 import axios from "axios"

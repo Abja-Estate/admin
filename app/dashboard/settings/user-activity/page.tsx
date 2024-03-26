@@ -1,7 +1,7 @@
 "use client"
 import RadioInput from "@/components/inputs/radioInput"
 import { DeleteIcon } from "@/components/svgs"
-import SwitchToggle from "@/components/switchToggle"
+import SwitchToggle from "@/components/inputs/switchToggle"
 import clsx from "clsx"
 import Image from "next/image"
 import { useState } from "react"

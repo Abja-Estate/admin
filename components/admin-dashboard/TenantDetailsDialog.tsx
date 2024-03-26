@@ -23,7 +23,7 @@ import MemoWifi from "../svgs/Wifi"
 import MemoGarden from "../svgs/Garden"
 import MemoPower from "../svgs/Power"
 import MemoLaundry from "../svgs/Laundry"
-import Checkbox from "../checkbox"
+import Checkbox from "../inputs/checkbox"
 
 const TenantDetailsDialog = ({
   open,

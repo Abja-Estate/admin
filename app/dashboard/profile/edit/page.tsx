@@ -1,7 +1,7 @@
 "use client"
-import Input from "@/components/input"
+import Input from "@/components/inputs/input"
 import { CameraIcon, EditGreenIcon, EditOutlineIcon } from "@/components/svgs"
-import TextArea from "@/components/textArea"
+import TextArea from "@/components/inputs/textArea"
 import Image from "next/image"
 
 export default function ProfileEdit() {

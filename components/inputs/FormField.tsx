@@ -1,6 +1,6 @@
 import { cn } from "@/utils/cn"
 import { Fragment, ReactNode, useState } from "react"
-import { EyeIcon, EyeSlashIcon } from "./svgs"
+import { EyeIcon, EyeSlashIcon } from "../svgs"
 import { Listbox, Transition } from "@headlessui/react"
 
 interface Desc {
