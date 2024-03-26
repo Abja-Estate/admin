@@ -83,7 +83,7 @@ export default function AdminDashboardTopNavigation({
             draggable={false}
           />
         </figure>
-        <div className="h-[40px] hidden ml-4 sm:ml-20 md:ml-40 mr-10 rounded-[10px] bg-[#EAEDE9] w-[500px] border-[1px] border-[#3A3A3A] px-[16px] sm:flex items-center gap-[16px]">
+        <div className="h-[40px] hidden ml-4 sm:ml-20 md:ml-40 mr-10 rounded-[10px] bg-bgprimaryfade w-[500px] border-[1px] border-[#3A3A3A] px-[16px] sm:flex items-center gap-[16px]">
           <SearchIcon />
           <input
             className="w-full flex-1 bg-transparent placeholder-[#3A3A3A] outline-none"

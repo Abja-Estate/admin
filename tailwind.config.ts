@@ -19,7 +19,8 @@ const config: Config = {
         white80: '#F6F8F6',
         fade: '#949494',
         textcolor100: '#333436',
-        primaryFade: '#B5D0B2'
+        primaryFade: '#B5D0B2',
+        bgprimaryfade: '#EAEDE9'
       }
     },
   },

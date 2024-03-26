@@ -34,7 +34,7 @@ function AdminDashboardLayout({ children }: { children: React.ReactNode }) {
             onClick={() => setMenuIsOpen(false)}
           ></div>
         </div>
-        <main className="flex-1 w-full py-[30px] bg-[#EAEDE9] overflow-x-auto">
+        <main className="flex-1 w-full py-[30px] bg-bgprimaryfade overflow-x-auto">
           <div className="px-[20px] w-full inline-block">{children}</div>
         </main>
       </div>

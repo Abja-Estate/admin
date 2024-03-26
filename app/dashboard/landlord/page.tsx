@@ -24,6 +24,8 @@ import { AnyObject } from "yup"
 import toast from "react-hot-toast"
 import { months } from "@/utils/constants"
 import LandlordsHeader from "@/components/admin-dashboard/LandlordsHeader"
+import AvatarStack from "@/components/admin-dashboard/AvatarStack"
+import Pagination from "@/components/admin-dashboard/Pagination"
 
 export default function AdminLandord() {
   const { data, isLoading } = useGetLandlordsQuery("")
@@ -98,7 +100,7 @@ export default function AdminLandord() {
     <>
       <LandlordsHeader />
       <div className="my-[24px]">
-        <Link href="/landlord">
+        <Link href="/dashboard/landlord">
           <span className="text-primary2 font-bold text-[22px]">
             Landlords /
           </span>
@@ -225,7 +227,7 @@ export default function AdminLandord() {
                 {data &&
                   currentItems.map((landlord: LandLord, i: number) => (
                     <tr
-                      className="bg-white text-[#4F4F4F] border-t-8 border-[#EAEDE9]"
+                      className="bg-white text-[#4F4F4F] border-t-8 border-bgprimaryfade"
                       key={i + "landlord"}
                     >
                       <td className="p-2">
@@ -259,7 +261,7 @@ export default function AdminLandord() {
                         Properties
                       </td>
                       <td className="p-2">
-                        <Images
+                        <AvatarStack
                           images={landlord?.history
                             ?.filter((each: any) => each.type == "tenantAdded")
                             .map((each: any) => each.data.selfie)}
@@ -318,63 +320,12 @@ export default function AdminLandord() {
           </div>
         )}
 
-        <div className="flex mt-3 bg-[#EAEDE9] p-3 items-center justify-between">
-          <ReactPaginate
-            className="flex text-xs items-center gap-2 npage w-full justify-center"
-            breakLabel="..."
-            nextLabel={
-              <button className="hover:text-primary2 hover:bg-[#B5D0B2] bg-white transition border-[#828282] text-[#828282]  rounded-[6px] px-[8px] py-[4px] border-[1px] flex gap-5 items-center">
-                Next
-                <SVGIcon.ChevronRightGreenIcon />
-              </button>
-            }
-            onPageChange={handlePageClick}
-            pageRangeDisplayed={4}
-            pageCount={pageCount}
-            activeLinkClassName="bg-primaryFade text-primary2"
-            pageLinkClassName="hover:text-primary2 hover:bg-[#B5D0B2] w-[27px] h-[27px] rounded-[6px] bg-white text-[#828282] grid place-items-center"
-            previousLabel={
-              <button className="hover:text-primary2 hover:primaryFade border-[#828282] bg-white text-[#828282] rounded-[6px] px-[8px] py-[4px] border-[1px] flex gap-2 items-center">
-                <SVGIcon.ChevronLeftIconIcon />
-                Previous
-              </button>
-            }
-            renderOnZeroPageCount={null}
-          />
+        <div className="flex mt-3 bg-bgprimaryfade p-3 items-center justify-between">
+          <Pagination pageCount={pageCount} handlePageClick={handlePageClick} />
         </div>
       </div>
 
       <AreYouSure aYSD={cDIO} setAYSD={setCDIO} />
     </>
-  )
-}
-
-const Images = ({ images }: { images?: string[] }) => {
-  const LIMIT = 3
-  return (
-    <div className="flex items-center">
-      {images
-        ?.filter((each, i) => i < LIMIT)
-        .map((each) => (
-          <SmallAvatar src={each} key={each} />
-        ))}
-      {images && images?.length > LIMIT && (
-        <div className=" grid place-items-center text-sm text-[#949494] pl-3 whitespace-nowrap">
-          +{images.length - LIMIT} persons
-        </div>
-      )}
-    </div>
-  )
-}
-
-const SmallAvatar = ({ src }: { src: string }) => {
-  return (
-    <Image
-      src={src}
-      alt="User"
-      width={25}
-      height={25}
-      className="-ml-[10px] xl:-ml-[14px] 2xl:-ml-[10px] ring-1 ring-white w-[1.65rem] h-[1.65rem] object-cover min-w-[1.65rem] rounded-full"
-    />
   )
 }
