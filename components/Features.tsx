@@ -35,6 +35,11 @@ const Features = ({ feature }: { feature: string }) => {
             stroke="#47893F"
             strokeWidth="2"
           />
+          <path
+            d="M16.5565 2.32568C16.4702 2.70465 16.1281 2.98972 15.7163 2.98972C15.3048 2.98972 14.9627 2.70467 14.8765 2.32568H16.5565Z"
+            stroke="#47893F"
+            strokeWidth="0.375"
+          />
         </svg>
       )
 

@@ -13,6 +13,17 @@ import MemoElectrician from "../svgs/Electrician"
 import CustomImage from "../CustomImage"
 import placeholder from "/public/images/landlord-emoji.svg"
 import MemoPlumber from "../svgs/Plumber"
+import MemoStructure from "../svgs/Structure"
+import MemoRedLocationIcon from "../svgs/RedLocationIcon"
+import Features from "../Features"
+import MemoFitness from "../svgs/Fitness"
+import MemoFootball from "../svgs/Football"
+import MemoPool from "../svgs/Pool"
+import MemoWifi from "../svgs/Wifi"
+import MemoGarden from "../svgs/Garden"
+import MemoPower from "../svgs/Power"
+import MemoLaundry from "../svgs/Laundry"
+import Checkbox from "../checkbox"
 
 const TenantDetailsDialog = ({
   open,
@@ -74,6 +85,26 @@ const TenantDetailsDialog = ({
     }
   }
 
+  const features: any = {
+    fitness: <MemoFitness />,
+    football: <MemoFootball />,
+    pool: <MemoPool />,
+    wifi: <MemoWifi />,
+    garden: <MemoGarden />,
+    power: <MemoPower />,
+    laundry: <MemoLaundry />,
+  }
+
+  const _features = [
+    { value: "football", label: "Football" },
+    { value: "wifi", label: "Wi Fi" },
+    { value: "pool", label: "Pool" },
+    { value: "garden", label: "Garden" },
+    { value: "fitness", label: "Fitness" },
+    { value: "laundry", label: "Laundry" },
+    { value: "power", label: "24 hrs Power" },
+  ]
+
   return (
     <DialogLayout
       className="bg-bgprimaryfade rounded-xl p-4"
@@ -82,7 +113,7 @@ const TenantDetailsDialog = ({
     >
       <>
         <div className="grid gap-3 w-[80vw] md:grid-cols-2 max-w-[57rem]">
-          <div className="bg-white p-4 rounded-xl">
+          <div className="bg-white p-4 max-h-[55vh] overflow-auto rounded-xl">
             <div className="flex gap-[20px] border-b pb-4 mb-4 border-primaryFade">
               <Image
                 src="/images/tenant-profile-img.svg"
@@ -129,7 +160,7 @@ const TenantDetailsDialog = ({
                 </div>
               </div>
             </div>
-            <Tab.Group defaultIndex={1}>
+            <Tab.Group>
               <Tab.List className="flex space-x-1 rounded-full bg-white80 p-1.5">
                 {["Service Requests", "Reviews and Ratings"].map(
                   (category, i) => (
@@ -183,7 +214,7 @@ const TenantDetailsDialog = ({
                         key={i + "service"}
                         className="flex flex-col text-sm bg-white80 p-3 rounded-xl"
                       >
-                        <div className="flex gap-3">
+                        <div className="flex gap-2">
                           <span className="text-primary2">
                             <MemoElectrician className="w-6" />
                           </span>
@@ -197,14 +228,14 @@ const TenantDetailsDialog = ({
                                 className="min-w-28"
                               />
                             </div>
-                            <p className="line-clamp-1 text-fade pb-2 text-[.65rem] leading-6">
+                            <p className="line-clamp-1 text-fade text-[.65rem] leading-6">
                               {each.message}
                             </p>
                           </div>
                         </div>
 
                         <div className="flex justify-between text-xs gap-3">
-                          <div className="flex items-center gap-3 mb-[2px]">
+                          <div className="flex items-center gap-3">
                             <CustomImage
                               src={""}
                               fallbackSrc={placeholder}
@@ -294,7 +325,129 @@ const TenantDetailsDialog = ({
               </Tab.Panels>
             </Tab.Group>
           </div>
-          <div className="bg-white p-4 rounded-xl"></div>
+          <div className="bg-white max-h-[55vh] overflowed text-sm flex flex-col gap-5 p-4 rounded-xl text-[#333436]">
+            <div className="flex gap-4">
+              <div className="basis-1/3">
+                <span className="text-xs text-fade">Property Name:</span>
+                <h3 className="font-medium">The Spring Lodge</h3>
+              </div>
+              <div className="basis-2/3">
+                <span className="text-xs text-fade">Unit ID:</span>
+                <h3 className="font-medium">ABJ56rjX</h3>
+              </div>
+            </div>
+            <div className="flex gap-4">
+              <div className="basis-1/3">
+                <span className="text-xs text-fade">Structure:</span>
+                <h3 className="flex gap-1 items-center">
+                  <MemoStructure /> Condominium
+                </h3>
+              </div>
+              <div className="basis-2/3">
+                <span className="text-xs text-fade">Type:</span>
+                <h3 className="font-medium">Residential</h3>
+              </div>
+            </div>
+            <div className="">
+              <span className="text-xs text-fade">Features:</span>
+              <div className="flex mt-1 gap-5 flex-wrap">
+                {[
+                  { feat: "bedroom", value: 2, label: "Bedroom" },
+                  { feat: "toilet", value: 2, label: "Toilet" },
+                  { feat: "bath", value: 2, label: "Bath" },
+                  { feat: "store", value: 2, label: "Store" },
+                  { feat: "meter", value: "No.1394567", label: "Light Meter" },
+                  { feat: "meter", value: "No.1394567", label: "Water Meter" },
+                ].map((each, i) => (
+                  <div key={i + "feat"} className=" flex flex-col gap-1">
+                    <span className="flex items-centerm gap-2">
+                      <Features feature={each.feat} />
+                      <span className="text-fade text-xs"> {each.value}</span>
+                    </span>
+                    <span className="text-xs mt-auto block">{each.label}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div className="">
+              <span className="text-xs text-fade">Structure:</span>
+              <h3 className="flex gap-1 items-center">
+                <MemoRedLocationIcon /> 24, Commercial Avenue, Kampala
+              </h3>
+            </div>
+            <div className="flex justify-between gap-4">
+              <div className="">
+                <span className="text-xs text-fade">Move-In Date:</span>
+                <h3 className="font-medium">27/08/2023</h3>
+              </div>
+              <div className="">
+                <span className="text-xs text-fade">Due Date:</span>
+                <h3 className="font-medium">27/08/2023</h3>
+              </div>
+              <div className="">
+                <span className="text-xs text-fade">Period:</span>
+                <h3 className="font-medium">12 months</h3>
+              </div>
+            </div>
+            <div className="">
+              <span className="text-xs text-fade">Description:</span>
+              <h3 className="font-medium">
+                Bright, spacious 2-bedroom apartment in a quiet neighborhood.
+                Close to shops, restaurants, and public transportation.
+              </h3>
+            </div>
+
+            <div className="">
+              <span className="text-xs text-fade">
+                Properties and Unit features:
+              </span>
+              <div className="grid grid-cols-3 gap-x-1  flex-wrap">
+                {_features.map((each) => (
+                  <div key={each.value} className="flex items-center gap-2">
+                    <Checkbox
+                      className="h-[1.15rem] w-[1.15rem] min-w-[1.15rem"
+                      onClick={() => {}}
+                      checked={false}
+                    />
+                    <span className="pt-2">{features[each.value]}</span>
+                    <span className="text-xs whitespace-nowrap">
+                      {each.label}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="">
+              <span className="text-xs text-fade">Cost:</span>
+              <div className="flex flex-col gap-3 mt-2">
+                <div className="flex justify-between items-center">
+                  <h3>
+                    Monthly Cost <span className="text-red-600">*</span>
+                  </h3>
+                  <span className="bg-bgprimaryfade border px-3 text-[.7rem] border-primaryFade text-primary2">
+                    #3,000 /mth
+                  </span>
+                </div>
+                <div className="flex justify-between items-center">
+                  <h3>
+                    Extra Charges <span className="text-red-600">*</span>
+                  </h3>
+                  <span className="bg-bgprimaryfade border px-3 text-[.7rem] border-primaryFade text-primary2">
+                    #3,000 /mth
+                  </span>
+                </div>
+                <div className="flex justify-between items-center">
+                  <h3>
+                    Tax <span className="text-red-600">*</span>
+                  </h3>
+                  <span className="bg-bgprimaryfade border px-3 text-[.7rem] border-primaryFade text-primary2">
+                    #3,000 /mth
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
 
         <AreYouSure aYSD={cDIO} setAYSD={setCDIO} />
