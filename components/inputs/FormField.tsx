@@ -37,7 +37,7 @@ const FormField = ({ autocomplete = true, inputProps, ...props }: Desc) => {
     >
       <label
         className={cn(
-          !props.t ? "inline-block text-primary font-medium mb-4" : "text-fade"
+          !props.t ? "inline-block text-primary font-medium mb-3" : "text-fade"
         )}
       >
         {props.label}
@@ -155,6 +155,7 @@ const FormField = ({ autocomplete = true, inputProps, ...props }: Desc) => {
             }
             name={props.name}
             placeholder={props.placeholder ?? ""}
+            rows={3}
             className={cn(
               !props.t
                 ? "w-full outline-none py-1"
@@ -217,7 +218,7 @@ const FormField = ({ autocomplete = true, inputProps, ...props }: Desc) => {
           {props.formik &&
             props.formik.touched[props.name] &&
             props?.formik.errors[props.name] && (
-              <div className="px-4 pt-1 text-[#D90001] text-sm">
+              <div className="px-4 pt-0.5 text-[#D90001] text-xs">
                 {props?.formik.errors[props.name] as ReactNode}{" "}
               </div>
             )}
@@ -227,7 +228,7 @@ const FormField = ({ autocomplete = true, inputProps, ...props }: Desc) => {
           {props.formik &&
             props.formik.touched[props.name] &&
             props?.formik.errors[props.name] && (
-              <small className="text-red-600">
+              <small className="text-red-600 text-sm block">
                 {props?.formik.errors[props.name] as ReactNode}
               </small>
             )}

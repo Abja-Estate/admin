@@ -16,6 +16,14 @@ export const landlordSchema = Yup.object({
 	// .length(10, "Phone number should be 8 digits (without the leading zero)"),
 })
 
+export const adminInputs: Input[] = [
+	{ label: "Firstname", name: 'name', type: "text", placeholder: "First name" },
+	{ label: "Lastname", name: 'surname', type: "text", placeholder: "Last name" },
+	{ label: "Email", name: 'email', type: "email", placeholder: "Email Address" },
+	{ label: "Phone", name: 'phone', type: "text", placeholder: "Phone Number" },
+	{ label: "Bio", name: 'about', type: "textarea", placeholder: "Bio" },
+]
+
 
 export const propertyInputs: Input[] = [
 	{ label: "Name", name: "name", type: "text", placeholder: "Enter Name" },
@@ -129,11 +137,18 @@ export const resetPasswordInputs: Input[] = [
 	{ name: 'password_confirmation', type: "password", placeholder: 'Confirm Password' },
 ]
 
-export const resetPasswordSchema = Yup.object({
+export const changePasswordSchema = Yup.object({
 	password: Yup.string()
 		.required("Password is required")
-		.matches(/[a-zA-Z]/, "Password must contain at least one alphabet")
-		.matches(/[0-9]/, "Password must contain at least one digit")
-		.min(8, "Password must contain at least 8 characters").label("Password"),
-	password_confirmation: Yup.string().label('Confirm Password').required().oneOf([Yup.ref('password')], 'Passwords must match'),
+		.test(
+			'password-complexity',
+			'Password must include a digit,a symbol, and a capital letter',
+			value =>
+				/^(?=.*\d)(?=.*[!@#$%^&*(),.?":{}|<>])(?=.*[A-Z])/.test(
+					value
+				)
+		)
+		.label("Password"),
+
+	confirmPassword: Yup.string().label('Confirm Password').required().oneOf([Yup.ref('password')], 'Passwords must match'),
 })

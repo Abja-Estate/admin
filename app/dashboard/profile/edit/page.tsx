@@ -1,17 +1,57 @@
 "use client"
-import Input from "@/components/inputs/input"
-import { CameraIcon, EditGreenIcon, EditOutlineIcon } from "@/components/svgs"
-import TextArea from "@/components/inputs/textArea"
+import { CameraIcon, EditOutlineIcon } from "@/components/svgs"
 import Image from "next/image"
+import FormField from "@/components/inputs/FormField"
+import { adminInputs, changePasswordSchema } from "@/utils/schema"
+import { useAppSelector } from "@/redux/hooks"
+import CustomImage from "@/components/CustomImage"
+import { useFormik } from "formik"
+import { AnyObject } from "yup"
+import { getDefault } from "@/utils/helpers"
+import { useAdminChangePassMutation } from "@/redux/endpoints"
+import toast from "react-hot-toast"
 
 export default function ProfileEdit() {
+  const { profile: user } = useAppSelector((state) => state.admin)
+  const [updatePassword, { isLoading }] = useAdminChangePassMutation()
+
+  const password_f = useFormik<{ password: string; confirmPassword: string }>({
+    validationSchema: changePasswordSchema,
+    initialValues: { password: "", confirmPassword: "" },
+    onSubmit: async (values) => {
+      const response: AnyObject = await updatePassword({
+        ...values,
+        id: user._id,
+        actor: "admin",
+      })
+      if (response.data) {
+        toast.success("Password Updated successfully")
+      }
+      password_f.resetForm()
+    },
+  })
+
+  const admin_f = useFormik<AnyObject>({
+    validationSchema: changePasswordSchema,
+    initialValues: getDefault(adminInputs, user),
+    onSubmit: async (values) => {
+      const ldata: AnyObject = {
+        ...values,
+        actor: "admin",
+      }
+      console.log(ldata)
+    },
+  })
+
   return (
-    <div className="w-[1156px] overflow-hidden">
+    <div className=" overflow-hidden">
       <header className="h-[212px] grid place-items-center w-full bg-[url(/images/profile-cover-img.svg)] bg-cover py-10 px-14">
         <div className="flex justify-between w-full">
-          <Image
-            src="/images/admin-user-img-1.svg"
+          <CustomImage
+            src={user?.selfie}
+            fallbackSrc="/images/landlord-emoji.svg"
             alt="Admin User 1"
+            className="h-28 w-28 min-w-38 rounded-full object-cover"
             width={100}
             height={100}
           />
@@ -22,100 +62,59 @@ export default function ProfileEdit() {
         </div>
       </header>
       <div className="pt-12 pb-8 px-10 w-full p-[24px] bg-white">
-        <div className="grid grid-cols-2 gap-10">
+        <div className="grid sm:grid-cols-2 gap-10 lg:gap-20 xl:px-8">
           <div>
             <header className="mb-6">
               <h1 className="text-[18px] font-semibold">
                 Personal Information
               </h1>
             </header>
-            <form className="w-full max-w-[425px] flex flex-col gap-[24px]">
-              <fieldset>
-                <label className="mb-[8px] inline-block">Full Name</label>
-                <Input
-                  type="text"
-                  defaultValue="Michael Ibaro"
-                  className="border-b-[2px]"
-                  trailing={<EditOutlineIcon />}
+            <form
+              onSubmit={admin_f.handleSubmit}
+              className="w-full flex flex-col gap-8"
+            >
+              {adminInputs.map((each) => (
+                <FormField
+                  key={each.name}
+                  formik={admin_f}
+                  {...each}
+                  suffix={<EditOutlineIcon />}
                 />
-              </fieldset>
-              <fieldset>
-                <label className="mb-[8px] inline-block">UserName</label>
-                <Input
-                  type="text"
-                  defaultValue="@Michaelibaro"
-                  className="border-b-[2px]"
-                  trailing={<EditOutlineIcon />}
-                />
-              </fieldset>
-              <fieldset>
-                <label className="mb-[8px] inline-block">Email Address</label>
-                <Input
-                  type="email"
-                  defaultValue="micheal.ibaro@gmail.com"
-                  className="border-b-[2px]"
-                  trailing={<EditOutlineIcon />}
-                />
-              </fieldset>
-              <fieldset>
-                <label className="mb-[8px] inline-block">Phone Number</label>
-                <Input
-                  type="text"
-                  defaultValue="(+256) 567890123"
-                  className="border-b-[2px]"
-                  trailing={<EditOutlineIcon />}
-                />
-              </fieldset>
-              <fieldset>
-                <label className="mb-[8px] inline-block">Bio</label>
-                <TextArea
-                  defaultValue="Super Admin of Abja Property Management Admin Dashboard, has 10+ years of experience in the industry. He oversees the entire operation of the dashboard, including managing user accounts, setting up permissions, and resolving technical issues. Michael is passionate about helping property owners and is always available to assist users."
-                  className="border-b-[2px]"
-                  trailing={<EditOutlineIcon />}
-                />
-              </fieldset>
+              ))}
             </form>
           </div>
           <div>
             <header className="mb-6">
               <h1 className="text-[18px] font-semibold">Change Password?</h1>
             </header>
-            <form className="w-full max-w-[425px] flex flex-col gap-[24px]">
-              <fieldset>
-                <label className="mb-[8px] inline-block">
-                  Current Password
-                </label>
-                <Input
-                  type="password"
-                  placeholder="Password"
-                  className="border-b-[2px]"
-                />
-              </fieldset>
-              <fieldset>
-                <label className="mb-[8px] inline-block">New Password</label>
-                <Input
-                  type="password"
-                  placeholder="Password"
-                  className="border-b-[2px]"
-                />
-              </fieldset>
-              <fieldset>
-                <label className="mb-[8px] inline-block">
-                  Confirm Password
-                </label>
-                <Input
-                  type="password"
-                  placeholder="Confirm Password"
-                  className="border-b-[2px]"
-                />
-              </fieldset>
+            <form
+              onSubmit={password_f.handleSubmit}
+              className="w-full flex flex-col gap-8"
+            >
+              <FormField
+                formik={password_f}
+                label="New Password"
+                name="password"
+                type="password"
+                placeholder="New Password Here"
+              />
+              <FormField
+                formik={password_f}
+                label="Confirm Password"
+                name="confirmPassword"
+                type="password"
+                placeholder="Confirm New Password"
+              />
+              <div className="flex justify-end pt-10">
+                <button
+                  disabled={isLoading}
+                  className="bg-primary grid place-items-center text-white rounded-[6px] w-[267px] h-[38px]"
+                >
+                  {isLoading ? "Saving..." : "Save Changes"}
+                </button>
+              </div>
             </form>
           </div>
-        </div>
-        <div className="flex justify-end pt-10">
-          <button className="bg-primary grid place-items-center text-white rounded-[6px] w-[267px] h-[38px]">
-            Save Changes
-          </button>
         </div>
       </div>
     </div>

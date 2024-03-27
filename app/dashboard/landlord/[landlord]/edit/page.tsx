@@ -1,11 +1,8 @@
 "use client"
 import FormField from "@/components/inputs/FormField"
 import { LandlordProfileHead } from "@/components/admin-dashboard/LandlordProfileHead"
-import Input from "@/components/inputs/input"
-import { CameraIcon, EditGreenIcon, EditOutlineIcon } from "@/components/svgs"
-import TextArea from "@/components/inputs/textArea"
+import { EditOutlineIcon } from "@/components/svgs"
 import { landlordInputs } from "@/utils/schema"
-import Image from "next/image"
 import Link from "next/link"
 
 export default function ProfileEdit({

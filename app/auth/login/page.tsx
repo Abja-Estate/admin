@@ -54,7 +54,6 @@ export default function AdminLogin() {
     validationSchema: signInSchema,
     initialValues: getDefault(signInInputs) as AdminLoginT,
     onSubmit: async (values) => {
-      console.log("dtfkyglkgnfd")
       const ldata: AdminLoginT = {
         ...values,
         actor: "admin",
@@ -62,11 +61,8 @@ export default function AdminLogin() {
       const response: AnyObject = await adminLogin(ldata)
       dispatch(setAuth(ldata))
 
-      console.log(response)
-
       if ("data" in response) {
         const data = response.data.data
-
         //save login details if "Remember Me" is checked
         if (checked && typeof window !== "undefined") {
           localStorage.setItem("saved-login-details", JSON.stringify(ldata))
@@ -84,8 +80,8 @@ export default function AdminLogin() {
         }
 
         if (response.error.data) {
-          const { statusCode } = response.error.data
-          if (statusCode == 400) {
+          const { statusCode, error } = response.error.data
+          if (statusCode == 400 && error.includes("activated yet")) {
             router.push("/auth/otp")
           }
         }

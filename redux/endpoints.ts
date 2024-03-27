@@ -3,6 +3,7 @@ import { BASE_URL } from '@/config';
 import { Actor, AddAdmin, AdminLoginT, LandLord, Package, RespData, UserData } from '@/utils/types';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import toast from 'react-hot-toast';
+import { AnyObject } from 'yup';
 
 // export const BURL = "https://4a1efe7e86e8-8302610227555236033.ngrok-free.app"
 // export const BURL = "https://rnaus-105-112-26-123.a.free.pinggy.online"
@@ -56,6 +57,9 @@ export const appApi = createApi({
 			invalidatesTags: ['User']
 		}),
 		adminResetPass: builder.mutation<any, { actor: Actor, id: string, password: string, confirmPassword: string }>({
+			query: (body) => ({ url: `auth/${body.actor}/reset_password`, method: "POST", body }),
+		}),
+		adminChangePass: builder.mutation<any, AnyObject>({
 			query: (body) => ({ url: `auth/${body.actor}/reset_password`, method: "POST", body }),
 		}),
 		adminForgotPassword: builder.mutation<any, { email: string, actor: Actor, }>({
@@ -179,6 +183,7 @@ export const {
 	useAdminVerifyOTPMutation,
 	useCreatePackageMutation,
 	useGetLandlordPropertiesMutation,
+	useAdminChangePassMutation,
 	useDeleteLandlordMutation,
 	useGetPackagesQuery,
 	useDeleteTenantMutation,

@@ -18,6 +18,7 @@ export default function AdminDashboardSideNavigation({
   const router = useRouter()
   const pathname = usePathname()
   const handleLogout = () => {
+    localStorage.removeItem("active-user")
     dispatch(setAdminProfile(null))
     localStorage.removeItem("token")
     router.push("/auth/login")
