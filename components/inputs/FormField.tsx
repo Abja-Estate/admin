@@ -20,6 +20,7 @@ interface Desc {
   value?: string | number
   icon?: JSX.Element
   suffix?: JSX.Element
+  className?: string
 }
 
 const FormField = ({ autocomplete = true, inputProps, ...props }: Desc) => {
@@ -30,7 +31,8 @@ const FormField = ({ autocomplete = true, inputProps, ...props }: Desc) => {
     <fieldset
       className={cn(
         !props.t ? "flex flex-col" : "flex flex-col",
-        props.type == "textarea" ? "h-fit" : !props.t ? "h-16" : "h-20"
+        props.type == "textarea" ? "h-fit" : !props.t ? "h-16" : "h-20",
+        props.className
       )}
     >
       <label
@@ -109,7 +111,7 @@ const FormField = ({ autocomplete = true, inputProps, ...props }: Desc) => {
                         <Listbox.Option
                           key={idx}
                           value={val.value}
-                          title={val.label}
+                          // title={val.label}
                           className={({ active }) =>
                             `relative transition-all hover:bg-gray-100 bg-white cursor-pointer select-none ${
                               active ? "text-black" : "text-gray-800"

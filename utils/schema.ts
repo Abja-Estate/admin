@@ -73,6 +73,35 @@ export const addPropertySchema = Yup.object().shape({
 	power: Yup.boolean().required("Power is required"),
 });
 
+
+export const addRequestInputs: Input[] = [
+	{ label: "Landlord", name: "landlord", type: "text", placeholder: "Enter Landlord" },
+	{ label: "Landlord Contact", name: "landlord_contact", type: "text", placeholder: "Enter Landlord Contact" },
+	{ label: "Tenant", name: "tenant", type: "text", placeholder: "Enter Tenant" },
+	{ label: "Tenant Contact", name: "tenant_contact", type: "text", placeholder: "Enter Tenant Contact" },
+	{ label: "Service Type", name: "service_type", type: "text", placeholder: "Enter Service Type" },
+	{ label: "Priority", name: "priority", type: "select", placeholder: "Enter Priority" },
+	{ label: "Start Date", name: "start_date", type: "date", placeholder: "Enter Start Date" },
+	{ label: "Due Date", name: "due_date", type: "date", placeholder: "Enter Due Date" },
+	{ label: "Address", name: "address", type: "text", placeholder: "Enter Address" },
+	{ label: "Description", name: "description", type: "text", placeholder: "Enter Description" },
+];
+
+// Generate Yup validation schema
+export const addRequestSchema = Yup.object().shape({
+	landlord: Yup.string().required("Landlord is required"),
+	landlord_contact: Yup.string().required("Landlord Contact is required"),
+	tenant: Yup.string().required("Tenant is required"),
+	tenant_contact: Yup.string().required("Tenant Contact is required"),
+	service_type: Yup.string().required("Service Type is required"),
+	priority: Yup.string().required("Priority is required"),
+	start_date: Yup.date().required("Start Date is required"),
+	due_date: Yup.date().required("Due Date is required"),
+	address: Yup.string().required("Address is required"),
+	description: Yup.string().required("Description is required"),
+});
+
+
 export const signInInputs: Input[] = [
 	{ label: "Email", name: 'email', type: "email", placeholder: "Enter Email" },
 	{ label: "Enter password", name: 'password', type: "password", placeholder: "Your password" },

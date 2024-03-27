@@ -14,7 +14,7 @@ const PriorityBadge = ({
   return (
     <span
       className={cn(
-        `px-3 py-1 text-xs w-fit min-w-20 transition duration-300 gap-2 flex items-center rounded-lg whitespace-nowrap`,
+        `px-3 py-1 text-[.7rem] w-fit min-w-32 transition duration-300 gap-2 flex items-center rounded-lg whitespace-nowrap `,
         className,
         status == "medium" || status == "medium priority"
           ? "bg-[#F2994A26] text-[#F2994A]"
@@ -43,7 +43,7 @@ const PriorityBadge = ({
           className="fill-current"
         />
       </svg>
-      <span className="mx-auto capitalize">{text ?? status}</span>
+      <span className=" capitalize">{text ?? status}</span>
     </span>
   )
 }
