@@ -1,48 +1,47 @@
+"use client"
+import CustomImage from "@/components/CustomImage"
 import { BriefCaseIcon, CameraIcon, LocationIcon } from "@/components/svgs"
+import { useAppSelector } from "@/redux/hooks"
+import { getGreeting } from "@/utils/helpers"
 import Image from "next/image"
 import Link from "next/link"
 
-export default function Profile({
-  params,
-}: {
-  params: { landlordId: string }
-}) {
+export default function Profile({}: {}) {
+  const { profile: user } = useAppSelector((state) => state.admin)
+
   return (
-    <div className="flex gap-[32px]">
-      <div className="w-[315px] flex flex-col rounded-se-[100px] bg-white">
+    <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-[32px]">
+      <div className="col-span-1 lg:col-span-2 flex flex-col rounded-se-[100px] bg-white">
         <div className="p-[24px] h-[300px] border-b-[1px] border-b-primary2 w-full">
           <figure>
-            <Image
-              src="/images/admin-user-img-1.svg"
+            <CustomImage
+              src={user?.selfie}
+              fallbackSrc="/images/circle.svg"
+              className="h-24 w-24 min-w-24 rounded-full object-cover"
               width={100}
               height={100}
               alt="Admin"
             />
             <figcaption className="text-textcolor100 text-[18px] font-semibold pt-5">
-              Micheal Ibaro
+              {user?.name} {user?.surname}
             </figcaption>
           </figure>
           <div className="flex gap-2 items-center text-[14px] text-[#949494] pt-4">
-            <p>@michealibaro</p>
+            <p>@{user?.name}</p>
             <div className="w-[1px] h-[15px] bg-primary2"></div>
-            <p>(+256) 567890123</p>
+            <p>{user?.phone ?? "--"}</p>
           </div>
-          <p className="text-[#949494] pt-2">micheal.ibaro@gmail.com</p>
+          <p className="text-[#949494] pt-2">{user?.email}</p>
           <div className="flex gap-2 pt-2">
             <LocationIcon />
-            <p className="text-[#949494]">Kampala, Uganda</p>
+            <p className="text-[#949494]">--</p>
           </div>
         </div>
-        <div className="flex flex-col px-[24px] py-[24px] h-[500px] gap-10 h-[35]">
+        <div className="flex flex-col px-[24px] py-[24px] h-[500px] gap-10">
           <div>
             <h1 className="text-textcolor100 text-[18px] font-semibold">Bio</h1>
             <p className="text-[#949494]">
-              Super Admin of Abja Property Management Admin Dashboard, has 10+
-              years of experience in the industry. He oversees the entire
-              operation of the dashboard, including managing user accounts,
-              setting up permissions, and resolving technical issues. Michael is
-              passionate about helping property owners and is always available
-              to assist users.
+              {user?.about && user?.about !== "" ? user?.about : "--"}
             </p>
           </div>
           <div className="mt-auto">
@@ -54,11 +53,11 @@ export default function Profile({
           </div>
         </div>
       </div>
-      <div className="rounded-tl-[100px] w-[900px] overflow-hidden">
+      <div className="col-span-1 md:col-span-2 lg:col-span-4 rounded-tl-[100px] overflow-hidden">
         <header className="h-[300px] flex flex-col justify-between w-full bg-[url(/images/profile-cover-img.svg)] bg-cover py-10 px-[24px]">
           <div className="pt-5 flex items-center justify-between">
             <h1 className="text-[28px] text-textcolor100 font-semibold">
-              Good Morning Micheal,
+              Good {getGreeting()} {user?.name},
             </h1>
             <button className="flex items-center gap-[5px] rounded-[4px] bg-[#B5D0B2] px-[8px] py-[4px]">
               <CameraIcon />

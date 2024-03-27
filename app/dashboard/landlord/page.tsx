@@ -5,16 +5,11 @@ import Link from "next/link"
 import { useEffect, useState } from "react"
 import MemoNoRecord from "@/components/NoRecord"
 import Loading from "@/components/Loading"
-import ReactPaginate from "react-paginate"
 import {
-  useDeleteAdminMutation,
   useDeleteLandlordMutation,
   useGetLandlordsQuery,
-  useGetPropertiesQuery,
-  useGetRequestsQuery,
 } from "@/redux/endpoints"
 import { AreYouSureProps, LandLord } from "@/utils/types"
-import LandlordDialog from "@/components/admin-dashboard/LandlordDialog"
 import MenuLayout from "@/components/MenuLayout"
 import { cn } from "@/utils/cn"
 import { useRouter } from "next/navigation"

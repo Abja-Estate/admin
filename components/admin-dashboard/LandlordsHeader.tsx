@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect, useState } from "react"
 import * as SVGIcon from "@/components/svgs"
 import LandlordDialog from "./LandlordDialog"
 import {
@@ -11,6 +11,14 @@ const LandlordsHeader = () => {
   const { data, isLoading } = useGetLandlordsQuery("")
   const { data: properties } = useGetPropertiesQuery("")
   const { data: requests } = useGetRequestsQuery("")
+
+  const [fRequests, setFRequests] = useState<any>([])
+
+  useEffect(() => {
+    if (requests) {
+      setFRequests(requests)
+    }
+  }, [requests])
 
   return (
     <header>
@@ -37,11 +45,11 @@ const LandlordsHeader = () => {
             </h1>
             <div className="flex items-center gap-[5px] mt-[10px]">
               <SVGIcon.ArrowGrowthWhiteIcon />
-              <p className="text-white text-[14px] font-semibold">17%</p>
+              <p className="text-white text-[14px] font-semibold">0%</p>
             </div>
           </div>
           <div className="text-white flex justify-between items-center text-[12px]">
-            <p>7 Requests made</p>
+            <p>{requests && fRequests.length} Requests made</p>
             <p>View</p>
           </div>
         </div>
@@ -56,11 +64,11 @@ const LandlordsHeader = () => {
             </h1>
             <div className="flex items-center gap-[5px] mt-[10px]">
               <SVGIcon.ArrowGrowthWhiteIcon />
-              <p className="text-white text-[14px] font-semibold">17%</p>
+              <p className="text-white text-[14px] font-semibold">0%</p>
             </div>
           </div>
           <div className="text-white flex justify-between items-center text-[12px]">
-            <p>7 Requests made</p>
+            <p>{requests && fRequests.length} Requests made</p>
             <p>View</p>
           </div>
         </div>
@@ -71,15 +79,15 @@ const LandlordsHeader = () => {
           </div>
           <div className="flex gap-[10px]">
             <h1 className="text-white text-[34px] font-semibold">
-              {requests && requests.length}
+              {requests && fRequests.length}
             </h1>
             <div className="flex items-center gap-[5px] mt-[10px]">
               <SVGIcon.ArrowGrowthWhiteIcon />
-              <p className="text-white text-[14px] font-semibold">17%</p>
+              <p className="text-white text-[14px] font-semibold">0%</p>
             </div>
           </div>
           <div className="text-white flex justify-between items-center text-[12px]">
-            <p>8 Requests made</p>
+            <p>{requests && fRequests.length} Requests made</p>
             <p>View</p>
           </div>
         </div>

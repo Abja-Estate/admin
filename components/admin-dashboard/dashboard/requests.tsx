@@ -25,11 +25,7 @@ export default function Requests() {
 
   useEffect(() => {
     if (requests) {
-      setFRequests(
-        requests
-          .filter((each) => each.requests.length)
-          .map((each) => each.requests[0])
-      )
+      setFRequests(requests)
     }
   }, [requests])
 
@@ -124,10 +120,7 @@ export default function Requests() {
                     Description
                   </th>
                   <th className="text-textcolor100 px-3 py-2 font-normal text-left">
-                    Start Date
-                  </th>
-                  <th className="text-textcolor100 px-3 py-2 font-normal text-left">
-                    Due Date
+                    Date
                   </th>
                   <th className="text-textcolor100 px-3 py-2 font-normal text-left">
                     Status
@@ -152,8 +145,7 @@ export default function Requests() {
                         />
                       </td>
                       <td className="p-3">{each.problems?.join(", ")}</td>
-                      <td> </td>
-                      <td> </td>
+                      <td>{new Date(each.time).toDateString()} </td>
                       <td className="px-3">
                         <span
                           className={`px-3 py-1.5 w-fit min-w-28 transition duration-300 gap-3 group-hover:text-white flex items-center rounded-lg whitespace-nowrap ${

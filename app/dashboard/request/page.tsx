@@ -35,14 +35,8 @@ export default function Request() {
 
   useEffect(() => {
     if (requests) {
-      let data: any[] = []
-      requests
-        .filter((each) => each?.requests?.length)
-        .forEach((each) => {
-          data = data.concat(each.requests)
-        })
-      setRRequests(data)
-      setFRequests(data)
+      setRRequests(requests)
+      setFRequests(requests)
     }
   }, [requests])
 
@@ -114,10 +108,10 @@ export default function Request() {
         <div className="p-[22px] rounded-b-[10px] grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 text-sm bg-white gap-[16px]">
           {[
             { value: rRequests.length },
-            { value: "20" },
-            { value: "12" },
-            { value: "20" },
-            { value: "25" },
+            { value: "--" },
+            { value: "--" },
+            { value: "--" },
+            { value: "--" },
           ].map((each, i) => (
             <div
               key={i + "cards"}
@@ -138,11 +132,11 @@ export default function Request() {
                 </h1>
                 <div className="flex items-center gap-[5px] mt-[10px]">
                   <ArrowGrowthWhiteIcon />
-                  <p className="text-white text-sm font-semibold">17%</p>
+                  <p className="text-white text-sm font-semibold">0%</p>
                 </div>
               </div>
               <div className="text-white flex justify-between items-center text-[12px]">
-                <p>7 Requests made</p>
+                <p>{rRequests.length} Requests made</p>
                 <p>View</p>
               </div>
             </div>

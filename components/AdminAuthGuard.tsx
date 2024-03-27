@@ -4,22 +4,27 @@ import { useAppDispatch } from "@/redux/hooks"
 import { redirect } from "next/navigation"
 
 const AdminAuthGuard = ({ Component }: { Component: React.FC }) => {
-  const { data, error, isLoading } = useGetAdminQuery("")
+  // const { data, error, isLoading } = useGetAdminQuery("")
   const dispatch = useAppDispatch()
-
-  if (!data) {
-    return <Component />
-  } else if (isLoading) {
-    return (
-      <div className="flex h-screen items-center justify-center">
-        Loading...
-      </div>
-    )
-  } else if (error) {
+  const data = localStorage.getItem("active-user")
+  try {
+    if (data) {
+      dispatch(setAdminProfile(JSON.parse(data)))
+      return <Component />
+    } else {
+      throw Error(`Can't find details: ${data}`)
+    }
+  } catch (error) {
     dispatch(setAdminProfile(null))
-    // console.log(error);
-    redirect("/login")
+    redirect("/auth/login")
   }
+  // else if (isLoading) {
+  //   return (
+  //     <div className="flex h-screen items-center justify-center">
+  //       Loading...
+  //     </div>
+  //   )
+  // }
 }
 
 export default AdminAuthGuard

@@ -71,7 +71,7 @@ export default function PasswordScreen({
       toast.error("An error occurred while processing the request.")
     } finally {
       setLoading(false)
-      router.push("/login")
+      router.push("/auth/login")
     }
   }
 

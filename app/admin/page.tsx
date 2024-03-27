@@ -92,7 +92,7 @@ export default function Admin() {
             ))}
           </div>
           <div className="pt-[60px] grid place-items-center">
-            <Link href="/login">
+            <Link href="/auth/login">
               <button className="text-white bg-primary grid place-items-center h-[38px] w-[234px] rounded-[6px]">
                 Proceed
               </button>

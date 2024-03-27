@@ -15,6 +15,8 @@ import { useAdminLoginMutation } from "@/redux/endpoints"
 import { useFormik } from "formik"
 import { AnyObject } from "yup"
 import { AdminLoginT } from "@/utils/types"
+import { useAppDispatch } from "@/redux/hooks"
+import { setAuth } from "@/redux/adminSlice"
 
 export default function AdminLogin() {
   const router = useRouter()
@@ -47,45 +49,46 @@ export default function AdminLogin() {
   // };
 
   const [adminLogin, { isLoading }] = useAdminLoginMutation()
-
+  const dispatch = useAppDispatch()
   const signIn_f = useFormik<AdminLoginT>({
     validationSchema: signInSchema,
     initialValues: getDefault(signInInputs) as AdminLoginT,
     onSubmit: async (values) => {
-      const response: AnyObject = await adminLogin({
+      console.log("dtfkyglkgnfd")
+      const ldata: AdminLoginT = {
         ...values,
         actor: "admin",
-      })
-      console.log(response.json())
+      }
+      const response: AnyObject = await adminLogin(ldata)
+      dispatch(setAuth(ldata))
+
+      console.log(response)
 
       if ("data" in response) {
         const data = response.data.data
 
         //save login details if "Remember Me" is checked
-
         if (checked && typeof window !== "undefined") {
-          localStorage.setItem("saved-login-details", JSON.stringify(values))
+          localStorage.setItem("saved-login-details", JSON.stringify(ldata))
         } else {
-          // clear saved login details if "remember me" is not checked
           localStorage.removeItem("saved-login-detail")
         }
 
         localStorage.setItem("active-user", JSON.stringify(data))
-        // router.push("/dashboard")
+        router.push("/dashboard")
 
         // localStorage.setItem("token", response.data.access_token)
       } else if (response.error) {
         if (response.error.status == "FETCH_ERROR") {
           toast.error("Please, check your connection.")
         }
-        // dispatch(
-        //   openRespDialog({
-        //     self: true,
-        //     type: "error",
-        //     desc: response.error.data.message,
-        //     title: "Oops!",
-        //   })
-        // )
+
+        if (response.error.data) {
+          const { statusCode } = response.error.data
+          if (statusCode == 400) {
+            router.push("/auth/otp")
+          }
+        }
       }
     },
   })

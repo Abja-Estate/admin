@@ -113,7 +113,18 @@ export const appApi = createApi({
 		// requests
 		getRequests: builder.query<any[], any>({
 			query: (qP) => `service/admin/all_requests`,
-			transformResponse: (response: any) => response.data,
+			transformResponse: (response: any) => {
+
+				let data: any[] = []
+				response.data
+					.filter((each: any) => each?.requests?.length)
+					.forEach((each: any) => {
+						data = data.concat(each.requests)
+					})
+
+				return data;
+
+			},
 			providesTags: ['Request']
 		}),
 		updateRequest: builder.mutation<any, { landlordID: string, ticketNumber: string }>({

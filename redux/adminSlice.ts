@@ -1,17 +1,24 @@
 import { RootState } from '@/redux/store'
+import { Actor } from '@/utils/types';
 import { createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
+import { AnyObject } from 'yup';
 
 type UserData = any;
 // Define a type for the slice state
 export interface AdminState {
 	// value: number
+	auth?: {
+		email: string,
+		password: string,
+		actor: Actor
+	} | null
 	profile: UserData | null,
 	navIsOpen: boolean,
 	responseDialog: {
 		path?: string,
 		open?: boolean,
-		to?: boolean,
+		to?: string,
 		btnLabel?: boolean,
 		title: string,
 		desc: string,
@@ -37,7 +44,8 @@ const initialState: AdminState = {
 	// value: 0,
 	navIsOpen: false,
 	profile: null,
-	responseDialog: defaultResp
+	responseDialog: defaultResp,
+	auth: null
 }
 
 export const adminSlice = createSlice({
@@ -52,6 +60,13 @@ export const adminSlice = createSlice({
 		setAdminProfile: (state, action: PayloadAction<UserData | null>) => {
 			state.profile = action.payload
 		},
+		setAuth: (state, action: PayloadAction<{
+			email: string,
+			password: string,
+			actor: Actor
+		} | null>) => {
+			state.auth = action.payload
+		},
 
 		closeRespDialog: (state) => {
 			state.responseDialog.open = false;
@@ -63,7 +78,7 @@ export const adminSlice = createSlice({
 	},
 })
 
-export const { setNavIsOpen, setAdminProfile, closeRespDialog, openRespDialog } = adminSlice.actions
+export const { setNavIsOpen, setAdminProfile, closeRespDialog, openRespDialog, setAuth } = adminSlice.actions
 
 // Other code such as selectors can use the imported `RootState` type
 export const selectNavIsOpen = (state: RootState) => state.admin.navIsOpen

@@ -54,7 +54,7 @@ const ActivityOverview: React.FC<ActivityOverviewProps> = ({
               title: "Requests",
               value: `${requests ? requests.length : ""} Requests`,
               icon: <RequestIcon />,
-              images: requests?.map((each) => each.requests[0].tenantPhoto),
+              images: requests?.map((each) => each.tenantPhoto),
             },
           ].map((each) => (
             <InfoBox key={each.title} {...each} />
@@ -154,7 +154,7 @@ const DonutChart: React.FC<{}> = () => {
 
     svg
       .append("text")
-      .text("76%")
+      .text("0%")
       .attr("text-anchor", "middle")
       .attr("dy", "0em")
       .style("font-size", "16px")

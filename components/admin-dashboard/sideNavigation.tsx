@@ -1,6 +1,5 @@
 "use client"
 import { adminSideNavigationLinksData } from "@/data/admin-links"
-import clsx from "clsx"
 import Link from "next/link"
 import { usePathname, useRouter } from "next/navigation"
 import { LogoutIcon } from "../svgs"
@@ -21,7 +20,7 @@ export default function AdminDashboardSideNavigation({
   const handleLogout = () => {
     dispatch(setAdminProfile(null))
     localStorage.removeItem("token")
-    router.push("/login")
+    router.push("/auth/login")
   }
 
   const { data: requests } = useGetRequestsQuery("")
@@ -29,13 +28,7 @@ export default function AdminDashboardSideNavigation({
 
   useEffect(() => {
     if (requests) {
-      let data: any[] = []
-      requests
-        .filter((each) => each?.requests?.length)
-        .forEach((each) => {
-          data = data.concat(each.requests)
-        })
-      setFRequests(data)
+      setFRequests(requests)
     }
   }, [requests])
 
@@ -55,7 +48,7 @@ export default function AdminDashboardSideNavigation({
                 href={link.href}
               >
                 <div
-                  className={clsx(
+                  className={cn(
                     "h-[40px] px-[16px] flex items-center group hover:bg-[#7F947B] hover:text-white gap-[24px] font-semibold rounded-[5px]",
                     isDashboardActiveRoute && "text-white bg-primary"
                   )}
@@ -77,7 +70,7 @@ export default function AdminDashboardSideNavigation({
                 href={link.href}
               >
                 <div
-                  className={clsx(
+                  className={cn(
                     "h-[40px] px-[16px] flex items-center group hover:bg-[#7F947B] hover:text-white gap-[24px] font-semibold rounded-[5px]",
                     isActiveRoute && "text-white bg-primary"
                   )}
@@ -103,7 +96,7 @@ export default function AdminDashboardSideNavigation({
         })}
 
         <button
-          className={clsx(
+          className={cn(
             "h-[40px] px-[16px] mt-auto mb-20 flex items-center group hover:bg-[#7F947B] hover:text-white gap-[24px] font-semibold rounded-[5px]"
           )}
           onClick={handleLogout}

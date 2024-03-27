@@ -43,3 +43,22 @@ export const filter = (items: any[], searchText: string, filter: string | null =
 	return filteredItems;
 
 }
+
+export function getGreeting (): string {
+	const currentTime = new Date();
+	const currentHour = currentTime.getHours();
+
+	let greeting: string;
+
+	if (currentHour >= 5 && currentHour < 12) {
+		greeting = "Morning";
+	} else if (currentHour >= 12 && currentHour < 17) {
+		greeting = "Afternoon";
+	} else if (currentHour >= 17 && currentHour < 21) {
+		greeting = "Evening";
+	} else {
+		greeting = "Night";
+	}
+
+	return greeting;
+}

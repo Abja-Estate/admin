@@ -24,14 +24,15 @@ import MemoProfileAdd from "../svgs/ProfileAdd"
 import MemoProcess from "../svgs/Process"
 import MemoUpdate from "../svgs/Update"
 import MemoShare from "../svgs/Share"
+import { useAppSelector } from "@/redux/hooks"
+import CustomImage from "../CustomImage"
 
 export default function AdminDashboardTopNavigation({
   setMenuIsOpen,
 }: {
   setMenuIsOpen: Function
 }) {
-  const [user, setUser] = useState<string>("") // Initialize user state with an empty string
-
+  const { profile: user } = useAppSelector((state) => state.admin)
   let [isOpen, setIsOpen] = useState(false)
 
   function closeModal() {
@@ -41,21 +42,6 @@ export default function AdminDashboardTopNavigation({
   function openModal() {
     setIsOpen(true)
   }
-
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      const userData = localStorage.getItem("active-user") // Declare a variable to store the retrieved user data
-
-      if (userData) {
-        try {
-          const parsedUser = JSON.parse(userData) // Parse the retrieved user data
-          setUser(parsedUser) // Update the user state with the parsed user data
-        } catch (error) {
-          console.error("Error parsing user data from localStorage:", error)
-        }
-      }
-    }
-  }, [])
 
   return (
     <>
@@ -98,25 +84,26 @@ export default function AdminDashboardTopNavigation({
           >
             <NotificationIcon />
             <span className="absolute h-[12px] w-[12px] grid place-items-center bg-[#D90001] text-white text-[7px] font-semibold rounded-[100%] top-[6px] right-[8px]">
-              8
+              0
             </span>
           </button>
           <div className="h-[38px] w-[38px]  min-w-[38px] bg-[#2A4C2333] rounded-[100%] relative grid place-items-center">
             <MessageIcon />
             <span className="absolute h-[12px] w-[12px] grid place-items-center bg-[#D90001] text-white text-[7px] font-semibold rounded-[100%] top-[6px] right-[8px]">
-              4
+              0
             </span>
           </div>
           <Popover className="ml-[8px] relative">
             <Popover.Button className="flex items-center gap-[16px] outline-none">
-              <Image
-                src="/images/admin-user-img-1.svg"
+              <CustomImage
+                fallbackSrc="/images/circle.svg"
+                src={user?.selfie}
                 alt="Admin user"
                 width={60}
-                className="w-fit sm:w-[unset]"
+                className="h-14 w-14 min-w-14 rounded-full object-cover"
                 height={60}
               />
-              <div>
+              <div className="text-left">
                 <h1 className="text-[14px]">
                   {user?.name} {user?.surname}
                 </h1>
