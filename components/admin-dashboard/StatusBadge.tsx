@@ -24,7 +24,7 @@ const StatusBadge = ({
           ? "bg-[#D5EBF8] text-[#0174C7]"
           : status == "cancelled" || status == "failed"
           ? "bg-[#D500004D] text-[#D50000]"
-          : status == "completed"
+          : status == "completed" || status == "recieved"
           ? "bg-primaryFade text-primary2"
           : "bg-[#EAEAEA] text-[#949494]"
       )}

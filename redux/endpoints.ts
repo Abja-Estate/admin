@@ -100,6 +100,11 @@ export const appApi = createApi({
 			transformResponse: (response: any) => response.data,
 			providesTags: ['Landlord']
 		}),
+		getLandlord: builder.query<AnyObject, string>({
+			query: (qP) => `service/admin/landlord/${qP}`,
+			transformResponse: (response: any) => response.data,
+			providesTags: ['Landlord']
+		}),
 		addLandlord: builder.mutation<any, AddAdmin>({
 			query: (body) => ({ url: `auth/landlord/register`, method: "POST", body }),
 			invalidatesTags: ['Landlord']
@@ -183,6 +188,8 @@ export const {
 	useAdminVerifyOTPMutation,
 	useCreatePackageMutation,
 	useGetLandlordPropertiesMutation,
+	useGetLandlordQuery,
+	useAddLandlordMutation,
 	useAdminChangePassMutation,
 	useDeleteLandlordMutation,
 	useGetPackagesQuery,

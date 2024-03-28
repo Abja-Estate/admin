@@ -11,8 +11,8 @@ const AvatarStack = ({
     <div className="flex items-center">
       {images
         ?.filter((each, i) => i < limit)
-        .map((each) => (
-          <SmallAvatar src={each} key={each} />
+        .map((each, i) => (
+          <SmallAvatar src={each} key={each + i} />
         ))}
       {images && images?.length > limit && (
         <div className=" grid place-items-center text-sm text-[#949494] pl-3 whitespace-nowrap">

@@ -24,6 +24,28 @@ export const adminInputs: Input[] = [
 	{ label: "Bio", name: 'about', type: "textarea", placeholder: "Bio" },
 ]
 
+export const adminSettingInputs1: Input[] = [
+	{ label: "Firstname", name: 'name', type: "text", placeholder: "First name" },
+	{ label: "Lastname", name: 'surname', type: "text", placeholder: "Last name" },
+	{ label: "Username", name: 'username', type: "text", placeholder: "Username" },
+	{ label: "Date of Birth", name: 'dob', type: "date", },
+]
+
+export const adminSettingInputs3: Input[] = [
+	{ label: "Phone Number", name: 'phone', type: "text", placeholder: "Phone Number" },
+	{ label: "E-mail Address", name: 'email', type: "text", placeholder: "Enter Email" },
+	{ label: "City", name: 'city', type: "select", placeholder: "City" },
+	{ label: "State", name: 'state', type: "select", placeholder: "State" },
+	{ label: "Country", name: 'country', type: "select", placeholder: "Country" },
+	{ label: "Address", name: 'address', type: "text", placeholder: "Address" },
+]
+
+export const adminProfileSchema = Yup.object({
+	email: Yup.string().email("Email is invalid").required("Email is required"),
+	// password: Yup.string().required("Password is required")
+	// .length(10, "Phone number should be 8 digits (without the leading zero)"),
+})
+
 
 export const propertyInputs: Input[] = [
 	{ label: "Name", name: "name", type: "text", placeholder: "Enter Name" },

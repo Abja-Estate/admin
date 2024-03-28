@@ -4,6 +4,7 @@ import PropertyDialog from "@/components/admin-dashboard/PropertyDialog"
 import StatusBadge from "@/components/admin-dashboard/StatusBadge"
 import UnitDialog from "@/components/admin-dashboard/UnitDialog"
 import { EditGreenIcon, LocationIcon } from "@/components/svgs"
+import { useGetLandlordQuery } from "@/redux/endpoints"
 import Image from "next/image"
 import Link from "next/link"
 import { useState } from "react"
@@ -12,6 +13,7 @@ export default function Profile({ params }: { params: { landlord: string } }) {
   const [propertyDialog, setPropertyDialog] = useState(false)
   const [unitDialog, setUnitDialog] = useState(false)
   const [currentProperty, setCurrentProperty] = useState<any>(null)
+  const { data: landlord } = useGetLandlordQuery(params.landlord)
 
   return (
     <div>
@@ -62,9 +64,9 @@ export default function Profile({ params }: { params: { landlord: string } }) {
                       <path
                         d="M6.5 10.5L9 13L14 8"
                         stroke="white"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
                       />
                     </svg>
                     Active
@@ -122,7 +124,7 @@ export default function Profile({ params }: { params: { landlord: string } }) {
                       <path
                         d="M12.0947 11.205C12.0947 11.205 12.0948 11.2051 12.0949 11.2051L12.0947 11.205ZM12.0947 11.205C12.0946 11.2049 12.0945 11.2048 12.0945 11.2047L12.0947 11.205ZM2.75039 11.3996C2.75039 11.8372 2.92423 12.2569 3.23366 12.5663C3.5431 12.8758 3.96278 13.0496 4.40039 13.0496C4.838 13.0496 5.25768 12.8758 5.56711 12.5663C5.87655 12.2569 6.05039 11.8372 6.05039 11.3996C6.05039 10.962 5.87655 10.5423 5.56712 10.2329C5.25768 9.92345 4.838 9.74961 4.40039 9.74961C3.96278 9.74961 3.5431 9.92345 3.23367 10.2329C2.92423 10.5423 2.75039 10.962 2.75039 11.3996ZM0.95039 16.7996C0.95039 17.3374 1.16153 17.8715 1.65591 18.284C2.15876 18.7036 3.02038 19.0496 4.40039 19.0496C5.78114 19.0496 6.64269 18.7047 7.14525 18.2859C7.63887 17.8746 7.85039 17.3409 7.85039 16.7996C7.85039 16.5211 7.73977 16.2541 7.54285 16.0571C7.34594 15.8602 7.07887 15.7496 6.80039 15.7496H2.00039C1.72191 15.7496 1.45484 15.8602 1.25793 16.0571C1.06102 16.2541 0.95039 16.5211 0.95039 16.7996Z"
                         stroke="#9B51E0"
-                        stroke-width="1.5"
+                        strokeWidth="1.5"
                       />
                     </svg>
 
@@ -155,9 +157,9 @@ export default function Profile({ params }: { params: { landlord: string } }) {
                     <path
                       d="M10.9983 6.11133V15.8891M15.8872 11.0002H6.10938"
                       stroke="white"
-                      stroke-width="1.2"
-                      stroke-linecap="square"
-                      stroke-linejoin="round"
+                      strokeWidth="1.2"
+                      strokeLinecap="square"
+                      strokeLinejoin="round"
                     />
                   </svg>
                 </button>

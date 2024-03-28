@@ -565,10 +565,9 @@ export const CancelIcon = () => {
   )
 }
 
-export const StarIcon = ({ key }: SVGProps) => {
+export const StarIcon = ({}: SVGProps) => {
   return (
     <svg
-      key={key}
       xmlns="http://www.w3.org/2000/svg"
       width="10"
       height="10"

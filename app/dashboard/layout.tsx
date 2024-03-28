@@ -6,10 +6,7 @@ import { useEffect, useState } from "react"
 import StoreProvider from "../StoreProvider"
 import AdminAuthGuard from "@/components/AdminAuthGuard"
 import SuccessDialog from "@/components/admin-dashboard/SuccessDialog"
-import { useAppDispatch } from "@/redux/hooks"
-import { setAdminProfile } from "@/redux/adminSlice"
-import toast from "react-hot-toast"
-import { useRouter } from "next/navigation"
+import nProgress from "nprogress"
 
 function AdminDashboardLayout({ children }: { children: React.ReactNode }) {
   const [menuIsOpen, setMenuIsOpen] = useState(false)
@@ -50,46 +47,62 @@ function AdminDashboardLayout({ children }: { children: React.ReactNode }) {
 }
 
 export default function AuthD({ children }: { children: React.ReactNode }) {
-  const [isActive, setIsActive] = useState(true)
-  const dispatch = useAppDispatch()
-  const router = useRouter()
+  // const [isActive, setIsActive] = useState(true)
+  // const dispatch = useAppDispatch()
+  // const router = useRouter()
 
-  useEffect(() => {
-    let inactivityTimer: NodeJS.Timeout
+  // useEffect(() => {
+  //   let inactivityTimer: NodeJS.Timeout
 
-    const resetTimer = () => {
-      clearTimeout(inactivityTimer)
-      inactivityTimer = setTimeout(() => {
-        setIsActive(false)
-        toast("You are logged out due to inactivity")
-        dispatch(setAdminProfile(null))
-        localStorage.removeItem("token")
-        localStorage.removeItem("active-user")
-        router.push("/auth/login")
-      }, 10 * 60 * 1000) // 10 minutes in milliseconds
-    }
+  //   const resetTimer = () => {
+  //     clearTimeout(inactivityTimer)
+  //     inactivityTimer = setTimeout(() => {
+  //       setIsActive(false)
+  //       toast("You are logged out due to inactivity")
+  //       dispatch(setAdminProfile(null))
+  //       localStorage.removeItem("token")
+  //       localStorage.removeItem("active-user")
+  //       router.push("/auth/login")
+  //     }, 10 * 60 * 1000) // 10 minutes in milliseconds
+  //   }
 
-    const handleActivity = () => {
-      if (!isActive) {
-        setIsActive(true)
-      }
-      resetTimer()
-    }
+  //   const handleActivity = () => {
+  //     if (!isActive) {
+  //       setIsActive(true)
+  //     }
+  //     resetTimer()
+  //   }
 
-    // Set up event listeners
-    window.addEventListener("mousemove", handleActivity)
-    window.addEventListener("keypress", handleActivity)
+  //   // Set up event listeners
+  //   window.addEventListener("mousemove", handleActivity)
+  //   window.addEventListener("keypress", handleActivity)
 
-    // Initial timer start
-    resetTimer()
+  //   // Initial timer start
+  //   resetTimer()
 
-    // Clean up event listeners
-    return () => {
-      clearTimeout(inactivityTimer)
-      window.removeEventListener("mousemove", handleActivity)
-      window.removeEventListener("keypress", handleActivity)
-    }
-  }, [isActive, dispatch, router])
+  //   // Clean up event listeners
+  //   return () => {
+  //     clearTimeout(inactivityTimer)
+  //     window.removeEventListener("mousemove", handleActivity)
+  //     window.removeEventListener("keypress", handleActivity)
+  //   }
+  // }, [isActive, dispatch, router])
+
+  // useEffect(() => {
+  //   // Router.events.on("routeChangeStart", (url) => {
+  //   //   console.log("Starting")
+  //   nProgress.configure({ showSpinner: false })
+  //   nProgress.start()
+  //   // })
+
+  //   Router.events.on("routeChangeComplete", (url) => {
+  //     nProgress.done(false)
+  //     console.log("done")
+  //   })
+  //   Router.events.on("routeChangeError", (url) => {
+  //     // setIsLoading(false)
+  //   })
+  // }, [])
 
   return (
     // <StoreProvider>

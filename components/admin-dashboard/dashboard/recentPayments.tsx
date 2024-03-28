@@ -117,7 +117,7 @@ export default function RecentPayments() {
           </div>
         </div>
         <div className="flex gap-[8px] items-center">
-          <h1 className="text-[32px]">4.5</h1>
+          <h1 className="text-[32px]">00</h1>
           <div className="h-[32px] border-l-[#949494] border-l-[1px] pl-[5px]">
             <div className="flex mb-[8px]">
               {[...Array(5)].map((_, i) => (
@@ -125,9 +125,9 @@ export default function RecentPayments() {
               ))}
             </div>
             <div className="flex gap-[8px] text-[10px]">
-              <p className="font-light">4.5</p>
-              <p>5.2K Ratings</p>
-              <p className="underline">18 reviews</p>
+              <p className="font-light">0</p>
+              <p>0 Ratings</p>
+              <p className="underline">0 reviews</p>
             </div>
           </div>
         </div>
