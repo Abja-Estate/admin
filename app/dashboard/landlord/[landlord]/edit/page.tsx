@@ -2,14 +2,52 @@
 import FormField from "@/components/inputs/FormField"
 import { LandlordProfileHead } from "@/components/admin-dashboard/LandlordProfileHead"
 import { EditOutlineIcon } from "@/components/svgs"
-import { landlordInputs } from "@/utils/schema"
+import {
+  editLandlordSchema,
+  editlandlordInputs,
+  landlordInputs,
+} from "@/utils/schema"
 import Link from "next/link"
+import { useCallback, useEffect, useState } from "react"
+import { LandlordData } from "@/utils/types"
+import { useGetLandlordMutation } from "@/redux/endpoints"
+import { useFormik } from "formik"
+import { getDefault } from "@/utils/helpers"
+import { AnyObject } from "yup"
 
 export default function ProfileEdit({
   params,
 }: {
   params: { landlord: string }
 }) {
+  const [landlordData, setLandlordData] = useState<LandlordData | null>(null)
+  const [fetchLandlordData] = useGetLandlordMutation()
+
+  const fetchL = useCallback(async () => {
+    const resp = await fetchLandlordData({
+      landlordID: params.landlord,
+    })
+    if ("data" in resp && resp.data.landlordInfo) {
+      setLandlordData(resp.data)
+      landlord_f.setValues(resp.data?.landlordInfo)
+    }
+  }, [params.landlord, fetchLandlordData])
+
+  useEffect(() => {
+    fetchL()
+  }, [fetchL])
+
+  const landlord_f = useFormik<AnyObject>({
+    validationSchema: editLandlordSchema,
+    initialValues: getDefault(editlandlordInputs),
+    onSubmit: async (values) => {
+      const ldata: AnyObject = {
+        ...values,
+        actor: "admin",
+      }
+      console.log(ldata)
+    },
+  })
   return (
     <div className=" overflow-hidden">
       <div className="lg:-mt-2 flex flex-wrap items-center gap-x-5">
@@ -28,7 +66,7 @@ export default function ProfileEdit({
         </button>
       </div>
       <div className="mt-4 bg-white">
-        <LandlordProfileHead id={params.landlord} />
+        <LandlordProfileHead landlord={landlordData?.landlordInfo} />
         <div className="grid sm:grid-cols-2 justify-items-center py-5">
           <div className="px-6 md:px-7 w-full py-5 border-r-[0.5px] border-primaryFade">
             <div className=" w-full max-w-xl mx-auto">
@@ -37,31 +75,24 @@ export default function ProfileEdit({
                   Personal Information
                 </h1>
               </header>
-              <form className="w-full flex flex-col gap-8">
+              <form
+                onSubmit={landlord_f.handleSubmit}
+                className="w-full flex flex-col gap-8"
+              >
                 <FormField
                   label="Username"
                   placeholder="@username"
                   name="username"
                   suffix={<EditOutlineIcon />}
                 />
-                {landlordInputs
-                  .filter(
-                    (each) => each.name != "start_date" && each.name != "plan"
-                  )
-                  .map((each) => (
-                    <FormField
-                      key={each.name}
-                      {...each}
-                      suffix={<EditOutlineIcon />}
-                    />
-                  ))}
-                <FormField
-                  label="Bio"
-                  placeholder="Bio"
-                  type="textarea"
-                  name="bio"
-                  suffix={<EditOutlineIcon />}
-                />
+                {editlandlordInputs.map((each) => (
+                  <FormField
+                    formik={landlord_f}
+                    key={each.name}
+                    {...each}
+                    suffix={<EditOutlineIcon />}
+                  />
+                ))}
               </form>
             </div>
           </div>

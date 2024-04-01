@@ -16,6 +16,23 @@ export const landlordSchema = Yup.object({
 	// .length(10, "Phone number should be 8 digits (without the leading zero)"),
 })
 
+export const editlandlordInputs: Input[] = [
+	{ label: "Firstname", name: 'name', type: "text", placeholder: "First name" },
+	{ label: "Lastname", name: 'surname', type: "text", placeholder: "Last name" },
+	{ label: "Email", name: 'email', type: "email", placeholder: "Email Address" },
+	{ label: "Phone", name: 'phone', type: "text", placeholder: "Phone Number" },
+	{ label: "Bio", name: 'about', type: "textarea", placeholder: "Bio" },
+]
+
+
+export const editLandlordSchema = Yup.object().shape({
+	name: Yup.string().required('First name is required'),
+	surname: Yup.string().required('Last name is required'),
+	email: Yup.string().email('Invalid email address').required('Email is required'),
+	phone: Yup.string().required('Phone number is required'),
+	about: Yup.string().nullable(),
+});
+
 export const adminInputs: Input[] = [
 	{ label: "Firstname", name: 'name', type: "text", placeholder: "First name" },
 	{ label: "Lastname", name: 'surname', type: "text", placeholder: "Last name" },

@@ -6,7 +6,10 @@ export default function PaymentChart() {
   const series: ApexAxisChartSeries = [
     {
       name: "Payment",
-      data: shuffleItems([10, 30, 35, 45, 49, 12, 19, 30, 10, 5, 30, 20]),
+      data: shuffleItems([
+        100000, 300000, 350000, 400005, 490000, 102000, 190000, 300000, 100000,
+        500000, 300000, 200000,
+      ]),
     },
   ]
 
@@ -29,6 +32,23 @@ export default function PaymentChart() {
     },
     fill: {
       opacity: 1,
+    },
+    yaxis: {
+      labels: {
+        formatter: (value: number): string => {
+          if (Number(value) >= 1000000000000) {
+            return value / 1000000000000 + "t"
+          } else if (Number(value) >= 1000000000) {
+            return value / 1000000000 + "b"
+          } else if (Number(value) >= 1000000) {
+            return value / 1000000 + "m"
+          } else if (Number(value) >= 1000) {
+            return value / 1000 + "k"
+          } else {
+            return value.toString() // Convert to string
+          }
+        },
+      },
     },
     plotOptions: {
       bar: {

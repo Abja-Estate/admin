@@ -1,19 +1,57 @@
 "use client"
+import MemoNoRecord2 from "@/components/NoRecord2"
 import { LandlordProfileHead } from "@/components/admin-dashboard/LandlordProfileHead"
+import ProfileInTD from "@/components/admin-dashboard/ProfileInTD"
 import PropertyDialog from "@/components/admin-dashboard/PropertyDialog"
 import StatusBadge from "@/components/admin-dashboard/StatusBadge"
 import UnitDialog from "@/components/admin-dashboard/UnitDialog"
 import { EditGreenIcon, LocationIcon } from "@/components/svgs"
-import { useGetLandlordQuery } from "@/redux/endpoints"
+import { useGetLandlordMutation } from "@/redux/endpoints"
+import { LandlordData } from "@/utils/types"
 import Image from "next/image"
 import Link from "next/link"
-import { useState } from "react"
+import { useCallback, useEffect, useState } from "react"
+import { AnyObject } from "yup"
 
 export default function Profile({ params }: { params: { landlord: string } }) {
   const [propertyDialog, setPropertyDialog] = useState(false)
   const [unitDialog, setUnitDialog] = useState(false)
   const [currentProperty, setCurrentProperty] = useState<any>(null)
-  const { data: landlord } = useGetLandlordQuery(params.landlord)
+  const [landlordData, setLandlordData] = useState<LandlordData | null>(null)
+  const [fetchLandlordData] = useGetLandlordMutation()
+
+  const fetchL = useCallback(async () => {
+    const resp = await fetchLandlordData({
+      landlordID: params.landlord,
+    })
+    if ("data" in resp && resp.data.landlordInfo) {
+      setLandlordData(resp.data)
+    }
+  }, [params.landlord, fetchLandlordData])
+
+  useEffect(() => {
+    fetchL()
+  }, [fetchL])
+
+  const logs = [
+    { message: "Newly listed property added", time: "9:50 AM" },
+    {
+      message: "Request service provider: Electrician ",
+      time: "9:41AM",
+    },
+    {
+      message: "1 Unit added to property and 1 tenant onboarded",
+      time: "8:42 AM",
+    },
+    {
+      message: "Updated subscription plan to Bronze Plan",
+      time: "yesterday",
+    },
+    {
+      message: "Added new tenant to property",
+      time: "2 days ago",
+    },
+  ]
 
   return (
     <div>
@@ -28,20 +66,41 @@ export default function Profile({ params }: { params: { landlord: string } }) {
         </button>
       </div>
       <div className="bg-white mt-4 ">
-        <LandlordProfileHead showEditbtn id={params.landlord} />
+        <LandlordProfileHead
+          showEditbtn
+          landlord={landlordData?.landlordInfo}
+        />
         <div className="grid grid-cols-1 xl:grid-cols-2 ">
           <div className="xl:border-r flex flex-col border-primary py-5 px-6">
             <div className="flex flex-col gap-4">
-              <DetailLine title="Properties" value={3} />
-              <DetailLine title="Units" value={11} />
-              <DetailLine title="Tenants" value={7} />
-              <DetailLine title="Service Requests" value={45} />
+              <DetailLine
+                title="Properties"
+                value={landlordData?.landlordInfo.properties.length}
+              />
+              <DetailLine
+                title="Units"
+                value={landlordData?.landlordInfo.properties.reduce(
+                  (totalUnits, property) => {
+                    return totalUnits + property.unitData.length
+                  },
+                  0
+                )}
+              />
+              <DetailLine
+                title="Tenants"
+                value={landlordData?.tenants.length}
+              />
+              <DetailLine
+                title="Service Requests"
+                value={landlordData?.landlordRequests.requests.length}
+              />
               <DetailLine
                 title={
                   <span className="flex flex-col">
                     <span>Subscription Plan</span>
                     <span className="text-fade text-xs">
-                      Bronze Plan : $20/month
+                      {/* Bronze Plan : $20/month */}
+                      --
                     </span>
                   </span>
                 }
@@ -58,8 +117,8 @@ export default function Profile({ params }: { params: { landlord: string } }) {
                         d="M10.0008 0.5L12.6274 2.41602L15.8786 2.40983L16.8774 5.50385L19.5113 7.40985L18.5008 10.5L19.5113 13.5901L16.8774 15.4961L15.8786 18.5902L12.6274 18.584L10.0008 20.5L7.37415 18.584L4.12295 18.5902L3.12415 15.4961L0.490234 13.5901L1.5008 10.5L0.490234 7.40985L3.12415 5.50385L4.12295 2.40983L7.37415 2.41602L10.0008 0.5Z"
                         fill="#47893F"
                         stroke="#333436"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
                       />
                       <path
                         d="M6.5 10.5L9 13L14 8"
@@ -77,7 +136,11 @@ export default function Profile({ params }: { params: { landlord: string } }) {
                 title="Onboarded Date"
                 value={
                   <span className="text-sm text-textcolor100">
-                    16 July, 2023
+                    {landlordData
+                      ? new Date(
+                          landlordData?.landlordInfo.created
+                        ).toDateString()
+                      : "--"}
                   </span>
                 }
               />
@@ -86,33 +149,19 @@ export default function Profile({ params }: { params: { landlord: string } }) {
             <div className="my-auto py-8 lg:py-14">
               <div className="flex justify-between gap-2 flex-wrap items-center">
                 <h3 className="text-[#4F4F4F] text-lg flex gap-2 items-center">
-                  Recent Activity Log{" "}
+                  Recent Activity Log
                   <span className="bg-primary text-xs text-white h-6 w-6 rounded-md flex items-center justify-center">
-                    11
+                    0
                   </span>
                 </h3>
                 <span className="text-sm text-primary2">View All</span>
               </div>
               <div className="flex flex-col gap-4 mt-4">
-                {[
-                  { message: "Newly listed property added", time: "9:50 AM" },
-                  {
-                    message: "Request service provider: Electrician ",
-                    time: "9:41AM",
-                  },
-                  {
-                    message: "1 Unit added to property and 1 tenant onboarded",
-                    time: "8:42 AM",
-                  },
-                  {
-                    message: "Updated subscription plan to Bronze Plan",
-                    time: "yesterday",
-                  },
-                  {
-                    message: "Added new tenant to property",
-                    time: "2 days ago",
-                  },
-                ].map((each) => (
+                <div className="flex py-20 items-center justify-center gap-3 flex-col">
+                  <MemoNoRecord2 className="w-1/4" />
+                  No Record found
+                </div>
+                {[].map((each: any) => (
                   <div className="flex items-center gap-3" key={each.message}>
                     <svg
                       width="20"
@@ -181,67 +230,51 @@ export default function Profile({ params }: { params: { landlord: string } }) {
                     </tr>
                   </thead>
                   <tbody>
-                    {[
-                      {
-                        name: "Spring Lodge",
-                        location: "Kampala, Uganda",
-                        totalUnits: 5,
-                        availableUnits: 2,
-                        tenants: 3,
-                      },
-                      {
-                        name: "Modern Oasis",
-                        location: "Kampala, Uganda",
-                        totalUnits: 5,
-                        availableUnits: 2,
-                        tenants: 3,
-                      },
-                      {
-                        name: "Urban Loft",
-                        location: "Kampala, Uganda",
-                        totalUnits: 5,
-                        availableUnits: 2,
-                        tenants: 3,
-                      },
-                    ].map((each) => (
-                      <tr
-                        key={each.name}
-                        className="border-t-8 text-[#4F4F4F] border-white80"
-                      >
-                        <td className="p-3 font-semibold ">{each.name}</td>
-                        <td className="p-3 min-w-40">{each.location}</td>
-                        <td className="p-3 text-center">{each.totalUnits}</td>
-                        <td className="p-3 text-center">
-                          {each.availableUnits}
-                        </td>
-                        <td className="p-3 text-center">{each.tenants}</td>
-                        <td className="p-3 text-center">
-                          <button
-                            onClick={() => {
-                              setCurrentProperty(each)
-                              setUnitDialog(true)
-                            }}
-                          >
-                            <svg
-                              width="14"
-                              height="15"
-                              viewBox="0 0 14 15"
-                              fill="none"
-                              xmlns="http://www.w3.org/2000/svg"
+                    {landlordData?.landlordInfo.properties
+                      .slice(0, 2)
+                      .map((each) => (
+                        <tr
+                          key={each.name}
+                          className="border-t-8 text-[#4F4F4F] border-white80"
+                        >
+                          <td className="p-3 font-semibold ">{each.name}</td>
+                          <td className="p-3 min-w-40">{each.location}</td>
+                          <td className="p-3 text-center">
+                            {each.unitData.length}
+                          </td>
+                          <td className="p-3 text-center">
+                            {/* {each.availableUnits} */}
+                          </td>
+                          <td className="p-3 text-center">
+                            {/* {each.tenants} */}
+                          </td>
+                          <td className="p-3 text-center">
+                            <button
+                              onClick={() => {
+                                setCurrentProperty(each)
+                                setUnitDialog(true)
+                              }}
                             >
-                              <path
-                                d="M13.7798 7.36982L8.99981 1.36982C8.91728 1.26709 8.81527 1.18169 8.69964 1.11852C8.584 1.05534 8.45702 1.01564 8.32599 1.0017C8.19496 0.987766 8.06247 0.99986 7.93613 1.03729C7.80979 1.07472 7.69209 1.13675 7.58981 1.21982C7.48708 1.30234 7.40168 1.40435 7.3385 1.51999C7.27533 1.63563 7.23563 1.76261 7.22169 1.89364C7.20775 2.02467 7.21985 2.15716 7.25728 2.2835C7.29471 2.40984 7.35674 2.52753 7.43981 2.62982L11.7098 7.99982L7.22981 13.3698C7.1456 13.4709 7.08217 13.5875 7.04312 13.7131C7.00408 13.8387 6.99019 13.9708 7.00227 14.1018C7.01435 14.2328 7.05214 14.3601 7.11349 14.4764C7.17485 14.5928 7.25855 14.6959 7.35981 14.7798C7.54109 14.9253 7.76739 15.0031 7.99981 14.9998C8.14672 15.0001 8.29188 14.9679 8.42496 14.9057C8.55804 14.8435 8.67578 14.7527 8.76981 14.6398L13.7698 8.63982C13.9183 8.46205 14.0005 8.23824 14.0023 8.00661C14.0041 7.77498 13.9255 7.54991 13.7798 7.36982Z"
-                                fill="#47893F"
-                              />
-                              <path
-                                d="M1.99981 1.36976C1.83272 1.15626 1.58767 1.01788 1.31855 0.98506C1.04944 0.952241 0.778307 1.02767 0.564807 1.19476C0.351308 1.36184 0.212928 1.6069 0.180109 1.87601C0.14729 2.14513 0.222721 2.41626 0.389807 2.62976L4.70981 7.99976L0.229807 13.3598C0.145605 13.4608 0.0821654 13.5775 0.0431209 13.7031C0.00407645 13.8287 -0.00980557 13.9608 0.0022703 14.0917C0.0143462 14.2227 0.0521425 14.35 0.113494 14.4664C0.174846 14.5827 0.258549 14.6858 0.359808 14.7698C0.53972 14.9188 0.766155 15.0002 0.999807 14.9998C1.14672 15 1.29188 14.9679 1.42496 14.9056C1.55804 14.8434 1.67578 14.7526 1.76981 14.6398L6.76981 8.63976C6.91689 8.46083 6.9973 8.23638 6.9973 8.00476C6.9973 7.77313 6.91689 7.54869 6.76981 7.36976L1.99981 1.36976Z"
-                                fill="#47893F"
-                              />
-                            </svg>
-                          </button>
-                        </td>
-                      </tr>
-                    ))}
+                              <svg
+                                width="14"
+                                height="15"
+                                viewBox="0 0 14 15"
+                                fill="none"
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <path
+                                  d="M13.7798 7.36982L8.99981 1.36982C8.91728 1.26709 8.81527 1.18169 8.69964 1.11852C8.584 1.05534 8.45702 1.01564 8.32599 1.0017C8.19496 0.987766 8.06247 0.99986 7.93613 1.03729C7.80979 1.07472 7.69209 1.13675 7.58981 1.21982C7.48708 1.30234 7.40168 1.40435 7.3385 1.51999C7.27533 1.63563 7.23563 1.76261 7.22169 1.89364C7.20775 2.02467 7.21985 2.15716 7.25728 2.2835C7.29471 2.40984 7.35674 2.52753 7.43981 2.62982L11.7098 7.99982L7.22981 13.3698C7.1456 13.4709 7.08217 13.5875 7.04312 13.7131C7.00408 13.8387 6.99019 13.9708 7.00227 14.1018C7.01435 14.2328 7.05214 14.3601 7.11349 14.4764C7.17485 14.5928 7.25855 14.6959 7.35981 14.7798C7.54109 14.9253 7.76739 15.0031 7.99981 14.9998C8.14672 15.0001 8.29188 14.9679 8.42496 14.9057C8.55804 14.8435 8.67578 14.7527 8.76981 14.6398L13.7698 8.63982C13.9183 8.46205 14.0005 8.23824 14.0023 8.00661C14.0041 7.77498 13.9255 7.54991 13.7798 7.36982Z"
+                                  fill="#47893F"
+                                />
+                                <path
+                                  d="M1.99981 1.36976C1.83272 1.15626 1.58767 1.01788 1.31855 0.98506C1.04944 0.952241 0.778307 1.02767 0.564807 1.19476C0.351308 1.36184 0.212928 1.6069 0.180109 1.87601C0.14729 2.14513 0.222721 2.41626 0.389807 2.62976L4.70981 7.99976L0.229807 13.3598C0.145605 13.4608 0.0821654 13.5775 0.0431209 13.7031C0.00407645 13.8287 -0.00980557 13.9608 0.0022703 14.0917C0.0143462 14.2227 0.0521425 14.35 0.113494 14.4664C0.174846 14.5827 0.258549 14.6858 0.359808 14.7698C0.53972 14.9188 0.766155 15.0002 0.999807 14.9998C1.14672 15 1.29188 14.9679 1.42496 14.9056C1.55804 14.8434 1.67578 14.7526 1.76981 14.6398L6.76981 8.63976C6.91689 8.46083 6.9973 8.23638 6.9973 8.00476C6.9973 7.77313 6.91689 7.54869 6.76981 7.36976L1.99981 1.36976Z"
+                                  fill="#47893F"
+                                />
+                              </svg>
+                            </button>
+                          </td>
+                        </tr>
+                      ))}
                   </tbody>
                 </table>
               </div>
@@ -257,44 +290,30 @@ export default function Profile({ params }: { params: { landlord: string } }) {
                     <tr className="bg-primary2 text-white">
                       <td className="p-3">Service</td>
                       <td className="p-3">Service Provider</td>
-                      <td className="p-3">Start Date</td>
-                      <td className="p-3">Due Date</td>
+                      <td className="p-3">Problems</td>
+                      <td className="p-3">Date</td>
                       <td className="p-3">Status</td>
                     </tr>
                   </thead>
                   <tbody>
-                    {[
-                      { service: "Electrician", status: "pending" },
-                      { service: "Plumber", status: "completed" },
-                      { service: "Electrician", status: "completed" },
-                    ].map((each, i) => (
-                      <tr
-                        key={each.service + i}
-                        className="border-t-8 text-[#4F4F4F] border-white80"
-                      >
-                        <td className="p-3 ">{each.service}</td>
-                        <td className="p-3 min-w-40">
-                          <span className="flex items-center gap-[5px] mb-[2px]">
-                            <Image
-                              src="/images/landlord-emoji.svg"
-                              alt="Landlord Emoji"
-                              width={24}
-                              draggable={false}
-                              height={24}
-                            />
-                            <p className="text-[#4f4f4f]">Okello Smith</p>
-                          </span>
-                          <p className="text-[10px] text-[#949494]">
-                            (+256) 567890123
-                          </p>
-                        </td>
-                        <td className="p-3">17 OCT, 2023</td>
-                        <td className="p-3">17 OCT, 2023</td>
-                        <td className="p-3 text-center">
-                          <StatusBadge status={each.status} />
-                        </td>
-                      </tr>
-                    ))}
+                    {landlordData?.landlordRequests.requests
+                      .slice(0, 2)
+                      .map((each, i) => (
+                        <tr
+                          key={"each.service" + i}
+                          className="border-t-8 text-[#4F4F4F] border-white80"
+                        >
+                          <td className="p-3 ">{each.agent}</td>
+                          <td className="p-3 min-w-40">
+                            <ProfileInTD image="/erer" />
+                          </td>
+                          <td className="p-3">{each.problems.join(", ")}</td>
+                          <td className="p-3">{each.day}</td>
+                          <td className="p-3 text-center">
+                            <StatusBadge status={each.status} />
+                          </td>
+                        </tr>
+                      ))}
                   </tbody>
                 </table>
               </div>

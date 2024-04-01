@@ -1,6 +1,6 @@
 // Need to use the React-specific entry point to import createApi
 import { BASE_URL } from '@/config';
-import { Actor, AddAdmin, AdminLoginT, LandLord, Package, RespData, UserData } from '@/utils/types';
+import { Actor, AddAdmin, AdminLoginT, LandLord, LandlordData, Package, RespData, TenantInfo, UserData } from '@/utils/types';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import toast from 'react-hot-toast';
 import { AnyObject } from 'yup';
@@ -33,10 +33,10 @@ export const appApi = createApi({
 		},
 
 		validateStatus: (response, result) => {
-			if (result.statusCode != 200) {
+			if (result.statusCode && result.statusCode != 200) {
 				toast.error(result.error);
 			}
-			return response.status === 200 && result.statusCode == 200
+			return response.status === 200 && (result.statusCode == 200 || !result.statusCode)
 		},
 
 		// responseHandler: async (response) => {
@@ -100,10 +100,9 @@ export const appApi = createApi({
 			transformResponse: (response: any) => response.data,
 			providesTags: ['Landlord']
 		}),
-		getLandlord: builder.query<AnyObject, string>({
-			query: (qP) => `service/admin/landlord/${qP}`,
-			transformResponse: (response: any) => response.data,
-			providesTags: ['Landlord']
+		getLandlord: builder.mutation<LandlordData, { landlordID: string }>({
+			query: (body) => ({ url: `service/admin/get_landlord_by_id`, body, method: "POST" }),
+			// providesTags: ['Landlord']
 		}),
 		addLandlord: builder.mutation<any, AddAdmin>({
 			query: (body) => ({ url: `auth/landlord/register`, method: "POST", body }),
@@ -113,9 +112,9 @@ export const appApi = createApi({
 			query: (body) => ({ url: `/admin/update_landlord`, method: "POST", body }),
 			invalidatesTags: ['Landlord']
 		}),
-		deleteLandlord: builder.mutation<any, any>({
-			query: (body,) => ({ url: `auth/${body.actor}/landlord`, method: "DELETE", body }),
-			transformResponse: (response: any) => response.data,
+		deleteLandlord: builder.mutation<any, { landlordID: string }>({
+			query: (body,) => ({ url: `service/admin/delete_landlord`, method: "POST", body }),
+			invalidatesTags: ['Landlord']
 		}),
 
 
@@ -147,6 +146,10 @@ export const appApi = createApi({
 			query: (qP) => `service/admin/all_tenants`,
 			transformResponse: (response: any) => response.data,
 			providesTags: ['Tenant']
+		}),
+		getTenant: builder.mutation<TenantInfo, { email: string }>({
+			query: (body) => ({ url: `service/admin/get_tenant_by_email`, body, method: "POST" }),
+			// providesTags: ['Landlord']
 		}),
 		getRents: builder.query<any[], any>({
 			query: (qP) => `service/admin/all_rents`,
@@ -182,13 +185,14 @@ export const {
 	useGetPropertiesQuery,
 	useGetRequestsQuery,
 	useGetRentsQuery,
+	useGetTenantMutation,
 	useAdminForgotPasswordMutation,
 	useAdminLoginMutation,
 	useAdminResetPassMutation,
 	useAdminVerifyOTPMutation,
 	useCreatePackageMutation,
 	useGetLandlordPropertiesMutation,
-	useGetLandlordQuery,
+	useGetLandlordMutation,
 	useAddLandlordMutation,
 	useAdminChangePassMutation,
 	useDeleteLandlordMutation,

@@ -31,6 +31,7 @@ export type Actor = "admin" | "tenant" | "landlord"
 export interface AdminLoginT {
 	email: string, password: string, actor: Actor
 }
+
 export interface LandLord {
 	name: string,
 	surname: string,
@@ -45,6 +46,139 @@ export interface LandLord {
 	password?: string
 	confirmPassword?: string
 }
+
+export interface RentHistory {
+	accessCode: string;
+	propertyName: string;
+	landlordName: string;
+	propertyStructure: string;
+	location: string;
+	landlordPhoto: string;
+	isActive: boolean;
+	duration: number;
+}
+
+export interface TenantInfo {
+	email: string;
+	phone: string;
+	unitID: string;
+	startDate: string;
+	endDate: string;
+	name: string;
+	surname: string;
+	canDelete: boolean;
+	selfie: string;
+	idPhoto: string;
+	receiptPhoto: string;
+	rentalPhoto: string;
+	created_at: string;
+	added_at: string;
+	active?: boolean;
+	validated?: boolean;
+	rentHistory?: RentHistory[];
+}
+
+interface UnitData {
+	bedroom: string;
+	landlordID: string;
+	propertyID: string;
+	unitID: string;
+	bathroom: string;
+	lightMeter: string;
+	waterMeter: string;
+	toilet: string;
+	wifi: boolean;
+	power: boolean;
+	store: string;
+	isTaken: boolean;
+	isInUse: boolean;
+	monthlyCost: string;
+	extraWages: string;
+	tax: string;
+	photo: string;
+	nick: string;
+	tenantInfo?: TenantInfo;
+}
+
+interface Property {
+	propertyID: string;
+	name: string;
+	description: string;
+	unit: string;
+	category: string;
+	unitTaken: string;
+	structure: string;
+	type: string;
+	location: string;
+	photo: string;
+	unitData: UnitData[];
+	football: boolean;
+	canDelete: boolean;
+	pool: boolean;
+	wifi: boolean;
+	laundry: boolean;
+	garden: boolean;
+	fitness: boolean;
+	power: boolean;
+	created_at: string;
+}
+
+export interface LandlordInfo {
+	_id: string;
+	name: string;
+	surname: string;
+	phone: string;
+	email: string;
+	selfie: string;
+	created: string;
+	active: boolean;
+	validated: boolean;
+	propertiesLimit: string;
+	properties: Property[];
+	history: {
+		type: string;
+		data: Property;
+	}[];
+	__v: number;
+}
+
+interface LandlordRequest {
+	agent: string;
+	description: string;
+	from: string;
+	priority: string;
+	phone: string;
+	email: string;
+	tenantPhoto: string;
+	propertyLocation: string;
+	problems: string[];
+	tenantUnit: string;
+	fullName: string;
+	propertyName: string;
+	landlordID: string;
+	propertyStructure: string;
+	period: string;
+	others: string;
+	time: string;
+	day: string;
+	ticket: string;
+	status: string;
+	isLandlordApproved: boolean;
+	isResolved: boolean;
+}
+
+interface LandlordRequests {
+	_id: string;
+	landlordID: string;
+	requests: LandlordRequest[];
+}
+
+export interface LandlordData {
+	landlordInfo: LandlordInfo;
+	tenants: TenantInfo[];
+	landlordRequests: LandlordRequests;
+}
+
 
 export interface Tenant {
 	email: string;

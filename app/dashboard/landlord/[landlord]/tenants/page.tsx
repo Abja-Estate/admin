@@ -18,22 +18,45 @@ import {
 } from "@/components/svgs"
 import Image from "next/image"
 import Link from "next/link"
-import { useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 import ReactPaginate from "react-paginate"
-import { AreYouSureProps } from "@/utils/types"
+import { AreYouSureProps, LandlordData, TenantInfo } from "@/utils/types"
 import { AnyObject } from "yup"
 import toast from "react-hot-toast"
-import { useDeleteTenantMutation } from "@/redux/endpoints"
+import {
+  useDeleteTenantMutation,
+  useGetLandlordMutation,
+} from "@/redux/endpoints"
 import LandlordsHeader from "@/components/admin-dashboard/LandlordsHeader"
 import AreYouSure from "@/components/AreYouSure"
+import ProfileInTD from "@/components/admin-dashboard/ProfileInTD"
+import CustomImage from "@/components/CustomImage"
 
-export default function Tenant({ params }: { params: { tenant: string } }) {
-  const [filteredTenants, setfilteredTenants] = useState<any[]>(
-    new Array(64).fill(0)
+export default function Tenant({ params }: { params: { landlord: string } }) {
+  const [landlordData, setLandlordData] = useState<LandlordData | null>(null)
+  const [fetchLandlordData] = useGetLandlordMutation()
+
+  const fetchL = useCallback(async () => {
+    const resp = await fetchLandlordData({
+      landlordID: params.landlord,
+    })
+    if ("data" in resp && resp.data.landlordInfo) {
+      setLandlordData(resp.data)
+      setfilteredTenants(resp.data.tenants)
+    }
+  }, [params.landlord, fetchLandlordData])
+
+  useEffect(() => {
+    fetchL()
+  }, [fetchL])
+
+  const [filteredTenants, setfilteredTenants] = useState<TenantInfo[]>(
+    // new Array(64).fill(0)
+    []
   )
   const [deleteATenant] = useDeleteTenantMutation()
-  const [currentTenant, setCurrentTenant] = useState<any>(null)
-  const [tenantIsOpen, setTenantIsOpen] = useState(true)
+  const [currentTenant, setCurrentTenant] = useState<TenantInfo | null>(null)
+  const [tenantIsOpen, setTenantIsOpen] = useState(false)
   const [cDIO, setCDIO] = useState<AreYouSureProps>({ status: false })
 
   // for pagination
@@ -98,29 +121,35 @@ export default function Tenant({ params }: { params: { tenant: string } }) {
       <div className="w-full flex flex-wrap items-center justify-between py-[16px] px-[22px] bg-white">
         <div className="flex flex-col sm:flex-row gap-[20px]">
           <Image
-            src="/images/tenant-profile-img.svg"
+            src={
+              landlordData?.landlordInfo.selfie ??
+              "/images/tenant-profile-img.svg"
+            }
+            // fallbackSrc="/images/tenant-profile-img.svg"
             alt="Tenant Profile"
+            className="h-24 w-24 rounded-full min-w-24 object-cover"
             width={100}
             height={100}
           />
           <div className="py-[8px] text-sm sm:text-base">
             <h1 className="text-textcolor100 text-[18px] font-semibold mb-[12px]">
-              Akello Buma
+              {landlordData?.landlordInfo.name}{" "}
+              {landlordData?.landlordInfo.surname}
             </h1>
             <div className="flex flex-wrap items-center gap-[19px] text-[#949494] mb-[4.5px]">
-              <p>@AkelloBuma</p>
+              <p>@{landlordData?.landlordInfo.name.toLowerCase()}</p>
               <div className="bg-textcolor100 w-[1px] h-[19px]"></div>
-              <p>(+256) 567890123</p>
+              <p>{landlordData?.landlordInfo.phone}</p>
             </div>
             <div className="gap-[16px] flex items-center">
               <LocationIcon />
-              <p className="text-[#949494] text-[14px]">Kampala, Uganda</p>
+              <p className="text-[#949494] text-[14px]">--</p>
             </div>
           </div>
         </div>
         <div>
           <Link
-            href={`/dashboard/tenant/${params.tenant}`}
+            href={`/dashboard/landlord/${params.landlord}`}
             className="text-white w-[140px] h-[38px] grid place-items-center rounded-[6px] bg-[#2A4C23]"
           >
             View Profile
@@ -135,11 +164,11 @@ export default function Tenant({ params }: { params: { tenant: string } }) {
                 <div className="border-[1px] border-white rounded-[4px] w-[20px] h-[20px]"></div>
               </td>
               <td className="p-3">Tenant</td>
-              <td className="p-3">Address</td>
+              <td className="p-3">Unit ID</td>
               <td className="p-3">Email Address</td>
-              <td className="p-3">Properties</td>
-              <td className="p-3">Tenants</td>
-              <td className="p-3">Request Status</td>
+              {/* <td className="p-3">Tenants</td> */}
+              <td className="p-3">Move in Date</td>
+              <td className="p-3">Due Date</td>
               <td className="p-3">Action</td>
             </tr>
           </thead>
@@ -154,28 +183,17 @@ export default function Tenant({ params }: { params: { tenant: string } }) {
                   <div className="border-[1px] border-[#828282] rounded-[4px] w-[20px] h-[20px]"></div>
                 </td>
                 <td className="p-3">
-                  <div className="flex items-center gap-[5px] mb-[2px]">
-                    <Image
-                      src="/images/tenant-emoji.svg"
-                      alt="Tenant Emoji"
-                      width={24}
-                      height={24}
-                    />
-                    <p className="text-[#4f4f4f]">Akello Buma</p>
-                  </div>
-                  <p className="text-[10px] text-[#949494]">(+256) 567890123</p>
-                </td>
-                <td className="p-3">Kampala, Uganda</td>
-                <td className="p-3">akello.buma@gmail.com</td>
-                <td className="p-3">12 Properties</td>
-                <td className="p-3">
-                  <AvatarStack
-                    images={Array(15).fill("/images/tenant-emoji.svg")}
+                  <ProfileInTD
+                    image={each.selfie}
+                    name={each.name}
+                    surname={each.surname}
+                    phone={each.phone}
                   />
                 </td>
-                <td className="p-3">
-                  <StatusBadge status="completed" />
-                </td>
+                <td className="p-3">{each.unitID}</td>
+                <td className="p-3">{each.email}</td>
+                <td className="p-3">{each.startDate}</td>
+                <td className="p-3">{each.endDate}</td>
                 <td className="p-3">
                   <span className="flex items-center gap-3">
                     <button

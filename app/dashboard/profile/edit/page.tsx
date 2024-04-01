@@ -1,8 +1,12 @@
 "use client"
 import { CameraIcon, EditOutlineIcon } from "@/components/svgs"
-import Image from "next/image"
 import FormField from "@/components/inputs/FormField"
-import { adminInputs, changePasswordSchema } from "@/utils/schema"
+import {
+  adminInputs,
+  changePasswordSchema,
+  editlandlordInputs,
+  landlordInputs,
+} from "@/utils/schema"
 import { useAppSelector } from "@/redux/hooks"
 import CustomImage from "@/components/CustomImage"
 import { useFormik } from "formik"
@@ -33,7 +37,7 @@ export default function ProfileEdit() {
 
   const admin_f = useFormik<AnyObject>({
     validationSchema: changePasswordSchema,
-    initialValues: getDefault(adminInputs, user),
+    initialValues: getDefault(editlandlordInputs, user),
     onSubmit: async (values) => {
       const ldata: AnyObject = {
         ...values,

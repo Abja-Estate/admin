@@ -20,7 +20,7 @@ export default function Report() {
 
   return (
     <>
-      <header className="grid gap-[30px]">
+      <header className="grid md:grid-cols-2 gap-[30px]">
         <div className="px-[20px] py-[13px] bg-white rounded-[15px] flex flex-col gap-[12px]">
           <div className="flex justify-between">
             <div className="flex gap-[8px]">
@@ -45,7 +45,7 @@ export default function Report() {
             </div>
           </div>
           <div className="flex gap-[8px] items-center">
-            <h1 className="text-[32px]">4.5</h1>
+            <h1 className="text-[32px]">0</h1>
             <div className="h-[32px] border-l-[#949494] border-l-[1px] pl-[5px]">
               <div className="flex mb-[8px]">
                 {[...Array(5)].map((_, i) => (
@@ -70,7 +70,7 @@ export default function Report() {
             <Button className="!text-[14px] !h-[35px]">View All Reviews</Button>
           </div>
         </div>
-        <div className="px-[26px] py-[13px] bg-white bg-[url('/images/report-stripes.svg')] rounded-[15px] flex flex-col justify-between gap-[12px]">
+        <div className="px-[26px] py-[13px] bg-cover bg-white bg-[url('/images/report-stripes.svg')] rounded-[15px] flex flex-col justify-between gap-[12px]">
           <div className="flex items-center justify-between">
             <p className="text-textcolor100 text-[18px] font-semibold">
               Total Service Report
