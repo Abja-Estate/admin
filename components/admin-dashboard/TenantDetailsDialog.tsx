@@ -4,7 +4,7 @@ import {
 } from "@/redux/endpoints"
 import AreYouSure from "../AreYouSure"
 import DialogLayout from "../DialogLayout"
-import { AreYouSureProps, TenantInfo } from "@/utils/types"
+import { AreYouSureProps, RentHistory, TenantInfo } from "@/utils/types"
 import { ReactNode, useCallback, useEffect, useState } from "react"
 import { AnyObject } from "yup"
 import toast from "react-hot-toast"
@@ -28,6 +28,8 @@ import MemoPower from "../svgs/Power"
 import MemoLaundry from "../svgs/Laundry"
 import Checkbox from "../inputs/checkbox"
 import { Span } from "next/dist/trace"
+import { demoPersonnel, demoTenantServiceRequest } from "@/utils/constants"
+import MemoNoRecord2 from "../NoRecord2"
 
 const TenantDetailsDialog = ({
   open,
@@ -57,7 +59,7 @@ const TenantDetailsDialog = ({
   const deleteTenantCaution = () => {
     setCDIO({
       status: true,
-      data: {},
+      data: tenant as AnyObject,
       type: "deleteUser",
       action: deleteTenant,
       desc: `Are you sure you want to delete this user?`,
@@ -110,7 +112,12 @@ const TenantDetailsDialog = ({
   ]
 
   const [tenantData, setTenantData] = useState<TenantInfo | null>(null)
+  const [rentData, setrentData] = useState<RentHistory | null>(null)
   const [fetchTenantData] = useGetTenantMutation()
+  // const serviceRequests = demoTenantServiceRequest;
+  // const reviews: any[] = demoPersonnel
+  const serviceRequests: any[] = []
+  const reviews: any[] = []
 
   const fetchL = useCallback(async () => {
     const resp = await fetchTenantData({
@@ -118,6 +125,7 @@ const TenantDetailsDialog = ({
     })
     if ("data" in resp && resp.data.email) {
       setTenantData(resp.data)
+      setrentData(resp.data.rentHistory?.find((each) => each.isActive) ?? null)
     }
   }, [tenant, fetchTenantData])
 
@@ -157,8 +165,8 @@ const TenantDetailsDialog = ({
                   <div className="gap-[16px] flex flex-wrap justify-between items-center">
                     <StatusBadge
                       className="min-w-fit"
-                      status="Unknown"
-                      text="Unknown"
+                      status="Paid"
+                      text="Paid"
                     />
                     <button
                       onClick={deleteTenantCaution}
@@ -174,7 +182,7 @@ const TenantDetailsDialog = ({
                         <path
                           d="M4.11111 1.55539V0.666504H6.33333V1.55539M8.55556 3.55539V10.4443C8.55556 10.68 8.4619 10.9061 8.29521 11.0728C8.12851 11.2395 7.90241 11.3332 7.66667 11.3332H2.77778C2.54203 11.3332 2.31594 11.2395 2.14924 11.0728C1.98254 10.9061 1.88889 10.68 1.88889 10.4443V3.55539M6.33333 4.27762V10.2221M4.11111 4.27762V10.2221M1 1.55539H9.44444V2.44428H1V1.55539Z"
                           stroke="#2A4C23"
-                          stroke-miterlimit="10"
+                          strokeMiterlimit="10"
                           strokeLinecap="round"
                           strokeLinejoin="round"
                         />
@@ -206,34 +214,9 @@ const TenantDetailsDialog = ({
                   )}
                 </Tab.List>
                 <Tab.Panels className="mt-2">
-                  <Tab.Panel className={cn("")}>
+                  <Tab.Panel className={cn("break-all")}>
                     <ul className="flex flex-col gap-3">
-                      {[
-                        {
-                          service: "Electrician",
-                          status: "arriving",
-                          message:
-                            "I need an electrician to install a new light fixture in my living room. The light fixture is a chandelier and it will need to be wired into the existing electrical system.",
-                          name: "Bryan Umar",
-                          time: "Arriving in 2 hours",
-                        },
-                        {
-                          service: "Electrician",
-                          status: "completed",
-                          message:
-                            "I need an electrician to install a new light fixture in my living room. The light fixture is a chandelier and it will need to be wired into the existing electrical system.",
-                          name: "Bryan Umar",
-                          time: "2 hours ago",
-                        },
-                        {
-                          service: "Electrician",
-                          status: "completed",
-                          message:
-                            "I need an electrician to install a new light fixture in my living room. The light fixture is a chandelier and it will need to be wired into the existing electrical system.",
-                          name: "Bryan Umar",
-                          time: "2 hours ago",
-                        },
-                      ].map((each, i) => (
+                      {serviceRequests.map((each, i) => (
                         <li
                           key={i + "service"}
                           className="flex flex-col text-sm bg-white80 p-3 rounded-xl"
@@ -275,23 +258,16 @@ const TenantDetailsDialog = ({
                         </li>
                       ))}
                     </ul>
+                    {serviceRequests.length == 0 && (
+                      <div className="flex flex-col items-center text-gray-600 text-sm justify-center gap-3 py-16">
+                        <MemoNoRecord2 className="w-1/3" />
+                        <p>No Service Request yet.</p>
+                      </div>
+                    )}
                   </Tab.Panel>
                   <Tab.Panel>
                     <div className="flex flex-col gap-3">
-                      {[
-                        {
-                          name: "Bryan Umar",
-                          service: "Electrician",
-                          message:
-                            "I was very impressed with Bryan’s work. He was prompt, professional, and did a great job fixing the electrical problem in my tenant's apartment. I would highly recommend him to anyone who needs an electrician.",
-                        },
-                        {
-                          name: "Bryan Umar",
-                          service: "Plumber",
-                          message:
-                            "I was very impressed with Bryan’s work. He was prompt, professional, and did a great job fixing the electrical problem in my tenant's apartment. I would highly recommend him to anyone who needs an electrician.",
-                        },
-                      ].map((each, i) => (
+                      {reviews.map((each, i) => (
                         <div
                           style={{
                             backgroundColor:
@@ -348,6 +324,12 @@ const TenantDetailsDialog = ({
                         </div>
                       ))}
                     </div>
+                    {reviews.length == 0 && (
+                      <div className="flex flex-col items-center text-gray-600 text-sm justify-center gap-3 py-16">
+                        <MemoNoRecord2 className="w-1/3" />
+                        <p>No Reviews yet.</p>
+                      </div>
+                    )}
                   </Tab.Panel>
                 </Tab.Panels>
               </Tab.Group>
@@ -356,18 +338,24 @@ const TenantDetailsDialog = ({
               <div className="flex gap-4">
                 <div className="basis-1/3">
                   <span className="text-xs text-fade">Property Name:</span>
-                  <h3 className="font-medium">The Spring Lodge</h3>
+                  <h3 className="font-medium capitalize">
+                    {rentData?.propertyName}
+                  </h3>
                 </div>
                 <div className="basis-2/3">
-                  <span className="text-xs text-fade">Unit ID:</span>
-                  <h3 className="font-medium">ABJ56rjX</h3>
+                  <span className="text-xs text-fade">Access Code:</span>
+                  <h3 className="font-medium">{rentData?.accessCode}</h3>
                 </div>
+                {/* <div className="basis-2/3">
+                  <span className="text-xs text-fade">Unit ID:</span>
+                  <h3 className="font-medium">{tenant?.unitID}</h3>
+                </div> */}
               </div>
               <div className="flex gap-4">
                 <div className="basis-1/3">
                   <span className="text-xs text-fade">Structure:</span>
                   <h3 className="flex gap-1 items-center">
-                    <MemoStructure /> Condominium
+                    <MemoStructure /> {rentData?.propertyStructure}
                   </h3>
                 </div>
                 <div className="basis-2/3">
@@ -379,18 +367,18 @@ const TenantDetailsDialog = ({
                 <span className="text-xs text-fade">Features:</span>
                 <div className="flex mt-1 gap-5 flex-wrap">
                   {[
-                    { feat: "bedroom", value: 2, label: "Bedroom" },
-                    { feat: "toilet", value: 2, label: "Toilet" },
-                    { feat: "bath", value: 2, label: "Bath" },
-                    { feat: "store", value: 2, label: "Store" },
+                    { feat: "bedroom", value: "--", label: "Bedroom" },
+                    { feat: "toilet", value: "--", label: "Toilet" },
+                    { feat: "bath", value: "--", label: "Bath" },
+                    { feat: "store", value: "--", label: "Store" },
                     {
                       feat: "meter",
-                      value: "No.1394567",
+                      value: "--",
                       label: "Light Meter",
                     },
                     {
                       feat: "meter",
-                      value: "No.1394567",
+                      value: "--",
                       label: "Water Meter",
                     },
                   ].map((each, i) => (
@@ -407,31 +395,28 @@ const TenantDetailsDialog = ({
                 </div>
               </div>
               <div className="">
-                <span className="text-xs text-fade">Structure:</span>
+                <span className="text-xs text-fade">Address:</span>
                 <h3 className="flex gap-1 items-center">
-                  <MemoRedLocationIcon /> 24, Commercial Avenue, Kampala
+                  <MemoRedLocationIcon /> --
                 </h3>
               </div>
               <div className="flex justify-between gap-4">
                 <div className="">
                   <span className="text-xs text-fade">Move-In Date:</span>
-                  <h3 className="font-medium">27/08/2023</h3>
+                  <h3 className="font-medium">--</h3>
                 </div>
                 <div className="">
                   <span className="text-xs text-fade">Due Date:</span>
-                  <h3 className="font-medium">27/08/2023</h3>
+                  <h3 className="font-medium">--</h3>
                 </div>
                 <div className="">
                   <span className="text-xs text-fade">Period:</span>
-                  <h3 className="font-medium">12 months</h3>
+                  <h3 className="font-medium">{rentData?.duration}</h3>
                 </div>
               </div>
               <div className="">
                 <span className="text-xs text-fade">Description:</span>
-                <h3 className="font-medium">
-                  Bright, spacious 2-bedroom apartment in a quiet neighborhood.
-                  Close to shops, restaurants, and public transportation.
-                </h3>
+                <h3 className="font-medium">--</h3>
               </div>
 
               <div className="">
@@ -463,7 +448,7 @@ const TenantDetailsDialog = ({
                       Monthly Cost <span className="text-red-600">*</span>
                     </h3>
                     <span className="bg-bgprimaryfade border px-3 text-[.7rem] border-primaryFade text-primary2">
-                      #3,000 /mth
+                      -- /mth
                     </span>
                   </div>
                   <div className="flex justify-between items-center">
@@ -471,7 +456,7 @@ const TenantDetailsDialog = ({
                       Extra Charges <span className="text-red-600">*</span>
                     </h3>
                     <span className="bg-bgprimaryfade border px-3 text-[.7rem] border-primaryFade text-primary2">
-                      #3,000 /mth
+                      -- /mth
                     </span>
                   </div>
                   <div className="flex justify-between items-center">
@@ -479,7 +464,7 @@ const TenantDetailsDialog = ({
                       Tax <span className="text-red-600">*</span>
                     </h3>
                     <span className="bg-bgprimaryfade border px-3 text-[.7rem] border-primaryFade text-primary2">
-                      #3,000 /mth
+                      -- /mth
                     </span>
                   </div>
                 </div>
