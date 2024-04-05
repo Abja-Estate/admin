@@ -81,7 +81,10 @@ const FormField = ({ autocomplete = true, inputProps, ...props }: Desc) => {
                         </span>
                       </>
                     )}
-                  {selected && (
+                  {(props?.options?.find(
+                    (each) => each.value == props?.formik?.values[props.name]
+                  ) ||
+                    selected) && (
                     <span
                       className={`flex capitalize items-center gap-2 truncate ${""}`}
                     >
@@ -188,7 +191,9 @@ const FormField = ({ autocomplete = true, inputProps, ...props }: Desc) => {
               !props.t
                 ? "w-full outline-none py-1"
                 : "w-full h-full outline-none rounded-lg px-3",
-              !props.value && !props?.formik?.values[props.name] && "text-fade"
+              ((!props.value && !props?.formik?.values[props.name]) ||
+                props.disabled) &&
+                "text-fade"
             )}
           />
         )}

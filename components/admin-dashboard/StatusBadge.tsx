@@ -20,7 +20,7 @@ const StatusBadge = ({
           ? "bg-[#D6B5DE] text-[#750790]"
           : status == "pending"
           ? "bg-[#FFBB0C4D] text-[#FFBB0C]"
-          : status == "ongoing"
+          : status == "ongoing" || status == "accepted"
           ? "bg-[#D5EBF8] text-[#0174C7]"
           : status == "cancelled" || status == "failed"
           ? "bg-[#D500004D] text-[#D50000]"

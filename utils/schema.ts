@@ -126,25 +126,25 @@ export const addRequestInputs: Input[] = [
 	{ label: "Landlord Contact", name: "landlord_contact", type: "text", placeholder: "Enter Landlord Contact" },
 	{ label: "Tenant", name: "tenant", type: "text", placeholder: "Enter Tenant" },
 	{ label: "Tenant Contact", name: "tenant_contact", type: "text", placeholder: "Enter Tenant Contact" },
-	{ label: "Service Type", name: "service_type", type: "text", placeholder: "Enter Service Type" },
+	{ label: "Service Type", name: "agent", type: "text", placeholder: "Enter Service Type" },
+	{ label: "Request Status", name: "status", type: "select", placeholder: "Request Status" },
 	{ label: "Priority", name: "priority", type: "select", placeholder: "Enter Priority" },
-	{ label: "Start Date", name: "start_date", type: "date", placeholder: "Enter Start Date" },
-	{ label: "Due Date", name: "due_date", type: "date", placeholder: "Enter Due Date" },
-	{ label: "Address", name: "address", type: "text", placeholder: "Enter Address" },
+	{ label: "Day", name: "day", type: "date", placeholder: "Day" },
+	{ label: "Start Time", name: "start_time", type: "time", placeholder: "Start Time" },
+	{ label: "End Time", name: "end_time", type: "time", placeholder: "End Time" },
+	{ label: "Address", name: "propertyLocation", type: "text", placeholder: "Enter Address" },
 	{ label: "Description", name: "description", type: "text", placeholder: "Enter Description" },
+	{ label: "Service Personnel", name: "servicePersonnelName", type: "text", placeholder: "Service Personnel" },
+	{ label: "Service Personnel Contact", name: "servicePersonnelPhone", type: "text", placeholder: "Service Personnel Contact" },
 ];
 
 // Generate Yup validation schema
 export const addRequestSchema = Yup.object().shape({
-	landlord: Yup.string().required("Landlord is required"),
-	landlord_contact: Yup.string().required("Landlord Contact is required"),
-	tenant: Yup.string().required("Tenant is required"),
-	tenant_contact: Yup.string().required("Tenant Contact is required"),
-	service_type: Yup.string().required("Service Type is required"),
+	agent: Yup.string().required("Service Type is required"),
 	priority: Yup.string().required("Priority is required"),
-	start_date: Yup.date().required("Start Date is required"),
-	due_date: Yup.date().required("Due Date is required"),
-	address: Yup.string().required("Address is required"),
+	// start_time: Yup.date().required("Start Time is required"),
+	// end_time: Yup.date().required("End Time is required"),
+	day: Yup.string().required("Day is required"),
 	description: Yup.string().required("Description is required"),
 });
 

@@ -18,10 +18,11 @@ import ReactPaginate from "react-paginate"
 import NoRecord from "../../NoRecord"
 import Loading from "@/components/Loading"
 import { useGetRequestsQuery } from "@/redux/endpoints"
+import { RequestDetails } from "@/utils/types"
 
 export default function Requests() {
   const { data: requests, isLoading: loading } = useGetRequestsQuery("")
-  const [fRequests, setFRequests] = useState<any>([])
+  const [fRequests, setFRequests] = useState<RequestDetails[]>([])
 
   useEffect(() => {
     if (requests) {
@@ -132,7 +133,7 @@ export default function Requests() {
               </thead>
               <tbody>
                 {requests &&
-                  currentItems.map((each: any, i: number) => (
+                  currentItems.map((each, i: number) => (
                     <tr
                       key={i + "req"}
                       className="hover:bg-[#7F947B] border-[#D4DBD3] border-b-2 text-sm group hover:text-white transition duration-300"
@@ -145,7 +146,7 @@ export default function Requests() {
                         />
                       </td>
                       <td className="p-3">{each.problems?.join(", ")}</td>
-                      <td>{new Date(each.time).toDateString()} </td>
+                      <td>{each.day} </td>
                       <td className="px-3">
                         <span
                           className={`px-3 py-1.5 w-fit min-w-28 transition duration-300 gap-3 group-hover:text-white flex items-center rounded-lg whitespace-nowrap ${

@@ -1,6 +1,7 @@
 // Need to use the React-specific entry point to import createApi
 import { BASE_URL } from '@/config';
-import { Actor, AddAdmin, AdminLoginT, LandLord, LandlordData, Package, RespData, TenantInfo, UserData } from '@/utils/types';
+import { isString } from '@/utils/helpers';
+import { Actor, AddAdmin, AdminLoginT, GetUnit, LandLord, LandlordData, Package, RequestDetails, RespData, TenantInfo, UserData } from '@/utils/types';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import toast from 'react-hot-toast';
 import { AnyObject } from 'yup';
@@ -34,7 +35,7 @@ export const appApi = createApi({
 
 		validateStatus: (response, result) => {
 			if (result.statusCode && result.statusCode != 200) {
-				toast.error(result.error);
+				toast.error(isString(result.error) ? result.error : "An error occured");
 			}
 			return response.status === 200 && (result.statusCode == 200 || !result.statusCode)
 		},
@@ -119,23 +120,26 @@ export const appApi = createApi({
 
 
 		// requests
-		getRequests: builder.query<any[], any>({
+		getRequests: builder.query<RequestDetails[], string>({
 			query: (qP) => `service/admin/all_requests`,
 			transformResponse: (response: any) => {
+				interface ReqDet {
+					landlordID: string;
+					requests: RequestDetails[];
+				}
 
-				let data: any[] = []
+				let data: RequestDetails[] = []
 				response.data
-					.filter((each: any) => each?.requests?.length)
-					.forEach((each: any) => {
+					.filter((each: ReqDet) => each?.requests?.length)
+					.forEach((each: ReqDet) => {
 						data = data.concat(each.requests)
 					})
 
 				return data;
-
 			},
 			providesTags: ['Request']
 		}),
-		updateRequest: builder.mutation<any, { landlordID: string, ticketNumber: string }>({
+		updateRequest: builder.mutation<any, RequestDetails>({
 			query: (body) => ({ url: `request/admin/update_requests`, method: "POST", body }),
 			invalidatesTags: ['Request']
 		}),
@@ -149,6 +153,12 @@ export const appApi = createApi({
 		}),
 		getTenant: builder.mutation<TenantInfo, { email: string }>({
 			query: (body) => ({ url: `service/admin/get_tenant_by_email`, body, method: "POST" }),
+			// providesTags: ['Landlord']
+		}),
+		getTenantByUnit: builder.mutation<TenantInfo, GetUnit>({
+			query: (body) => ({ url: `service/admin/get_tenant_by_unitid`, body, method: "POST" }),
+			transformResponse: (response: any) => response.data,
+			transformErrorResponse: (response: any) => response.error,
 			// providesTags: ['Landlord']
 		}),
 		getRents: builder.query<any[], any>({
@@ -188,9 +198,11 @@ export const {
 	useGetTenantMutation,
 	useAdminForgotPasswordMutation,
 	useAdminLoginMutation,
+	useGetTenantByUnitMutation,
 	useAdminResetPassMutation,
 	useAdminVerifyOTPMutation,
 	useCreatePackageMutation,
+	useUpdateRequestMutation,
 	useGetLandlordPropertiesMutation,
 	useGetLandlordMutation,
 	useAddLandlordMutation,

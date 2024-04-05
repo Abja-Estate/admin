@@ -238,7 +238,7 @@ export default function AdminLandord() {
                             height={24}
                           />
                           <p className="text-[#4f4f4f]">
-                            {landlord.name} {landlord.name}
+                            {landlord.name} {landlord.surname}
                           </p>
                         </div>
                         <p className="text-[10px] text-[#949494]">

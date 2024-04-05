@@ -58,6 +58,12 @@ export interface RentHistory {
 	duration: number;
 }
 
+export interface GetUnit {
+	propertyID: string,
+	landlordID: string,
+	unitID: string
+};
+
 export interface TenantInfo {
 	email: string;
 	phone: string;
@@ -123,6 +129,23 @@ interface Property {
 	created_at: string;
 }
 
+interface PropertyCreation {
+	type: "propertyCreation";
+	data: Property
+}
+
+interface TenantAdded {
+	type: "tenantAdded";
+	data: TenantInfo
+}
+
+interface RequestAdded {
+	type: "request";
+	data: RequestDetails
+}
+
+type Event = PropertyCreation | TenantAdded | RequestAdded;
+
 export interface LandlordInfo {
 	_id: string;
 	name: string;
@@ -135,14 +158,11 @@ export interface LandlordInfo {
 	validated: boolean;
 	propertiesLimit: string;
 	properties: Property[];
-	history: {
-		type: string;
-		data: Property;
-	}[];
+	history: Event[];
 	__v: number;
 }
 
-interface LandlordRequest {
+export interface RequestDetails {
 	agent: string;
 	description: string;
 	from: string;
@@ -165,18 +185,30 @@ interface LandlordRequest {
 	status: string;
 	isLandlordApproved: boolean;
 	isResolved: boolean;
+	servicePersonnelName?: string;
+	servicePersonnelPhone?: string
 }
 
 interface LandlordRequests {
 	_id: string;
 	landlordID: string;
-	requests: LandlordRequest[];
+	requests: RequestDetails[];
 }
 
 export interface LandlordData {
 	landlordInfo: LandlordInfo;
 	tenants: TenantInfo[];
-	landlordRequests: LandlordRequests;
+	propertyInfo: {
+		propertyID: string,
+		totalTenants: string | number,
+		totalUnits: string | number
+	}[];
+	requestData: {
+		active: string | number,
+		pending: string | number,
+		completed: string | number,
+		all: LandlordRequests
+	};
 }
 
 

@@ -62,3 +62,41 @@ export function getGreeting (): string {
 
 	return greeting;
 }
+
+export function isString (value: any): value is string {
+	return typeof value === 'string';
+}
+
+
+export function getDefaultTimeValue (timeRange: string, isStartTime: boolean) {
+	var times = timeRange.split(' - ');
+	var startTime = times[0];
+	var endTime = times[1];
+
+	if (isStartTime) {
+		var date = new Date('2000-01-01 ' + startTime); // Use an arbitrary date for parsing
+		var hour = date.getHours();
+		var minute = date.getMinutes();
+		if (startTime.includes('PM') && hour < 12) {
+			hour += 12; // Convert to 24-hour format if needed
+		}
+		var formattedTime = (hour < 10 ? '0' : '') + hour + ':' + (minute < 10 ? '0' : '') + minute;
+		return formattedTime;
+	} else {
+		var date = new Date('2000-01-01 ' + endTime); // Use an arbitrary date for parsing
+		var hour = date.getHours();
+		var minute = date.getMinutes();
+		if (endTime.includes('PM') && hour < 12) {
+			hour += 12; // Convert to 24-hour format if needed
+		}
+		var formattedTime = (hour < 10 ? '0' : '') + hour + ':' + (minute < 10 ? '0' : '') + minute;
+		return formattedTime;
+	}
+}
+
+// var timeRange = "14:30 - 5:20PM";
+// var defaultStartTime = getDefaultTimeValue(timeRange, true);
+// var defaultEndTime = getDefaultTimeValue(timeRange, false);
+
+// console.log("Default Start Time: " + defaultStartTime);
+// console.log("Default End Time: " + defaultEndTime);

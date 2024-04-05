@@ -20,7 +20,7 @@ const CustomImage: React.FC<{
       {...props}
       loading="lazy"
       className={className}
-      src={imgSrc}
+      src={imgSrc == "" ? "/null" : imgSrc}
       draggable={false}
       onError={handleImageError}
       alt={alt ?? ""}

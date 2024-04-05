@@ -26,12 +26,13 @@ import { useGetRequestsQuery } from "@/redux/endpoints"
 import { cn } from "@/utils/cn"
 import { months } from "@/utils/constants"
 import { filter } from "@/utils/helpers"
+import { RequestDetails } from "@/utils/types"
 import { useEffect, useState } from "react"
 
 export default function Request() {
   const { data: requests, isLoading: loading } = useGetRequestsQuery("")
-  const [rRequests, setRRequests] = useState<any[]>([])
-  const [fRequests, setFRequests] = useState<any[]>([])
+  const [rRequests, setRRequests] = useState<RequestDetails[]>([])
+  const [fRequests, setFRequests] = useState<RequestDetails[]>([])
 
   useEffect(() => {
     if (requests) {
@@ -221,13 +222,16 @@ export default function Request() {
                     <td className="p-3">
                       <ProfileInTD
                         image={each?.tenantPhoto}
-                        name=""
-                        surname=""
-                        phone=""
+                        fullname={each.from == "tenant" ? each?.fullName : ""}
+                        phone={each.from == "tenant" ? each?.phone : ""}
                       />
                     </td>
                     <td className="p-3">
-                      <ProfileInTD image="" name="" surname="" phone="" />
+                      <ProfileInTD
+                        image={each?.servicePersonnelPhoto}
+                        name={each?.servicePersonnelName}
+                        phone={each?.servicePersonnelPhone}
+                      />
                     </td>
                     <td className="p-3">{each?.agent}</td>
                     <td className="p-3">

@@ -92,7 +92,7 @@ export default function Profile({ params }: { params: { landlord: string } }) {
               />
               <DetailLine
                 title="Service Requests"
-                value={landlordData?.landlordRequests.requests.length}
+                value={landlordData?.requestData.all.requests.length}
               />
               <DetailLine
                 title={
@@ -243,10 +243,14 @@ export default function Profile({ params }: { params: { landlord: string } }) {
                             {each.unitData.length}
                           </td>
                           <td className="p-3 text-center">
-                            {/* {each.availableUnits} */}
+                            {each.unitData.length - Number(each.unitTaken)}
                           </td>
                           <td className="p-3 text-center">
-                            {/* {each.tenants} */}
+                            {
+                              landlordData.propertyInfo.find(
+                                (each_f) => each_f.propertyID == each.propertyID
+                              )?.totalTenants
+                            }
                           </td>
                           <td className="p-3 text-center">
                             <button
@@ -296,7 +300,7 @@ export default function Profile({ params }: { params: { landlord: string } }) {
                     </tr>
                   </thead>
                   <tbody>
-                    {landlordData?.landlordRequests.requests
+                    {landlordData?.requestData.all.requests
                       .slice(0, 2)
                       .map((each, i) => (
                         <tr
