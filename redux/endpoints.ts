@@ -140,7 +140,7 @@ export const appApi = createApi({
 			providesTags: ['Request']
 		}),
 		updateRequest: builder.mutation<any, RequestDetails>({
-			query: (body) => ({ url: `request/admin/update_requests`, method: "POST", body }),
+			query: (body) => ({ url: `request/admin/update_request`, method: "PATCH", body }),
 			invalidatesTags: ['Request']
 		}),
 

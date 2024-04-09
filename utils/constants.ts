@@ -51,3 +51,23 @@ export const demoPersonnel = [
 			"I was very impressed with Bryan’s work. He was prompt, professional, and did a great job fixing the electrical problem in my tenant's apartment. I would highly recommend him to anyone who needs an electrician.",
 	},
 ]
+
+export const demologs = [
+	{ message: "Newly listed property added", time: "9:50 AM" },
+	{
+		message: "Request service provider: Electrician ",
+		time: "9:41AM",
+	},
+	{
+		message: "1 Unit added to property and 1 tenant onboarded",
+		time: "8:42 AM",
+	},
+	{
+		message: "Updated subscription plan to Bronze Plan",
+		time: "yesterday",
+	},
+	{
+		message: "Added new tenant to property",
+		time: "2 days ago",
+	},
+]

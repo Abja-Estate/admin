@@ -142,3 +142,17 @@
 .nprogress-custom-parent #nprogress .spinner {
   position: absolute;
 }
+
+.fade {
+  animation: fadeAnimation 1s ease-in-out;
+  opacity: 1;
+}
+
+@keyframes fadeAnimation {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

@@ -163,6 +163,7 @@ export interface LandlordInfo {
 }
 
 export interface RequestDetails {
+	ticketNumber?: string,
 	agent: string;
 	description: string;
 	from: string;
@@ -186,7 +187,8 @@ export interface RequestDetails {
 	isLandlordApproved: boolean;
 	isResolved: boolean;
 	servicePersonnelName?: string;
-	servicePersonnelPhone?: string
+	servicePersonnelPhone?: string;
+	created_at: string
 }
 
 interface LandlordRequests {

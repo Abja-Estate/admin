@@ -94,9 +94,29 @@ export function getDefaultTimeValue (timeRange: string, isStartTime: boolean) {
 	}
 }
 
-// var timeRange = "14:30 - 5:20PM";
-// var defaultStartTime = getDefaultTimeValue(timeRange, true);
-// var defaultEndTime = getDefaultTimeValue(timeRange, false);
+export function formatDateTime (dateTimeStr: string) {
+	const date = new Date(dateTimeStr);
+	const currentDate = new Date();
 
-// console.log("Default Start Time: " + defaultStartTime);
-// console.log("Default End Time: " + defaultEndTime);
+	// Calculate time difference in milliseconds
+	const timeDiff = currentDate.getTime() - date.getTime();
+	const secondsDiff = Math.floor(timeDiff / 1000);
+	const minutesDiff = Math.floor(secondsDiff / 60);
+	const hoursDiff = Math.floor(minutesDiff / 60);
+	const daysDiff = Math.floor(hoursDiff / 24);
+
+	if (daysDiff === 0) {
+		// Today's date
+		const formattedTime = date.toLocaleString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true });
+		return formattedTime;
+	} else if (daysDiff === 1) {
+		// Yesterday's date
+		return 'Yesterday';
+	} else if (daysDiff <= 7) {
+		// Up to 1 week ago
+		return `${daysDiff} days ago`;
+	} else {
+		// X days ago
+		return date.toLocaleDateString('en-US', { day: 'numeric', month: 'long', year: 'numeric' });
+	}
+}
