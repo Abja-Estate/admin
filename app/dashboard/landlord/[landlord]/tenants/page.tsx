@@ -81,27 +81,10 @@ export default function Tenant({ params }: { params: { landlord: string } }) {
   }
 
   const deleteTenant = async (_tenant: any) => {
-    const response: AnyObject = await deleteATenant(_tenant._id)
+    const response: AnyObject = await deleteATenant({ tenantID: _tenant._id })
     if (response.data) {
-      // dispatch(
-      //   openRespDialog({
-      //     self: false,
-      //     type: "success",
-      //     desc: response.data.message,
-      //     title: "Deleted!",
-      //   })
-      // )
       toast.success("Tenant Deleted")
     } else if (response.error) {
-      toast.error("An error occured")
-      // dispatch(
-      //   openRespDialog({
-      //     self: false,
-      //     type: "error",
-      //     desc: response.error.message,
-      //     title: "Oops!",
-      //   })
-      // )
     }
   }
 

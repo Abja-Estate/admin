@@ -48,6 +48,7 @@ export default function RequestDialog({
           description: values.description,
           servicePersonnelName: values.servicePersonnelName,
           servicePersonnelPhone: values.servicePersonnelPhone,
+          servicePersonnelPhoto: "",
         }
         updateRequest(requestData)
           .unwrap()
@@ -169,8 +170,8 @@ export default function RequestDialog({
                 />
               </>
             )}
-            <FormField formik={formik} {...getProps("agent")} t />
-            <FormField formik={formik} {...getProps("day")} t />
+            <FormField disabled formik={formik} {...getProps("agent")} t />
+            <FormField disabled formik={formik} {...getProps("day")} t />
             {/* <FormField formik={formik} {...getProps("start_time")} t />
             <FormField formik={formik} {...getProps("end_time")} t /> */}
             {/* <FormField {...getProps("period")} t /> */}
@@ -194,6 +195,7 @@ export default function RequestDialog({
               ]}
             />
             <FormField
+              disabled
               formik={formik}
               {...getProps("priority")}
               t
@@ -222,6 +224,7 @@ export default function RequestDialog({
             />
             <FormField
               formik={formik}
+              disabled
               {...getProps("description")}
               t
               className="col-span-full"

@@ -47,27 +47,12 @@ export default function AdminLandord() {
   }
 
   const deleteLandlord = async (_landlord: any) => {
-    const response: AnyObject = await deleteALandlord(_landlord._id)
+    const response: AnyObject = await deleteALandlord({
+      landlordID: _landlord._id,
+    })
     if (response.data) {
-      // dispatch(
-      //   openRespDialog({
-      //     self: false,
-      //     type: "success",
-      //     desc: response.data.message,
-      //     title: "Deleted!",
-      //   })
-      // )
       toast.success("Landlord Deleted")
     } else if (response.error) {
-      toast.error("An error occured")
-      // dispatch(
-      //   openRespDialog({
-      //     self: false,
-      //     type: "error",
-      //     desc: response.error.message,
-      //     title: "Oops!",
-      //   })
-      // )
     }
   }
 

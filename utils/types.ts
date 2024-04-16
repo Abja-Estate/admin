@@ -38,6 +38,7 @@ export interface LandLord {
 	active?: boolean,
 	history?: any[],
 	_id: string,
+	landlordID?: string,
 	phone: string,
 	selfie: string,
 	email: string,
@@ -188,6 +189,7 @@ export interface RequestDetails {
 	isResolved: boolean;
 	servicePersonnelName?: string;
 	servicePersonnelPhone?: string;
+	servicePersonnelPhoto?: string;
 	created_at: string
 }
 

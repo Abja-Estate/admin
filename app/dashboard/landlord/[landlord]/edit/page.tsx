@@ -9,11 +9,15 @@ import {
 } from "@/utils/schema"
 import Link from "next/link"
 import { useCallback, useEffect, useState } from "react"
-import { LandlordData } from "@/utils/types"
-import { useGetLandlordMutation } from "@/redux/endpoints"
+import { LandLord, LandlordData } from "@/utils/types"
+import {
+  useGetLandlordMutation,
+  useUpdateLandlordMutation,
+} from "@/redux/endpoints"
 import { useFormik } from "formik"
 import { getDefault } from "@/utils/helpers"
 import { AnyObject } from "yup"
+import toast from "react-hot-toast"
 
 export default function ProfileEdit({
   params,
@@ -22,6 +26,7 @@ export default function ProfileEdit({
 }) {
   const [landlordData, setLandlordData] = useState<LandlordData | null>(null)
   const [fetchLandlordData] = useGetLandlordMutation()
+  const [updateLandlord, { isLoading }] = useUpdateLandlordMutation()
 
   const fetchL = useCallback(async () => {
     const resp = await fetchLandlordData({
@@ -31,6 +36,7 @@ export default function ProfileEdit({
       setLandlordData(resp.data)
       landlord_f.setValues(resp.data?.landlordInfo)
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [params.landlord, fetchLandlordData])
 
   useEffect(() => {
@@ -41,9 +47,14 @@ export default function ProfileEdit({
     validationSchema: editLandlordSchema,
     initialValues: getDefault(editlandlordInputs),
     onSubmit: async (values) => {
-      const ldata: AnyObject = {
+      const ldata = {
         ...values,
-        actor: "admin",
+        landlordID: params.landlord,
+      }
+      const response: AnyObject = await updateLandlord(ldata as LandLord)
+      if (response.data) {
+        toast.success("Landlord Details Updated")
+      } else if (response.error) {
       }
       console.log(ldata)
     },
@@ -93,6 +104,11 @@ export default function ProfileEdit({
                     suffix={<EditOutlineIcon />}
                   />
                 ))}
+                <div className="flex justify-end pt-4">
+                  <button className="bg-primary grid place-items-center text-white rounded-[6px] w-full sm:w-[267px] h-[38px]">
+                    Update Profile
+                  </button>
+                </div>
               </form>
             </div>
           </div>

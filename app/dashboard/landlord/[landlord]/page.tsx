@@ -169,7 +169,7 @@ export default function Profile({ params }: { params: { landlord: string } }) {
                     <h3 className="text-[#4F4F4F] text-lg flex gap-2 items-center">
                       Recent Activity Log
                       <span className="bg-primary text-xs text-white h-6 w-6 rounded-md flex items-center justify-center">
-                        0
+                        {landlordData?.landlordInfo.history.slice(0, 10).length}
                       </span>
                     </h3>
                     <span className="text-sm text-primary2">View All</span>

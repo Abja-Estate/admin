@@ -26,6 +26,8 @@ import MemoUpdate from "../svgs/Update"
 import MemoShare from "../svgs/Share"
 import { useAppSelector } from "@/redux/hooks"
 import CustomImage from "../CustomImage"
+import toast from "react-hot-toast"
+import { RequestDetails } from "@/utils/types"
 
 export default function AdminDashboardTopNavigation({
   setMenuIsOpen,
@@ -42,6 +44,49 @@ export default function AdminDashboardTopNavigation({
   function openModal() {
     setIsOpen(true)
   }
+
+  const id = process.env.ID
+  const apiKey = process.env.API_KEY
+
+  useEffect(() => {
+    const ws = new WebSocket(
+      `wss://casmara-request-app-api.onrender.com/ws/admin?apiKey=Ayoseun&id=abja2024Admin`
+    )
+
+    const sendBroadcastData = {
+      target_id: "abjaInclusiveness",
+      message: "yo, admin",
+      sender_id: "abja2024Admin",
+    }
+
+    ws.onopen = function (event) {
+      ws.send(JSON.stringify(sendBroadcastData))
+    }
+
+    ws.onmessage = function (event) {
+      // const json = JSON.parse(event.data);
+      // try {
+      //   if ((json.event = "data")) {
+      //     setBids(json.data.bids.slice(0, 5));
+      //   }
+      // } catch (err) {
+      //   console.log(err);
+      // }
+
+      if (typeof event.data == "string") {
+        if (
+          // !event.data.toLowerCase().includes("yo, admin") &&
+          !event.data.toLowerCase().includes("delivered.") &&
+          !event.data.toLowerCase().includes("connected")
+        ) {
+          toast(event.data)
+        }
+      } else {
+        const data = event.data as RequestDetails
+        toast(`${data.fullName}`)
+      }
+    }
+  }, [apiKey, id])
 
   return (
     <>

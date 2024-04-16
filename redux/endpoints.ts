@@ -110,7 +110,7 @@ export const appApi = createApi({
 			invalidatesTags: ['Landlord']
 		}),
 		updateLandlord: builder.mutation<any, LandLord>({
-			query: (body) => ({ url: `/admin/update_landlord`, method: "POST", body }),
+			query: (body) => ({ url: `auth/admin/update_landlord`, method: "POST", body }),
 			invalidatesTags: ['Landlord']
 		}),
 		deleteLandlord: builder.mutation<any, { landlordID: string }>({
@@ -153,22 +153,22 @@ export const appApi = createApi({
 		}),
 		getTenant: builder.mutation<TenantInfo, { email: string }>({
 			query: (body) => ({ url: `service/admin/get_tenant_by_email`, body, method: "POST" }),
-			// providesTags: ['Landlord']
+			invalidatesTags: ['Tenant']
 		}),
 		getTenantByUnit: builder.mutation<TenantInfo, GetUnit>({
 			query: (body) => ({ url: `service/admin/get_tenant_by_unitid`, body, method: "POST" }),
 			transformResponse: (response: any) => response.data,
 			transformErrorResponse: (response: any) => response.error,
-			// providesTags: ['Landlord']
+			invalidatesTags: ['Tenant']
 		}),
 		getRents: builder.query<any[], any>({
 			query: (qP) => `service/admin/all_rents`,
 			transformResponse: (response: any) => response.data,
 			providesTags: ['Rent']
 		}),
-		deleteTenant: builder.mutation<any, any>({
-			query: (body,) => ({ url: `auth/${body.actor}/tenant`, method: "DELETE", body }),
-			transformResponse: (response: any) => response.data,
+		deleteTenant: builder.mutation<any, { tenantID: string }>({
+			query: (body,) => ({ url: `auth/admin/delete_tenant`, method: "POST", body }),
+			invalidatesTags: ['Tenant']
 		}),
 
 
@@ -180,7 +180,7 @@ export const appApi = createApi({
 		}),
 		getLandlordProperties: builder.mutation<any, { landlordID: string }>({
 			query: (body) => ({ url: `service/landlord/properties`, method: "POST", body }),
-			invalidatesTags: ['Property']
+			invalidatesTags: ['Property', 'Landlord']
 		})
 
 
@@ -198,6 +198,7 @@ export const {
 	useGetTenantMutation,
 	useAdminForgotPasswordMutation,
 	useAdminLoginMutation,
+	useUpdateLandlordMutation,
 	useGetTenantByUnitMutation,
 	useAdminResetPassMutation,
 	useAdminVerifyOTPMutation,
