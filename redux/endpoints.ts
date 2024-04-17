@@ -166,7 +166,7 @@ export const appApi = createApi({
 			transformResponse: (response: any) => response.data,
 			providesTags: ['Rent']
 		}),
-		deleteTenant: builder.mutation<any, { tenantID: string }>({
+		deleteTenant: builder.mutation<any, { email: string }>({
 			query: (body,) => ({ url: `service/admin/delete_tenant`, method: "POST", body }),
 			invalidatesTags: ['Tenant', 'Landlord']
 		}),

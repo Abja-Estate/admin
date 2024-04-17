@@ -86,13 +86,7 @@ export default function AdminDashboardTopNavigation({
         }
         new Notification("New Request", options)
         const patchCollection = dispatch(
-          appApi.util.updateQueryData(
-            "getRequests",
-            undefined,
-            (draftPosts) => {
-              draftPosts.push(resp)
-            }
-          )
+          appApi.util.invalidateTags(["Request"])
         )
       } catch (error) {
         resp = event.data

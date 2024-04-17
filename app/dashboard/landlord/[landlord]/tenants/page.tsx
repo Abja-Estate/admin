@@ -24,6 +24,7 @@ import { AreYouSureProps, LandlordData, TenantInfo } from "@/utils/types"
 import { AnyObject } from "yup"
 import toast from "react-hot-toast"
 import {
+  appApi,
   useDeleteTenantMutation,
   useGetLandlordMutation,
 } from "@/redux/endpoints"
@@ -81,12 +82,13 @@ export default function Tenant({ params }: { params: { landlord: string } }) {
   }
 
   const deleteTenant = async (_tenant: any) => {
-    const req = { tenantID: _tenant.email }
+    const req = { email: _tenant.email }
     console.log(req)
 
     const response: AnyObject = await deleteATenant(req)
     if (response.data) {
       toast.success("Tenant Deleted")
+      fetchL()
     } else if (response.error) {
     }
   }
