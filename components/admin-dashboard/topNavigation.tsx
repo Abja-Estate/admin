@@ -24,10 +24,11 @@ import MemoProfileAdd from "../svgs/ProfileAdd"
 import MemoProcess from "../svgs/Process"
 import MemoUpdate from "../svgs/Update"
 import MemoShare from "../svgs/Share"
-import { useAppSelector } from "@/redux/hooks"
+import { useAppDispatch, useAppSelector } from "@/redux/hooks"
 import CustomImage from "../CustomImage"
 import toast from "react-hot-toast"
 import { RequestDetails } from "@/utils/types"
+import { appApi } from "@/redux/endpoints"
 
 export default function AdminDashboardTopNavigation({
   setMenuIsOpen,
@@ -36,7 +37,7 @@ export default function AdminDashboardTopNavigation({
 }) {
   const { profile: user } = useAppSelector((state) => state.admin)
   let [isOpen, setIsOpen] = useState(false)
-
+  const dispatch = useAppDispatch()
   function closeModal() {
     setIsOpen(false)
   }
@@ -72,21 +73,47 @@ export default function AdminDashboardTopNavigation({
       // } catch (err) {
       //   console.log(err);
       // }
-
-      if (typeof event.data == "string") {
+      let resp
+      try {
+        resp = JSON.parse(event.data)
+        const data = resp as RequestDetails
+        const message = `Incoming Request for ${data.agent} from ${data.fullName} at ${data.propertyLocation}`
+        toast(message, { duration: 10000 })
+        var options: NotificationOptions = {
+          body: message,
+          icon: "/images/icons8-info.gif",
+          dir: "ltr",
+        }
+        new Notification("New Request", options)
+        const patchCollection = dispatch(
+          appApi.util.updateQueryData(
+            "getRequests",
+            undefined,
+            (draftPosts) => {
+              draftPosts.push(resp)
+            }
+          )
+        )
+      } catch (error) {
+        resp = event.data
         if (
           // !event.data.toLowerCase().includes("yo, admin") &&
-          !event.data.toLowerCase().includes("delivered.") &&
-          !event.data.toLowerCase().includes("connected")
+          !resp.toLowerCase().includes("delivered.") &&
+          !resp.toLowerCase().includes("connected")
         ) {
-          toast(event.data)
+          toast(resp)
         }
-      } else {
-        const data = event.data as RequestDetails
-        toast(`${data.fullName}`)
       }
     }
-  }, [apiKey, id])
+  }, [apiKey, id, dispatch])
+
+  useEffect(() => {
+    if (!("Notification" in window)) {
+      console.log("Browser does not support desktop notification")
+    } else {
+      Notification.requestPermission()
+    }
+  }, [])
 
   return (
     <>
@@ -212,12 +239,12 @@ const Activity = ({ isOpen, closeModal }) => {
           Activity Log
         </button>
       </header>
-      {activeTab === "NOTIFICATION" ? <Notification /> : <ActivityLog />}
+      {activeTab === "NOTIFICATION" ? <Notifications /> : <ActivityLog />}
     </Modal>
   )
 }
 
-const Notification = () => {
+const Notifications = () => {
   const notifications = [...Array(0)]
   return (
     <>

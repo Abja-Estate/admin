@@ -181,11 +181,9 @@ export const changePasswordSchema = Yup.object({
 		.required("Password is required")
 		.test(
 			'password-complexity',
-			'Password must include a digit,a symbol, and a capital letter',
+			'Password must include a digit, a symbol, a lowercase and a capital letter',
 			value =>
-				/^(?=.*\d)(?=.*[!@#$%^&*(),.?":{}|<>])(?=.*[A-Z])/.test(
-					value
-				)
+				/^(?=.*\d)(?=.*[a-z])(?=.*[!@#$%^&*(),.?":{}|<>])(?=.*[A-Z])/.test(value)
 		)
 		.label("Password"),
 

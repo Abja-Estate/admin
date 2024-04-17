@@ -81,7 +81,10 @@ export default function Tenant({ params }: { params: { landlord: string } }) {
   }
 
   const deleteTenant = async (_tenant: any) => {
-    const response: AnyObject = await deleteATenant({ tenantID: _tenant._id })
+    const req = { tenantID: _tenant.email }
+    console.log(req)
+
+    const response: AnyObject = await deleteATenant(req)
     if (response.data) {
       toast.success("Tenant Deleted")
     } else if (response.error) {

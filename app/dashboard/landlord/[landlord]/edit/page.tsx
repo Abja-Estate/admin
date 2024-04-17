@@ -3,6 +3,7 @@ import FormField from "@/components/inputs/FormField"
 import { LandlordProfileHead } from "@/components/admin-dashboard/LandlordProfileHead"
 import { EditOutlineIcon } from "@/components/svgs"
 import {
+  changePasswordSchema,
   editLandlordSchema,
   editlandlordInputs,
   landlordInputs,
@@ -26,7 +27,8 @@ export default function ProfileEdit({
 }) {
   const [landlordData, setLandlordData] = useState<LandlordData | null>(null)
   const [fetchLandlordData] = useGetLandlordMutation()
-  const [updateLandlord, { isLoading }] = useUpdateLandlordMutation()
+  const [updateLandlord, { isLoading: updatingLandlord }] =
+    useUpdateLandlordMutation()
 
   const fetchL = useCallback(async () => {
     const resp = await fetchLandlordData({
@@ -57,6 +59,24 @@ export default function ProfileEdit({
       } else if (response.error) {
       }
       console.log(ldata)
+    },
+  })
+
+  const password_f = useFormik<AnyObject>({
+    validationSchema: changePasswordSchema,
+    initialValues: { password: "", confirmPassword: "" },
+    onSubmit: async (values) => {
+      const ldata = {
+        ...values,
+        landlordID: params.landlord,
+        ...landlord_f.values,
+      }
+      password_f.resetForm()
+      const response: AnyObject = await updateLandlord(ldata as LandLord)
+      if (response.data) {
+        toast.success("Landlord Password Updated")
+      } else if (response.error) {
+      }
     },
   })
   return (
@@ -105,8 +125,33 @@ export default function ProfileEdit({
                   />
                 ))}
                 <div className="flex justify-end pt-4">
-                  <button className="bg-primary grid place-items-center text-white rounded-[6px] w-full sm:w-[267px] h-[38px]">
+                  <button
+                    disabled={updatingLandlord}
+                    className="bg-primary gap-2 flex items-center justify-center text-white rounded-[6px] w-full sm:w-[267px] h-[38px]"
+                  >
                     Update Profile
+                    {updatingLandlord && (
+                      <svg
+                        className="animate-spin h-5 w-5 text-white"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                      >
+                        <circle
+                          className="opacity-25"
+                          cx={12}
+                          cy={12}
+                          r={10}
+                          stroke="currentColor"
+                          strokeWidth={4}
+                        />
+                        <path
+                          className="opacity-75"
+                          fill="currentColor"
+                          d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                        />
+                      </svg>
+                    )}
                   </button>
                 </div>
               </form>
@@ -119,28 +164,52 @@ export default function ProfileEdit({
                   Change Password?
                 </h1>
               </header>
-              <form className=" flex flex-col gap-8">
+              <form
+                onSubmit={password_f.handleSubmit}
+                className=" flex flex-col gap-8"
+              >
                 <FormField
-                  label="Current Password"
-                  placeholder="Current Password"
-                  name="current_password"
-                  type="password"
-                />
-                <FormField
+                  formik={password_f}
                   label="New Password"
                   placeholder="New Password"
-                  name="new_password"
+                  name="password"
                   type="password"
                 />
                 <FormField
+                  formik={password_f}
                   label="Confirm Password"
                   placeholder="Confirm Password"
-                  name="confirm_password"
+                  name="confirmPassword"
                   type="password"
                 />
                 <div className="flex justify-end pt-10">
-                  <button className="bg-primary grid place-items-center text-white rounded-[6px] w-full sm:w-[267px] h-[38px]">
+                  <button
+                    disabled={updatingLandlord}
+                    className="bg-primary gap-2 flex items-center justify-center text-white rounded-[6px] w-full sm:w-[267px] h-[38px]"
+                  >
                     Reset Password
+                    {updatingLandlord && (
+                      <svg
+                        className="animate-spin h-5 w-5 text-white"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                      >
+                        <circle
+                          className="opacity-25"
+                          cx={12}
+                          cy={12}
+                          r={10}
+                          stroke="currentColor"
+                          strokeWidth={4}
+                        />
+                        <path
+                          className="opacity-75"
+                          fill="currentColor"
+                          d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                        />
+                      </svg>
+                    )}
                   </button>
                 </div>
               </form>

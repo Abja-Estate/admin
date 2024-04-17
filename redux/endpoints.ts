@@ -110,7 +110,7 @@ export const appApi = createApi({
 			invalidatesTags: ['Landlord']
 		}),
 		updateLandlord: builder.mutation<any, LandLord>({
-			query: (body) => ({ url: `auth/admin/update_landlord`, method: "POST", body }),
+			query: (body) => ({ url: `auth/landlord/update_landlord`, method: "PUT", body }),
 			invalidatesTags: ['Landlord']
 		}),
 		deleteLandlord: builder.mutation<any, { landlordID: string }>({
@@ -167,8 +167,8 @@ export const appApi = createApi({
 			providesTags: ['Rent']
 		}),
 		deleteTenant: builder.mutation<any, { tenantID: string }>({
-			query: (body,) => ({ url: `auth/admin/delete_tenant`, method: "POST", body }),
-			invalidatesTags: ['Tenant']
+			query: (body,) => ({ url: `service/admin/delete_tenant`, method: "POST", body }),
+			invalidatesTags: ['Tenant', 'Landlord']
 		}),
 
 
