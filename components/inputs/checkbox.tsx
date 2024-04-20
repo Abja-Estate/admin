@@ -1,18 +1,18 @@
-import clsx from "clsx";
+import clsx from "clsx"
 
 interface CheckboxProps {
-  height?: string;
-  width?: string;
-  bgColor?: string;
-  checkedBgColor?: string;
-  onClick: () => void;
-  checked: boolean;
-  tickColor?: string;
-  borderColor?: string;
-  checkedBorderColor?: string;
-  borderRadius?: string;
-  className?: string;
-  borderWidth?: string;
+  height?: string
+  width?: string
+  bgColor?: string
+  checkedBgColor?: string
+  onClick: () => void
+  checked: boolean
+  tickColor?: string
+  borderColor?: string
+  checkedBorderColor?: string
+  borderRadius?: string
+  className?: string
+  borderWidth?: string
 }
 
 export default function Checkbox(props: CheckboxProps) {
@@ -29,23 +29,21 @@ export default function Checkbox(props: CheckboxProps) {
     borderColor,
     borderRadius,
     borderWidth,
-  } = props;
+  } = props
 
   return (
     <div
       onClick={onClick}
       className={clsx(
-        height ?? "h-[24px]",
-        width ?? "w-[24px]",
         borderWidth ?? "border-[2px]",
         checked
-          ? `${checkedBorderColor ?? "border-[#47893F]"}`
+          ? `${checkedBorderColor ?? "border-current"}`
           : `${borderColor ?? "border-[#949494]"}`,
         checked
           ? `${checkedBgColor ?? "bg-transparent"}`
           : `${bgColor ?? "bg-transparent"}`,
         borderRadius ?? "rounded-[4px]",
-        "shrink-0",
+        "shrink-0 flex items-center justify-center",
         className
       )}
     >
@@ -55,7 +53,7 @@ export default function Checkbox(props: CheckboxProps) {
           viewBox="0 0 20 20"
           fill="currentColor"
           aria-hidden="true"
-          className={clsx(tickColor ?? "text-[#47893F]")}
+          className={clsx(tickColor ?? "text-current", "h-4")}
         >
           <path
             fillRule="evenodd"
@@ -65,5 +63,5 @@ export default function Checkbox(props: CheckboxProps) {
         </svg>
       )}
     </div>
-  );
+  )
 }

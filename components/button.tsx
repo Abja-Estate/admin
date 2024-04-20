@@ -1,12 +1,13 @@
-import clsx from "clsx";
+import clsx from "clsx"
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  loading?: boolean;
-  disabled?: boolean;
+  loading?: boolean
+  disabled?: boolean
+  // type?: string;
 }
 
 export default function Button(props: ButtonProps) {
-  const { loading, className, children, disabled, ...prop } = props;
+  const { loading, className, children, disabled, ...prop } = props
 
   return (
     <button
@@ -43,5 +44,5 @@ export default function Button(props: ButtonProps) {
         {children}
       </div>
     </button>
-  );
+  )
 }

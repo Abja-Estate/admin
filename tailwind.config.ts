@@ -15,7 +15,12 @@ const config: Config = {
       },
       colors: {
         primary: '#2A4C23',
-        fade: '#949494'
+        primary2: '#47893F',
+        white80: '#F6F8F6',
+        fade: '#949494',
+        textcolor100: '#333436',
+        primaryFade: '#B5D0B2',
+        bgprimaryfade: '#EAEDE9'
       }
     },
   },

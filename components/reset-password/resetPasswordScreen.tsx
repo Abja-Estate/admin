@@ -1,62 +1,62 @@
-import Image from "next/image";
-import { ChangeEvent, FormEvent, useState } from "react";
-import Input from "../input";
-import Button from "../button";
-import toast from "react-hot-toast";
-import axios from "axios";
+import Image from "next/image"
+import { ChangeEvent, FormEvent, useState } from "react"
+import Input from "../inputs/input"
+import Button from "../button"
+import toast from "react-hot-toast"
+import axios from "axios"
 
 export default function ResetPasswordScreen({
   changeView,
 }: ResetPasswordViewsProps) {
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false)
 
   const [formData, setFormData] = useState({
     email: "",
-  });
+  })
 
   const submit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+    e.preventDefault()
 
     if (formData.email === "") {
-      toast.error("email cannot be blank!");
+      toast.error("email cannot be blank!")
     }
 
-    console.log("fefe");
+    console.log("fefe")
 
-    setLoading(true);
+    setLoading(true)
 
     try {
-      let response = await axios.post("api/reset-password", formData);
-      console.log(response);
+      let response = await axios.post("api/reset-password", formData)
+      console.log(response)
 
       if (response.data.statusCode == 200) {
         toast.success(
           "Reset password successful, check your email for the code."
-        );
+        )
 
-        localStorage.setItem("form_email", formData.email);
+        localStorage.setItem("form_email", formData.email)
 
-        localStorage.setItem("form_id", response.data.data._id);
+        localStorage.setItem("form_id", response.data.data._id)
 
-        changeView("OTP");
+        changeView("OTP")
       } else {
-        toast.error("Reset password not successful");
+        toast.error("Reset password not successful")
       }
     } catch (error) {
-      console.log(error);
+      console.log(error)
     } finally {
-      setLoading(false);
+      setLoading(false)
     }
-  };
+  }
 
   const formDataHandler = (e: ChangeEvent<HTMLInputElement>) => {
     setFormData((prev) => ({
       ...prev,
       [e.target.name]: e.target.value,
-    }));
-  };
+    }))
+  }
 
-  const isDisabled = !formData.email;
+  const isDisabled = !formData.email
 
   return (
     <div>
@@ -68,7 +68,7 @@ export default function ResetPasswordScreen({
           height={100}
         />
         <h1 className="text-primary text-[32px] font-bold">Reset Password</h1>
-        <p className="text-[#333436] font-semibold">
+        <p className="text-textcolor100 font-semibold">
           Enter email address or phone number to receive a one-time password.
         </p>
       </header>
@@ -95,5 +95,5 @@ export default function ResetPasswordScreen({
         </fieldset>
       </form>
     </div>
-  );
+  )
 }
