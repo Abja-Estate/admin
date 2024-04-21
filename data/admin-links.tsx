@@ -12,12 +12,13 @@ import {
   SecurityIcon,
   SettingIcon,
   UserActivityIcon,
-} from "@/components/svgs";
+} from "@/components/svgs"
+import { Role } from "@/utils/types"
 
 interface AdminSideNavigationLink {
-  href: string;
-  linkText: string;
-  leading: React.FC<SVGProps>;
+  href: string
+  linkText: string
+  leading: React.FC<SVGProps>
 }
 
 export const adminSideNavigationLinksData: Array<AdminSideNavigationLink> = [
@@ -51,15 +52,16 @@ export const adminSideNavigationLinksData: Array<AdminSideNavigationLink> = [
     linkText: "Settings",
     leading: SettingIcon,
   },
-];
+]
 
 interface SettingsNavigationLink {
-  href: string;
-  linkText: string;
-  leading: React.FC<SVGProps>;
+  href: string
+  linkText: string
+  leading: React.FC<SVGProps>
+  roles?: Role[]
 }
 
-export const settingsNavigationLinksData: Array<SettingsNavigationLink> = [
+export const settingsNavigationLinksData: SettingsNavigationLink[] = [
   {
     href: "/dashboard/settings",
     linkText: "My Account",
@@ -79,6 +81,7 @@ export const settingsNavigationLinksData: Array<SettingsNavigationLink> = [
     href: "/dashboard/settings/user-activity",
     linkText: "User Activity",
     leading: UserActivityIcon,
+    roles: ["3"],
   },
   {
     href: "/dashboard/settings/configuration",
@@ -90,4 +93,4 @@ export const settingsNavigationLinksData: Array<SettingsNavigationLink> = [
     linkText: "Security",
     leading: SecurityIcon,
   },
-];
+]

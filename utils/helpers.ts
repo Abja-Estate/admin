@@ -94,7 +94,7 @@ export function getDefaultTimeValue (timeRange: string, isStartTime: boolean) {
 	}
 }
 
-export function formatDateTime (dateTimeStr: string) {
+export function formatDateTime (dateTimeStr: string, ago: boolean = false) {
 	const date = new Date(dateTimeStr);
 	const currentDate = new Date();
 
@@ -112,7 +112,7 @@ export function formatDateTime (dateTimeStr: string) {
 	} else if (daysDiff === 1) {
 		// Yesterday's date
 		return 'Yesterday';
-	} else if (daysDiff <= 7) {
+	} else if (daysDiff <= 7 || ago) {
 		// Up to 1 week ago
 		return `${daysDiff} days ago`;
 	} else {
@@ -120,3 +120,5 @@ export function formatDateTime (dateTimeStr: string) {
 		return date.toLocaleDateString('en-US', { day: 'numeric', month: 'long', year: 'numeric' });
 	}
 }
+
+export const isBrowser = typeof window !== 'undefined';

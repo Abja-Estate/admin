@@ -6,6 +6,7 @@ import Button from "../button"
 import { BASE_URL } from "@/config"
 import toast from "react-hot-toast"
 import { useRouter } from "next/navigation"
+import { isBrowser } from "@/utils/helpers"
 
 interface formData {
   password: string
@@ -34,7 +35,7 @@ export default function PasswordScreen({
     e.preventDefault()
 
     try {
-      const form_id = localStorage.getItem("form_id")
+      const form_id = isBrowser ? localStorage.getItem("form_id") : ""
 
       console.log("form_id", form_id)
 

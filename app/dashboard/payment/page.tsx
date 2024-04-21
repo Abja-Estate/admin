@@ -5,14 +5,10 @@ import Pagination from "@/components/admin-dashboard/Pagination"
 import PaymentChart from "@/components/admin-dashboard/PaymentChart"
 import ProfileInTD from "@/components/admin-dashboard/ProfileInTD"
 import StatusBadge from "@/components/admin-dashboard/StatusBadge"
-import Button from "@/components/button"
 import {
   ArrowGrowthIcon,
   CalenderOutlineIcon,
-  CancelIcon,
   CashBillIcon,
-  ChevronLeftIconIcon,
-  ChevronRightGreenIcon,
   DeleteRedIcon,
   MoreVertIcon,
   SearchIcon,
@@ -20,7 +16,6 @@ import {
   ShareYellowIcon,
 } from "@/components/svgs"
 import { months } from "@/utils/constants"
-import Image from "next/image"
 import { useState } from "react"
 
 export default function AdminPayment() {

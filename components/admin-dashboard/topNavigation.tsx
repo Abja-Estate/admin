@@ -29,7 +29,12 @@ import CustomImage from "../CustomImage"
 import toast from "react-hot-toast"
 import { RequestDetails } from "@/utils/types"
 import { appApi } from "@/redux/endpoints"
+import { formatDateTime, isBrowser } from "@/utils/helpers"
 
+interface NotificationEntry {
+  message: string
+  time: string
+}
 export default function AdminDashboardTopNavigation({
   setMenuIsOpen,
 }: {
@@ -37,6 +42,13 @@ export default function AdminDashboardTopNavigation({
 }) {
   const { profile: user } = useAppSelector((state) => state.admin)
   let [isOpen, setIsOpen] = useState(false)
+  const [notifications, setNotifications] = useState<NotificationEntry[]>([
+    // {
+    //   message:
+    //     "Incoming Request for ${data.agent} from ${data.fullName} at ${data.propertyLocation}",
+    //   time: formatDateTime("4/15/2024"),
+    // },
+  ])
   const dispatch = useAppDispatch()
   function closeModal() {
     setIsOpen(false)
@@ -56,7 +68,7 @@ export default function AdminDashboardTopNavigation({
 
     const sendBroadcastData = {
       target_id: "abjaInclusiveness",
-      message: "yo, admin",
+      message: "Welcome",
       sender_id: "abja2024Admin",
     }
 
@@ -78,6 +90,13 @@ export default function AdminDashboardTopNavigation({
         resp = JSON.parse(event.data)
         const data = resp as RequestDetails
         const message = `Incoming Request for ${data.agent} from ${data.fullName} at ${data.propertyLocation}`
+        setNotifications((e) => [
+          ...e,
+          {
+            time: formatDateTime(data.time),
+            message: `Incoming Request for ${data.agent} from ${data.fullName} at ${data.propertyLocation}`,
+          },
+        ])
         toast(message, { duration: 10000 })
         var options: NotificationOptions = {
           body: message,
@@ -102,7 +121,7 @@ export default function AdminDashboardTopNavigation({
   }, [apiKey, id, dispatch])
 
   useEffect(() => {
-    if (!("Notification" in window)) {
+    if (isBrowser && !("Notification" in window)) {
       console.log("Browser does not support desktop notification")
     } else {
       Notification.requestPermission()
@@ -149,15 +168,17 @@ export default function AdminDashboardTopNavigation({
             className="h-[38px] w-[38px] min-w-[38px] bg-[#2A4C2333] rounded-[100%] relative grid place-items-center"
           >
             <NotificationIcon />
-            <span className="absolute h-[12px] w-[12px] grid place-items-center bg-[#D90001] text-white text-[7px] font-semibold rounded-[100%] top-[6px] right-[8px]">
-              0
-            </span>
+            {notifications.length > 0 && (
+              <span className="absolute h-[12px] w-[12px] grid place-items-center bg-[#D90001] text-white text-[7px] font-semibold rounded-[100%] top-[6px] right-[8px]">
+                {notifications.length}
+              </span>
+            )}
           </button>
           <div className="h-[38px] w-[38px]  min-w-[38px] bg-[#2A4C2333] rounded-[100%] relative grid place-items-center">
             <MessageIcon />
-            <span className="absolute h-[12px] w-[12px] grid place-items-center bg-[#D90001] text-white text-[7px] font-semibold rounded-[100%] top-[6px] right-[8px]">
+            {/* <span className="absolute h-[12px] w-[12px] grid place-items-center bg-[#D90001] text-white text-[7px] font-semibold rounded-[100%] top-[6px] right-[8px]">
               0
-            </span>
+            </span> */}
           </div>
           <Popover className="ml-[8px] relative">
             <Popover.Button className="flex items-center gap-[16px] outline-none">
@@ -196,13 +217,17 @@ export default function AdminDashboardTopNavigation({
           </Popover>
         </div>
       </nav>
-      <Activity isOpen={isOpen} closeModal={closeModal} />
+      <Activity
+        notifications={notifications}
+        isOpen={isOpen}
+        closeModal={closeModal}
+      />
     </>
   )
 }
 
 type ActiviyTabs = "NOTIFICATION" | "ACTIVITY-LOG"
-const Activity = ({ isOpen, closeModal }) => {
+const Activity = ({ isOpen, closeModal, notifications }) => {
   const [activeTab, setActiveTab] = useState<ActiviyTabs>("NOTIFICATION")
 
   const toggleActiveTab = (tab: ActiviyTabs) => setActiveTab(tab)
@@ -233,13 +258,21 @@ const Activity = ({ isOpen, closeModal }) => {
           Activity Log
         </button>
       </header>
-      {activeTab === "NOTIFICATION" ? <Notifications /> : <ActivityLog />}
+      {activeTab === "NOTIFICATION" ? (
+        <Notifications notifications={notifications} />
+      ) : (
+        <ActivityLog />
+      )}
     </Modal>
   )
 }
 
-const Notifications = () => {
-  const notifications = [...Array(0)]
+const Notifications = ({
+  notifications,
+}: {
+  notifications: NotificationEntry[]
+}) => {
+  // const notifications = [...Array(2)]
   return (
     <>
       {!notifications.length && (
@@ -257,10 +290,12 @@ const Notifications = () => {
             <div>
               <div className="flex gap-2">
                 <div className="bg-[#FFF1CE] h-[24px] w-[24px] grid place-items-center">
-                  <StarYellowIcon />
+                  {/* <StarYellowIcon /> */}
+                  <MemoProcess />
                 </div>
                 <div className="flex items-center gap-2 flex-1 text-[14px]">
-                  <div className="flex items-center gap-[5px]">
+                  {_.message}
+                  {/* <div className="flex items-center gap-[5px]">
                     <Image
                       src="/images/tenant-emoji.svg"
                       alt="Tenant Emoji"
@@ -280,11 +315,11 @@ const Notifications = () => {
                       draggable={false}
                     />
                     <p className="text-[#4f4f4f]">Okello Buma</p>
-                  </div>
+                  </div> */}
                 </div>
               </div>
               <p className="text-[#949494] text-[8px] py-[3px] border-b-[1px] border-b-[#d9d9d9]">
-                10:13 AM &nbsp; 7 NOV 2023
+                {_.time}
               </p>
             </div>
           </div>
@@ -305,7 +340,7 @@ const ActivityLog = () => {
     { actions: ["edit", "update"], icon: <MemoUpdate /> },
     { actions: ["share"], icon: <MemoShare /> },
   ]
-  const activities = [...Array(8)].map((each) => ({
+  const activities = [...Array(0)].map((each) => ({
     action:
       actionIcons[Math.floor(Math.random() * (actionIcons.length - 0 + 1)) + 0]
         ?.actions[0],

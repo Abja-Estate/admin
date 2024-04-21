@@ -1,15 +1,19 @@
 import { AnyObject } from "yup"
+export type Role = "1" | "2" | "3";
 
 export type UserData = {
-	id: string,
+	_id: string,
 	name: string,
 	surname: string,
 	phone?: string,
 	email: string,
 	active: boolean,
+	role: Role,
+	about?: string,
 	activated: boolean,
 	accessToken?: string,
-	created?: string
+	created?: string,
+	selfie?: string,
 }
 
 export interface AddAdmin {
@@ -29,7 +33,7 @@ export interface AddLandlord extends AddAdmin {
 export type Actor = "admin" | "tenant" | "landlord"
 
 export interface AdminLoginT {
-	email: string, password: string, actor: Actor
+	email: string, password: string,
 }
 
 export interface LandLord {
@@ -235,7 +239,7 @@ export interface AreYouSureProps {
 	desc?: string | JSX.Element,
 	data?: AnyObject,
 	action?: (data?: any) => (void | Promise<void>),
-	type?: 'deleteUser'
+	type?: 'deleteUser' | "successResp"
 }
 
 export interface RespData<T> {

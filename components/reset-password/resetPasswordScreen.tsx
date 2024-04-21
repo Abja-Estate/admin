@@ -4,6 +4,7 @@ import Input from "../inputs/input"
 import Button from "../button"
 import toast from "react-hot-toast"
 import axios from "axios"
+import { isBrowser } from "@/utils/helpers"
 
 export default function ResetPasswordScreen({
   changeView,
@@ -34,9 +35,9 @@ export default function ResetPasswordScreen({
           "Reset password successful, check your email for the code."
         )
 
-        localStorage.setItem("form_email", formData.email)
+        isBrowser && localStorage.setItem("form_email", formData.email)
 
-        localStorage.setItem("form_id", response.data.data._id)
+        isBrowser && localStorage.setItem("form_id", response.data.data._id)
 
         changeView("OTP")
       } else {

@@ -9,6 +9,7 @@ export default function DialogLayout({
   isOpen,
   btnClass,
   noToggle,
+  noPadding,
   ...props
 }: {
   toggle?: ReactNode
@@ -18,6 +19,7 @@ export default function DialogLayout({
   isOpen: boolean
   btnClass?: string
   className?: string
+  noPadding?: boolean
 }) {
   return (
     <>
@@ -50,7 +52,12 @@ export default function DialogLayout({
           </Transition.Child>
 
           <div className="fixed inset-0 overflow-y-auto">
-            <div className="flex min-h-full items-center justify-center p-4 text-center">
+            <div
+              className={cn(
+                `flex min-h-full items-center justify-center text-center`,
+                !noPadding && "p-4"
+              )}
+            >
               <Transition.Child
                 as={Fragment}
                 enter="ease-out duration-300"
@@ -62,8 +69,9 @@ export default function DialogLayout({
               >
                 <Dialog.Panel
                   className={cn(
-                    "transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all",
-                    props?.className
+                    "transform overflow-hidden rounded-2xl bg-white text-left align-middle shadow-xl transition-all",
+                    props?.className,
+                    !noPadding && "p-6"
                   )}
                 >
                   {children}

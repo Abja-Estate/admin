@@ -1,7 +1,7 @@
 import { setAdminProfile } from "@/redux/adminSlice"
-import { useGetAdminQuery } from "@/redux/endpoints"
 import { useAppDispatch } from "@/redux/hooks"
-import { redirect, useRouter } from "next/navigation"
+import { isBrowser } from "@/utils/helpers"
+import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 
 const AdminAuthGuard = ({ Component }: { Component: React.FC }) => {
@@ -12,9 +12,7 @@ const AdminAuthGuard = ({ Component }: { Component: React.FC }) => {
   const [cv, setcv] = useState(<span></span>)
 
   useEffect(() => {
-    const data =
-      typeof window !== "undefined" ? localStorage.getItem("active-user") : "{}"
-    console.log(data)
+    const data = isBrowser ? localStorage.getItem("active-user") ?? "{}" : "{}"
     try {
       if (data) {
         const parsed = JSON.parse(data)

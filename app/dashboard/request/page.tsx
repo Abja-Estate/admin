@@ -186,7 +186,7 @@ export default function Request() {
                   <td className="p-3">
                     <div className="border-[1px] border-white rounded-[4px] w-[20px] h-[20px]"></div>
                   </td>
-                  <td className="p-3">ID</td>
+                  <td className="p-3">Request ID</td>
                   <td className="p-3">Landlord</td>
                   <td className="p-3">Address</td>
                   <td className="p-3">Tenant</td>
@@ -209,7 +209,9 @@ export default function Request() {
                     </td>
                     <td className="p-3 whitespace-nowrap">
                       {each?.ticket}
-                      <div className="text-xs">{each?.day}</div>
+                      <div className="text-xs">
+                        {new Date(each?.time).toDateString()}
+                      </div>
                     </td>
                     <td className="p-3">
                       <ProfileInTD
