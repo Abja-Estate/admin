@@ -63,7 +63,12 @@ const AreYouSure = ({
         {aYSD.type == "successResp" && (
           <>
             <div className="flex flex-col gap-4 pb-3 justify-center items-center w-[80vw] max-w-[20rem]">
-              <button onClick={() => {}} className="ml-auto mb-4">
+              <button
+                onClick={() => {
+                  setAYSD({ ...aYSD, status: false })
+                }}
+                className="ml-auto mb-4"
+              >
                 <svg
                   width="24"
                   height="24"

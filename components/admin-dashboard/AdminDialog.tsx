@@ -43,15 +43,27 @@ const AdminDialog = ({
     validationSchema: addAdminSchema,
     initialValues: { ...getDefault(addAdminInputs), selfie: "" },
     onSubmit: async (values) => {
+      const fileToBase64 = (file: File) => {
+        return new Promise<string>((resolve, reject) => {
+          const reader = new FileReader()
+          reader.readAsDataURL(file)
+          reader.onload = () => resolve(reader.result as string)
+          reader.onerror = (error) => reject(error)
+        })
+      }
+
       const details = {
         ...values,
-        selfie: images[0] ? URL.createObjectURL(images[0]) : "",
+        confirmPassword: values.password,
+        selfie: images.length > 0 ? await fileToBase64(images[0]) : "", // convert image[0] to base64 here
         actor: "admin",
       }
+
       const response = await (admin ? updateAdmin(details) : addAdmin(details))
       if ("data" in response) {
         setOpen(false)
         setDone(true)
+        setImages([])
       }
     },
   })

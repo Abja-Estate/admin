@@ -49,7 +49,7 @@ export const appApi = createApi({
 	endpoints: (builder) => ({
 		getAdmin: builder.query<UserData, string>({
 			query: () => `service/admin/user`,
-			providesTags: (result) => result ? [{ type: "User", id: result.id }] : ["User"],
+			providesTags: (result) => result ? [{ type: "User", id: result._id }] : ["User"],
 			// extraOptions:{},
 			// forceRefetch: () => false
 		}),

@@ -25,7 +25,7 @@ export default function ProfileEdit() {
     onSubmit: async (values) => {
       const response: AnyObject = await updatePassword({
         ...values,
-        id: user._id,
+        id: user?._id,
         actor: "admin",
       })
       if (response.data) {
@@ -52,7 +52,7 @@ export default function ProfileEdit() {
       <header className="h-[212px] grid place-items-center w-full bg-[url(/images/profile-cover-img.svg)] bg-cover py-10 px-14">
         <div className="flex justify-between w-full">
           <CustomImage
-            src={user?.selfie}
+            src={user?.selfie ?? "/images/landlord-emoji.svg"}
             fallbackSrc="/images/landlord-emoji.svg"
             alt="Admin User 1"
             className="h-28 w-28 min-w-38 rounded-full object-cover"

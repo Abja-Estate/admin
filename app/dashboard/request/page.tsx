@@ -220,7 +220,7 @@ export default function Request() {
                         phone={each.from == "landlord" ? each?.phone : ""}
                       />
                     </td>
-                    <td className="p-3">{each?.propertyLocation}</td>
+                    <td className="p-3 min-w-40">{each?.propertyLocation}</td>
                     <td className="p-3">
                       <ProfileInTD
                         image={each?.tenantPhoto}

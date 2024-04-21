@@ -127,46 +127,48 @@ const Admin = () => {
       </header>
       <div className="flex overflow-auto w-full flex-col p-[16px]">
         <table className="w-full">
-          {admins?.map((each, i) => (
-            <tr key={"admin" + i}>
-              <td>
-                <figure className="flex gap-[6px] items-center">
-                  <CustomImage
-                    src={each?.selfie ?? ""}
-                    fallbackSrc="/images/circle.svg"
-                    alt="User Admin"
-                    width={48}
-                    height={48}
-                  />
-                  <figcaption className="text-textcolor100 text-[14px]">
-                    {each.name} {each.surname}
-                  </figcaption>
-                </figure>
-              </td>
-              <td className="text-textcolor100 text-[14px]">Admin 1</td>
-              <td className="text-textcolor100 text-[14px]">
-                {each.created && new Date(each.created).toDateString()}
-              </td>
-              <td className="text-textcolor100 text-[14px]">
-                {each.created && formatDateTime(each.created, true)}
-              </td>
-              <td className="text-textcolor100 text-[14px]">
-                <button
-                  onClick={() => {
-                    setCurrentAdmin(each)
-                    setOpen(true)
-                  }}
-                >
-                  ...
-                </button>
-              </td>
-              <td className="text-textcolor100 text-[14px]">
-                <button onClick={() => deleteAdminCaution(each)}>
-                  <DeleteIcon />
-                </button>
-              </td>
-            </tr>
-          ))}
+          {admins
+            ?.filter((each: UserData) => each.role != "3")
+            .map((each, i) => (
+              <tr key={"admin" + i}>
+                <td>
+                  <figure className="flex gap-[6px] items-center">
+                    <CustomImage
+                      src={each?.selfie ?? ""}
+                      fallbackSrc="/images/circle.svg"
+                      alt="User Admin"
+                      width={48}
+                      height={48}
+                    />
+                    <figcaption className="text-textcolor100 text-[14px]">
+                      {each.name} {each.surname}
+                    </figcaption>
+                  </figure>
+                </td>
+                <td className="text-textcolor100 text-[14px]">Admin 1</td>
+                <td className="text-textcolor100 text-[14px]">
+                  {each.created && new Date(each.created).toDateString()}
+                </td>
+                <td className="text-textcolor100 text-[14px]">
+                  {each.created && formatDateTime(each.created, true)}
+                </td>
+                <td className="text-textcolor100 text-[14px]">
+                  <button
+                    onClick={() => {
+                      setCurrentAdmin(each)
+                      setOpen(true)
+                    }}
+                  >
+                    ...
+                  </button>
+                </td>
+                <td className="text-textcolor100 text-[14px]">
+                  <button onClick={() => deleteAdminCaution(each)}>
+                    <DeleteIcon />
+                  </button>
+                </td>
+              </tr>
+            ))}
         </table>
 
         {/* <p className="text-textcolor100 text-[14px]">Admin 1</p>
