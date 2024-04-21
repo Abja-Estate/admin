@@ -44,6 +44,13 @@ export const editLandlordSchema = Yup.object().shape({
 	phone: Yup.string().required('Phone number is required'),
 	about: Yup.string().nullable(),
 });
+export const editProfileSchema = Yup.object().shape({
+	name: Yup.string().required('First name is required'),
+	surname: Yup.string().required('Last name is required'),
+	email: Yup.string().email('Invalid email address').required('Email is required'),
+	phone: Yup.string().required('Phone number is required'),
+	about: Yup.string().nullable(),
+});
 
 export const adminInputs: Input[] = [
 	{ label: "Firstname", name: 'name', type: "text", placeholder: "First name" },

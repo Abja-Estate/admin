@@ -70,6 +70,11 @@ export const appApi = createApi({
 			query: (body) => ({ url: `auth/${body.actor}/verify_otp`, method: "POST", body }),
 			// transformResponse: (response: any) => response.data,
 		}),
+		updateprofile: builder.mutation<RespData<UserData>, any>({
+			query: (body,) => ({ url: `auth/admin/update_admin`, method: "PATCH", body }),
+			transformResponse: (response: any) => response.data,
+			invalidatesTags: ['User']
+		}),
 		registerAdmin: builder.mutation<RespData<UserData>, AddAdmin>({
 			query: (body,) => ({ url: `auth/${body.actor}/register`, method: "POST", body }),
 			transformResponse: (response: any) => response.data,
@@ -229,6 +234,7 @@ export const {
 	useUpdateAdminMutation,
 	useAddLandlordMutation,
 	useAdminChangePassMutation,
+	useUpdateprofileMutation,
 	useDeleteLandlordMutation,
 	useGetPackagesQuery,
 	useRegisterAdminMutation,

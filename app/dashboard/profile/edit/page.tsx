@@ -4,6 +4,7 @@ import FormField from "@/components/inputs/FormField"
 import {
   adminInputs,
   changePasswordSchema,
+  editProfileSchema,
   editlandlordInputs,
   landlordInputs,
 } from "@/utils/schema"
@@ -12,12 +13,17 @@ import CustomImage from "@/components/CustomImage"
 import { useFormik } from "formik"
 import { AnyObject } from "yup"
 import { getDefault } from "@/utils/helpers"
-import { useAdminChangePassMutation } from "@/redux/endpoints"
+import {
+  useAdminChangePassMutation,
+  useUpdateprofileMutation,
+} from "@/redux/endpoints"
 import toast from "react-hot-toast"
 
 export default function ProfileEdit() {
   const { profile: user } = useAppSelector((state) => state.admin)
   const [updatePassword, { isLoading }] = useAdminChangePassMutation()
+  const [updateProfile, { isLoading: savingProfile }] =
+    useUpdateprofileMutation()
 
   const password_f = useFormik<{ password: string; confirmPassword: string }>({
     validationSchema: changePasswordSchema,
@@ -36,14 +42,16 @@ export default function ProfileEdit() {
   })
 
   const admin_f = useFormik<AnyObject>({
-    validationSchema: changePasswordSchema,
+    validationSchema: editProfileSchema,
     initialValues: getDefault(editlandlordInputs, user),
     onSubmit: async (values) => {
-      const ldata: AnyObject = {
+      const response: AnyObject = await updateProfile({
         ...values,
-        actor: "admin",
+        id: user?._id,
+      })
+      if (response.data) {
+        toast.success("Profile Updated successfully")
       }
-      console.log(ldata)
     },
   })
 
@@ -85,6 +93,15 @@ export default function ProfileEdit() {
                   suffix={<EditOutlineIcon />}
                 />
               ))}
+
+              <div className="flex justify-end pt-10">
+                <button
+                  disabled={savingProfile}
+                  className="bg-primary grid place-items-center text-white rounded-[6px] w-[267px] h-[38px]"
+                >
+                  {savingProfile ? "Saving..." : "Save Changes"}
+                </button>
+              </div>
             </form>
           </div>
           <div>
