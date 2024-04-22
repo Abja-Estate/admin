@@ -32,10 +32,13 @@ import LandlordsHeader from "@/components/admin-dashboard/LandlordsHeader"
 import AreYouSure from "@/components/AreYouSure"
 import ProfileInTD from "@/components/admin-dashboard/ProfileInTD"
 import CustomImage from "@/components/CustomImage"
+import { canDelete } from "@/utils/helpers"
+import { useAppSelector } from "@/redux/hooks"
 
 export default function Tenant({ params }: { params: { landlord: string } }) {
   const [landlordData, setLandlordData] = useState<LandlordData | null>(null)
   const [fetchLandlordData] = useGetLandlordMutation()
+  const { profile: user } = useAppSelector((state) => state.admin)
 
   const fetchL = useCallback(async () => {
     const resp = await fetchLandlordData({
@@ -193,13 +196,15 @@ export default function Tenant({ params }: { params: { landlord: string } }) {
                       <InformationIcon />
                     </button>
                     <ShareYellowIcon />
-                    <button
-                      onClick={() => {
-                        deleteTenantCaution(each)
-                      }}
-                    >
-                      <DeleteRedIcon />
-                    </button>
+                    {canDelete("tenants", user?.role) && (
+                      <button
+                        onClick={() => {
+                          deleteTenantCaution(each)
+                        }}
+                      >
+                        <DeleteRedIcon />
+                      </button>
+                    )}
                   </span>
                 </td>
               </tr>

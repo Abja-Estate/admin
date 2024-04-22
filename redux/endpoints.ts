@@ -168,8 +168,8 @@ export const appApi = createApi({
 			query: (body) => ({ url: `request/admin/update_request`, method: "PATCH", body }),
 			invalidatesTags: ['Request']
 		}),
-		deleteRequest: builder.mutation<any, { ticketID: string }>({
-			query: (body,) => ({ url: `service/admin/delete_request`, method: "POST", body }),
+		deleteRequest: builder.mutation<any, { ticket: string, landlordID: string }>({
+			query: (body,) => ({ url: `request/admin/delete_request`, method: "POST", body }),
 			invalidatesTags: ['Request']
 		}),
 

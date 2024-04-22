@@ -16,9 +16,11 @@ import {
   useUpdateLandlordMutation,
 } from "@/redux/endpoints"
 import { useFormik } from "formik"
-import { getDefault } from "@/utils/helpers"
+import { canEdit, getDefault } from "@/utils/helpers"
 import { AnyObject } from "yup"
 import toast from "react-hot-toast"
+import { useAppSelector } from "@/redux/hooks"
+import { useRouter } from "next/navigation"
 
 export default function ProfileEdit({
   params,
@@ -29,6 +31,7 @@ export default function ProfileEdit({
   const [fetchLandlordData] = useGetLandlordMutation()
   const [updateLandlord, { isLoading: updatingLandlord }] =
     useUpdateLandlordMutation()
+  const { profile: user } = useAppSelector((state) => state.admin)
 
   const fetchL = useCallback(async () => {
     const resp = await fetchLandlordData({
@@ -41,9 +44,17 @@ export default function ProfileEdit({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [params.landlord, fetchLandlordData])
 
+  const router = useRouter()
   useEffect(() => {
     fetchL()
   }, [fetchL])
+
+  useEffect(() => {
+    if (!canEdit("landlords", user?.role)) {
+      router.push("/dashboard/")
+      return
+    }
+  }, [router, user?.role])
 
   const landlord_f = useFormik<AnyObject>({
     validationSchema: editLandlordSchema,

@@ -1,5 +1,16 @@
 import { AnyObject } from "yup"
 export type Role = "1" | "2" | "3";
+export type Action = "view" | "add" | "edit" | "delete"
+export type Entity = "requests" | "landlords" | "admins" | "tenants"
+export type Permissions = {
+	[k: string]: {
+		view: Role[],
+		add: Role[],
+		delete: Role[],
+		edit: Role[],
+		[b: string]: Role[],
+	}
+}
 
 export type UserData = {
 	_id: string,

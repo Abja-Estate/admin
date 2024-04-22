@@ -12,7 +12,13 @@ import { AnyObject } from "yup"
 import toast from "react-hot-toast"
 import AreYouSure from "@/components/AreYouSure"
 import CustomImage from "@/components/CustomImage"
-import { formatDateTime } from "@/utils/helpers"
+import {
+  canAdd,
+  canDelete,
+  canEdit,
+  canView,
+  formatDateTime,
+} from "@/utils/helpers"
 import { useAppSelector } from "@/redux/hooks"
 import { useRouter } from "next/navigation"
 
@@ -20,7 +26,7 @@ export default function UserActivity() {
   const { profile: user } = useAppSelector((state) => state.admin)
   const router = useRouter()
   useEffect(() => {
-    if (user?.role != "3") {
+    if (!canView("admins", user?.role)) {
       router.push("/dashboard/settings/")
     }
   }, [user, router])
@@ -66,6 +72,10 @@ const Admin = () => {
   const { profile: user } = useAppSelector((state) => state.admin)
 
   const deleteAdminCaution = (data: any) => {
+    if (!canDelete("admins", user?.role)) {
+      toast.error("You don't have permission")
+      return
+    }
     setCDIO({
       status: true,
       data,
@@ -117,14 +127,16 @@ const Admin = () => {
           </p>
         </div>
         <div>
-          <button
-            onClick={() => {
-              setOpen(true)
-            }}
-            className="text-primary bg-transparent border-[1px] border-primary w-[160px] h-[41px] rounded-[8px] font-semibold"
-          >
-            Add Admin
-          </button>
+          {canAdd("admins", user?.role) && (
+            <button
+              onClick={() => {
+                setOpen(true)
+              }}
+              className="text-primary bg-transparent border-[1px] border-primary w-[160px] h-[41px] rounded-[8px] font-semibold"
+            >
+              Add Admin
+            </button>
+          )}
         </div>
       </header>
       <div className="flex overflow-auto w-full flex-col py-4 px-2">
@@ -169,6 +181,10 @@ const Admin = () => {
                   <button
                     className="p-2"
                     onClick={() => {
+                      if (!canEdit("admins", user?.role)) {
+                        toast.error("You don't have permission")
+                        return
+                      }
                       setCurrentAdmin(each)
                       setOpen(true)
                     }}

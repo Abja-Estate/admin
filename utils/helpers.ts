@@ -1,4 +1,6 @@
 import { AnyObject } from "yup"
+import { Action, Entity, Role } from "./types"
+import { permissions } from "./constants"
 
 export const getDefault = (inputArr: any[], data: AnyObject | null = null) => {
 	let obj = {}
@@ -120,5 +122,12 @@ export function formatDateTime (dateTimeStr: string, ago: boolean = false) {
 		return date.toLocaleDateString('en-US', { day: 'numeric', month: 'long', year: 'numeric' });
 	}
 }
+
+
+export const isPermitted = (action: Action, role: Role, entity: Entity) => permissions[entity][action].includes(role);
+export const canDelete = (entity: Entity, role: Role = "1") => isPermitted("delete", role, entity);
+export const canEdit = (entity: Entity, role: Role = "1") => isPermitted("edit", role, entity);
+export const canAdd = (entity: Entity, role: Role = "1") => isPermitted("add", role, entity);
+export const canView = (entity: Entity, role: Role = "1") => isPermitted("view", role, entity);
 
 export const isBrowser = typeof window !== 'undefined';
