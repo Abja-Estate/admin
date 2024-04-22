@@ -168,7 +168,10 @@ export const appApi = createApi({
 			query: (body) => ({ url: `request/admin/update_request`, method: "PATCH", body }),
 			invalidatesTags: ['Request']
 		}),
-
+		deleteRequest: builder.mutation<any, { ticketID: string }>({
+			query: (body,) => ({ url: `service/admin/delete_request`, method: "POST", body }),
+			invalidatesTags: ['Request']
+		}),
 
 
 		getTenants: builder.query<any[], any>({
@@ -239,6 +242,7 @@ export const {
 	useDeleteLandlordMutation,
 	useGetPackagesQuery,
 	useRegisterAdminMutation,
+	useDeleteRequestMutation,
 	useDeleteTenantMutation,
 	useGetTenantsQuery,
 	useDeleteAdminMutation

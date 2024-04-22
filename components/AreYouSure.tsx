@@ -60,6 +60,34 @@ const AreYouSure = ({
           </div>
         )}
 
+        {aYSD.type == "deleteRequest" && (
+          <div className="flex flex-col items-center px-5 justify-center">
+            <div className="text-center mb-5 text-fade max-w-[12rem]">
+              {aYSD.desc}
+            </div>
+
+            <div className="flex w-full mt-5 flex-row-reverse justify-between items-center gap-3 sm:gap-8">
+              <button
+                onClick={() => {
+                  aYSD.action && aYSD.action(aYSD.data)
+                  setAYSD({ ...aYSD, status: false })
+                }}
+                className="filledbtn text-xs h-6 max-w-fit"
+              >
+                Proceed
+              </button>
+              <button
+                onClick={() => {
+                  setAYSD({ ...aYSD, status: false })
+                }}
+                className="outlinebtn text-xs h-6 max-w-fit"
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        )}
+
         {aYSD.type == "successResp" && (
           <>
             <div className="flex flex-col gap-4 pb-3 justify-center items-center w-[80vw] max-w-[20rem]">

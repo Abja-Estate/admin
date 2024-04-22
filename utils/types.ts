@@ -239,7 +239,7 @@ export interface AreYouSureProps {
 	desc?: string | JSX.Element,
 	data?: AnyObject,
 	action?: (data?: any) => (void | Promise<void>),
-	type?: 'deleteUser' | "successResp"
+	type?: 'deleteUser' | "successResp" | "deleteRequest"
 }
 
 export interface RespData<T> {
