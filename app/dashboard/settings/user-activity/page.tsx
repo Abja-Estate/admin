@@ -63,13 +63,14 @@ const Admin = () => {
   const [deleteAnAdmin] = useDeleteAdminMutation()
   const { data: admins, isLoading } = useGetAdminsQuery("")
   const [currentAdmin, setCurrentAdmin] = useState<UserData | null>(null)
+  const { profile: user } = useAppSelector((state) => state.admin)
 
   const deleteAdminCaution = (data: any) => {
     setCDIO({
       status: true,
       data,
       type: "deleteUser",
-      action: deleteLandlord,
+      action: deleteAdmin,
       desc: `Are you sure you want to delete this admin?`,
     })
   }
@@ -96,9 +97,10 @@ const Admin = () => {
     }
   }, [open])
 
-  const deleteLandlord = async (_admin: any) => {
+  const deleteAdmin = async (_admin: any) => {
     const response: AnyObject = await deleteAnAdmin({
       adminID: _admin._id,
+      superAdminID: user?._id,
     })
     if (response.data) {
       toast.success("Admin Deleted")
@@ -125,15 +127,24 @@ const Admin = () => {
           </button>
         </div>
       </header>
-      <div className="flex overflow-auto w-full flex-col p-[16px]">
+      <div className="flex overflow-auto w-full flex-col py-4 px-2">
+        {isLoading && (
+          <div className="flex items-center justify-center min-h-[20rem] p-4 ">
+            Fetching...
+          </div>
+        )}
         <table className="w-full">
           {admins
             ?.filter((each: UserData) => each.role != "3")
             .map((each, i) => (
-              <tr key={"admin" + i}>
-                <td>
+              <tr
+                key={"admin" + i}
+                className="border-b-[1rem] border-transparent"
+              >
+                <td className="px-2 min-w-[10rem]">
                   <figure className="flex gap-[6px] items-center">
                     <CustomImage
+                      className="rounded-full object-cover"
                       src={each?.selfie ?? ""}
                       fallbackSrc="/images/circle.svg"
                       alt="User Admin"
@@ -145,15 +156,18 @@ const Admin = () => {
                     </figcaption>
                   </figure>
                 </td>
-                <td className="text-textcolor100 text-[14px]">Admin 1</td>
-                <td className="text-textcolor100 text-[14px]">
+                <td className="text-textcolor100 px-2 whitespace-nowrap text-[14px] capitalize">
+                  Admin {each.role}
+                </td>
+                <td className="text-textcolor100 px-2 whitespace-nowrap text-[14px]">
                   {each.created && new Date(each.created).toDateString()}
                 </td>
-                <td className="text-textcolor100 text-[14px]">
+                <td className="text-textcolor100 px-2 whitespace-nowrap text-[14px]">
                   {each.created && formatDateTime(each.created, true)}
                 </td>
-                <td className="text-textcolor100 text-[14px]">
+                <td className="text-textcolor100 px-2 whitespace-nowrap text-[14px]">
                   <button
+                    className="p-2"
                     onClick={() => {
                       setCurrentAdmin(each)
                       setOpen(true)
@@ -162,7 +176,7 @@ const Admin = () => {
                     ...
                   </button>
                 </td>
-                <td className="text-textcolor100 text-[14px]">
+                <td className="text-textcolor100 px-2 whitespace-nowrap text-[14px]">
                   <button onClick={() => deleteAdminCaution(each)}>
                     <DeleteIcon />
                   </button>

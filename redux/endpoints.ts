@@ -47,9 +47,10 @@ export const appApi = createApi({
 	}),
 
 	endpoints: (builder) => ({
-		getAdmin: builder.query<UserData, string>({
-			query: () => `service/admin/user`,
-			providesTags: (result) => result ? [{ type: "User", id: result._id }] : ["User"],
+		getAnAdmin: builder.mutation<UserData, { adminID: string }>({
+			query: (body) => ({ url: `auth/admin/get_admin_by_id`, body, method: "POST" }),
+			// transformResponse: (response: any) => response.data,
+			invalidatesTags: ["User", "Admin"],
 			// extraOptions:{},
 			// forceRefetch: () => false
 		}),
@@ -73,7 +74,7 @@ export const appApi = createApi({
 		updateprofile: builder.mutation<RespData<UserData>, any>({
 			query: (body,) => ({ url: `auth/admin/update_admin`, method: "PATCH", body }),
 			transformResponse: (response: any) => response.data,
-			invalidatesTags: ['User']
+			invalidatesTags: ['User', "Admin"]
 		}),
 		registerAdmin: builder.mutation<RespData<UserData>, AddAdmin>({
 			query: (body,) => ({ url: `auth/${body.actor}/register`, method: "POST", body }),
@@ -86,12 +87,12 @@ export const appApi = createApi({
 			invalidatesTags: ['Admin']
 		}),
 		deleteAdmin: builder.mutation<any, any>({
-			query: (body,) => ({ url: `auth/${body.actor}/`, method: "DELETE", body }),
+			query: (body,) => ({ url: `auth/admin/delete_admin`, method: "POST", body }),
 			transformResponse: (response: any) => response.data,
 			invalidatesTags: ['Admin']
 		}),
 		getAdmins: builder.query<UserData[], any>({
-			query: (qP) => `data/admin/all_admins`,
+			query: (qP) => `auth/admin/all_admins`,
 			transformResponse: (response: any) => response.data,
 			providesTags: ['Admin']
 		}),
@@ -215,7 +216,7 @@ export const appApi = createApi({
 // auto-generated based on the defined endpoints
 export const {
 	useGetLandlordsQuery,
-	useGetAdminQuery,
+	useGetAnAdminMutation,
 	useGetPropertiesQuery,
 	useGetRequestsQuery,
 	useGetRentsQuery,

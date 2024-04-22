@@ -179,13 +179,13 @@ export const signInSchema = Yup.object({
 	// .length(10, "Phone number should be 8 digits (without the leading zero)"),
 })
 
-export const addAdminSchema = Yup.object({
+export const addAdminSchema = (update: boolean = false) => Yup.object({
 	email: Yup.string().email("Email is invalid").required("Email is required"),
 	name: Yup.string().required("Firstname is required"),
 	surname: Yup.string().required("Lastname is required"),
 	role: Yup.string().required("Role is required"),
-	phone: Yup.string().required("Phone is required"),
-	password: passwordSchema,
+	phone: update ? Yup.string().notRequired() : Yup.string().required("Phone is required"),
+	password: update ? Yup.string().notRequired() : passwordSchema,
 	// confirmPassword: cPasswordSchema("password")
 })
 

@@ -9,6 +9,7 @@ import Image from "next/image"
 import {
   useRegisterAdminMutation,
   useUpdateAdminMutation,
+  useUpdateprofileMutation,
 } from "@/redux/endpoints"
 import toast from "react-hot-toast"
 
@@ -23,10 +24,14 @@ const AdminDialog = ({
   setDone: Function
   admin?: UserData | null
 }) => {
+  const [validationSchema, setValidationSchema] = useState<any>(
+    addAdminSchema()
+  )
   const fileInputRef = useRef<HTMLInputElement>(null)
   const [images, setImages] = useState<File[]>([])
   const [addAdmin, { isLoading: adding }] = useRegisterAdminMutation()
-  const [updateAdmin, { isLoading: saving }] = useUpdateAdminMutation()
+  // const [updateAdmin, { isLoading: saving }] = useUpdateAdminMutation()
+  const [updateAdmin, { isLoading: saving }] = useUpdateprofileMutation()
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files
@@ -40,7 +45,7 @@ const AdminDialog = ({
   }
 
   const add_f = useFormik<any>({
-    validationSchema: addAdminSchema,
+    validationSchema,
     initialValues: { ...getDefault(addAdminInputs), selfie: "" },
     onSubmit: async (values) => {
       const fileToBase64 = (file: File) => {
@@ -55,11 +60,13 @@ const AdminDialog = ({
       const details = {
         ...values,
         confirmPassword: values.password,
-        selfie: images.length > 0 ? await fileToBase64(images[0]) : "", // convert image[0] to base64 here
+        img: images.length > 0 ? await fileToBase64(images[0]) : "",
         actor: "admin",
       }
 
-      const response = await (admin ? updateAdmin(details) : addAdmin(details))
+      const response = await (admin
+        ? updateAdmin({ ...details, id: admin._id })
+        : addAdmin(details))
       if ("data" in response) {
         setOpen(false)
         setDone(true)
@@ -69,12 +76,20 @@ const AdminDialog = ({
   })
 
   useEffect(() => {
-    admin && add_f.setValues(admin)
+    if (admin) {
+      add_f.setValues(admin)
+      setValidationSchema(addAdminSchema(true))
+    } else {
+      setValidationSchema(addAdminSchema())
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [admin])
 
   useEffect(() => {
-    !open && add_f.resetForm()
+    if (!open) {
+      add_f.resetForm()
+      setImages([])
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open])
 
@@ -117,7 +132,7 @@ const AdminDialog = ({
             onClick={() => fileInputRef.current?.click()}
             className="w-14 cursor-pointer flex items-center justify-center h-14 min-w-14 rounded-full overflow-hidden bg-bgprimaryfade"
           >
-            {!images.length && (
+            {!images.length && !admin?.selfie && (
               <svg
                 width="24"
                 height="30"
@@ -134,7 +149,7 @@ const AdminDialog = ({
               </svg>
             )}
 
-            {images[0] && (
+            {images[0] ? (
               <>
                 {images.map((image, index) => (
                   <Image
@@ -147,6 +162,18 @@ const AdminDialog = ({
                   />
                 ))}
               </>
+            ) : admin?.selfie ? (
+              <>
+                <Image
+                  width={200}
+                  height={200}
+                  src={admin.selfie}
+                  alt={`Profile Image`}
+                  className="w-full h-full object-cover"
+                />
+              </>
+            ) : (
+              ""
             )}
           </div>
 
