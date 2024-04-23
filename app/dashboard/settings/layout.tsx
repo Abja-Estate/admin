@@ -6,7 +6,7 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { Suspense } from "react"
 
-export default function AdminDashboardLayout({
+export default function SettingsLayout({
   children,
 }: {
   children: React.ReactNode

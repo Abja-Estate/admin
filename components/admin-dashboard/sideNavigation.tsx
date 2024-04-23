@@ -86,14 +86,18 @@ export default function AdminDashboardSideNavigation({
                     )}
                   />
                   <span>{link.linkText}</span>
-                  {i == 2 && (
-                    <span className="flex items-center rounded-full justify-center h-6 min-w-6 ml-auto w-6 bg-[#D90001] text-white text-sm">
-                      {
-                        fRequests.filter((each) => each.status == "Pending")
-                          .length
-                      }
-                    </span>
-                  )}
+                  {i == 2 &&
+                    Boolean(
+                      fRequests.filter((each) => each.status == "Pending")
+                        .length
+                    ) && (
+                      <span className="flex items-center rounded-full justify-center h-6 min-w-6 ml-auto w-6 bg-[#D90001] text-white text-sm">
+                        {
+                          fRequests.filter((each) => each.status == "Pending")
+                            .length
+                        }
+                      </span>
+                    )}
                 </div>
               </Link>
             )

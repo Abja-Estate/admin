@@ -1,3 +1,5 @@
+"use client"
+
 import { setAdminProfile } from "@/redux/adminSlice"
 import { appApi, useGetAnAdminMutation } from "@/redux/endpoints"
 import { useAppDispatch } from "@/redux/hooks"
@@ -20,15 +22,16 @@ const AdminAuthGuard = ({ Component }: { Component: React.FC }) => {
   useEffect(() => {
     const data = isBrowser ? localStorage.getItem("active-user") ?? "{}" : "{}"
 
-    const fetchData = async (adminID: string) => {
-      const resp = await getAdminDetails({ adminID })
-      if ("data" in resp) {
-        dispatch(setAdminProfile({ ...resp.data, role: "3" }))
-        setcv(<Component />)
-      } else {
-        dispatch(setAdminProfile(null))
-        router.push("/auth/login")
-      }
+    const fetchData = (adminID: string) => {
+      getAdminDetails({ adminID }).then((resp) => {
+        if ("data" in resp) {
+          dispatch(setAdminProfile({ ...resp.data }))
+          setcv(<Component />)
+        } else {
+          dispatch(setAdminProfile(null))
+          router.push("/auth/login")
+        }
+      })
     }
 
     try {
@@ -36,6 +39,8 @@ const AdminAuthGuard = ({ Component }: { Component: React.FC }) => {
         const parsed = JSON.parse(data)
         if (parsed.email && parsed._id) {
           fetchData(parsed._id)
+          // dispatch(setAdminProfile(parsed))
+          // setcv(<Component />)
         } else {
           throw Error(`Can't find details: ${data}`)
         }

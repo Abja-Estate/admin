@@ -231,7 +231,7 @@ export default function Request() {
           </div>
         )}
         {loading && <Loading />}
-        {!loading && requests?.length && (
+        {!loading && Boolean(requests?.length) && (
           <div className="overflow-auto">
             <table className="w-full">
               <thead>

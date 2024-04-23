@@ -191,7 +191,7 @@ export default function AdminDashboardTopNavigation({
                 height={60}
               />
               <div className="text-left">
-                <h1 className="text-[14px]">
+                <h1 className="text-[14px] capitalize">
                   {user?.name} {user?.surname}
                 </h1>
                 <p className="text-[14px] text-[#2A4C23] font-bold">Admin</p>
