@@ -199,24 +199,27 @@ const FormField = ({ autocomplete = true, inputProps, ...props }: Desc) => {
         )}
 
         {props.suffix}
-        {props.type == "password" &&
-          (type == "password" ? (
-            <button
-              className="my-1"
-              type="button"
-              onClick={() => setType("text")}
-            >
-              <EyeSlashIcon />
-            </button>
-          ) : (
-            <button
-              className="my-1"
-              type="button"
-              onClick={() => setType("password")}
-            >
-              <EyeIcon />
-            </button>
-          ))}
+        {props.type == "password" && (
+          <div className={cn(props.t && "pr-2")}>
+            {type == "password" ? (
+              <button
+                className="my-1"
+                type="button"
+                onClick={() => setType("text")}
+              >
+                <EyeSlashIcon />
+              </button>
+            ) : (
+              <button
+                className="my-1"
+                type="button"
+                onClick={() => setType("password")}
+              >
+                <EyeIcon />
+              </button>
+            )}
+          </div>
+        )}
       </div>
       {!props.t ? (
         <>
@@ -233,7 +236,7 @@ const FormField = ({ autocomplete = true, inputProps, ...props }: Desc) => {
           {props.formik &&
             props.formik.touched[props.name] &&
             props?.formik.errors[props.name] && (
-              <small className="text-red-600 text-sm block">
+              <small className="text-red-600 text-xs block">
                 {props?.formik.errors[props.name] as ReactNode}
               </small>
             )}

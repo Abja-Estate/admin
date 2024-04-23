@@ -52,43 +52,6 @@ export default function AuthD({ children }: { children: React.ReactNode }) {
   // const router = useRouter()
 
   // useEffect(() => {
-  //   let inactivityTimer: NodeJS.Timeout
-
-  //   const resetTimer = () => {
-  //     clearTimeout(inactivityTimer)
-  //     inactivityTimer = setTimeout(() => {
-  //       setIsActive(false)
-  //       toast("You are logged out due to inactivity")
-  //       dispatch(setAdminProfile(null))
-  //       localStorage.removeItem("token")
-  //       localStorage.removeItem("active-user")
-  //       router.push("/auth/login")
-  //     }, 10 * 60 * 1000) // 10 minutes in milliseconds
-  //   }
-
-  //   const handleActivity = () => {
-  //     if (!isActive) {
-  //       setIsActive(true)
-  //     }
-  //     resetTimer()
-  //   }
-
-  //   // Set up event listeners
-  //   window.addEventListener("mousemove", handleActivity)
-  //   window.addEventListener("keypress", handleActivity)
-
-  //   // Initial timer start
-  //   resetTimer()
-
-  //   // Clean up event listeners
-  //   return () => {
-  //     clearTimeout(inactivityTimer)
-  //     window.removeEventListener("mousemove", handleActivity)
-  //     window.removeEventListener("keypress", handleActivity)
-  //   }
-  // }, [isActive, dispatch, router])
-
-  // useEffect(() => {
   //   // Router.events.on("routeChangeStart", (url) => {
   //   //   console.log("Starting")
   //   nProgress.configure({ showSpinner: false })

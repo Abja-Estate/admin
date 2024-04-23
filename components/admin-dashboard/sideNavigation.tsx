@@ -8,6 +8,8 @@ import { setAdminProfile } from "@/redux/adminSlice"
 import { cn } from "@/utils/cn"
 import { useEffect, useState } from "react"
 import { useGetRequestsQuery } from "@/redux/endpoints"
+import { isBrowser } from "@/utils/helpers"
+import { RequestDetails } from "@/utils/types"
 
 export default function AdminDashboardSideNavigation({
   setMenuIsOpen,
@@ -18,14 +20,14 @@ export default function AdminDashboardSideNavigation({
   const router = useRouter()
   const pathname = usePathname()
   const handleLogout = () => {
-    localStorage.removeItem("active-user")
+    isBrowser && localStorage.removeItem("active-user")
     dispatch(setAdminProfile(null))
-    localStorage.removeItem("token")
+    isBrowser && localStorage.removeItem("token")
     router.push("/auth/login")
   }
 
   const { data: requests } = useGetRequestsQuery("")
-  const [fRequests, setFRequests] = useState<any>([])
+  const [fRequests, setFRequests] = useState<RequestDetails[]>([])
 
   useEffect(() => {
     if (requests) {
@@ -86,7 +88,10 @@ export default function AdminDashboardSideNavigation({
                   <span>{link.linkText}</span>
                   {i == 2 && (
                     <span className="flex items-center rounded-full justify-center h-6 min-w-6 ml-auto w-6 bg-[#D90001] text-white text-sm">
-                      {fRequests.length}
+                      {
+                        fRequests.filter((each) => each.status == "Pending")
+                          .length
+                      }
                     </span>
                   )}
                 </div>

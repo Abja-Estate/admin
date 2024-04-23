@@ -5,6 +5,7 @@ import OTPInput from "react-otp-input"
 import Button from "../button"
 import { BASE_URL } from "@/config"
 import toast from "react-hot-toast"
+import { isBrowser } from "@/utils/helpers"
 
 export default function OtpVerifyScreen({
   changeView,
@@ -19,7 +20,7 @@ export default function OtpVerifyScreen({
     e.preventDefault()
 
     try {
-      const form_email = localStorage.getItem("form_email")
+      const form_email = isBrowser ? localStorage.getItem("form_email") : ""
 
       console.log("form_email", form_email)
 
@@ -101,7 +102,7 @@ export default function OtpVerifyScreen({
 
     try {
       // For example:
-      const form_email = localStorage.getItem("form_email")
+      const form_email = isBrowser ? localStorage.getItem("form_email") : ""
 
       const response = await fetch(`${BASE_URL}/auth/admin/verify_otp`, {
         method: "POST",

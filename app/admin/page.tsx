@@ -27,7 +27,7 @@ export default function Admin() {
       }
     }
     fetchRequests()
-  }, [BASE_URL])
+  }, [])
 
   console.log("he")
   return (

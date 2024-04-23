@@ -1,4 +1,5 @@
 "use client"
+import AreYouSure from "@/components/AreYouSure"
 import Loading from "@/components/Loading"
 import MemoNoRecord from "@/components/NoRecord"
 import AddRequestDialog from "@/components/admin-dashboard/AddRequestDialog"
@@ -22,17 +23,51 @@ import {
   SearchIcon,
   ShareIcon,
 } from "@/components/svgs"
-import { useGetRequestsQuery } from "@/redux/endpoints"
+import {
+  useDeleteRequestMutation,
+  useGetRequestsQuery,
+} from "@/redux/endpoints"
+import { useAppSelector } from "@/redux/hooks"
 import { cn } from "@/utils/cn"
 import { months } from "@/utils/constants"
-import { filter } from "@/utils/helpers"
-import { RequestDetails } from "@/utils/types"
+import { canDelete, canEdit, filter } from "@/utils/helpers"
+import { AreYouSureProps, RequestDetails } from "@/utils/types"
 import { useEffect, useState } from "react"
+import toast from "react-hot-toast"
+import { AnyObject } from "yup"
 
 export default function Request() {
   const { data: requests, isLoading: loading } = useGetRequestsQuery("")
+  const { profile: user } = useAppSelector((state) => state.admin)
   const [rRequests, setRRequests] = useState<RequestDetails[]>([])
   const [fRequests, setFRequests] = useState<RequestDetails[]>([])
+
+  const [deleteARequest] = useDeleteRequestMutation()
+  const [cDIO, setCDIO] = useState<AreYouSureProps>({ status: false })
+  const deleteRequestCaution = (data: any) => {
+    if (!canDelete("requests", user?.role)) {
+      toast.error("You don't have permission")
+      return
+    }
+    setCDIO({
+      status: true,
+      data,
+      type: "deleteRequest",
+      action: deleteRequest,
+      desc: `Are you sure you want to delete this Request?`,
+    })
+  }
+
+  const deleteRequest = async (_request: RequestDetails) => {
+    const response: AnyObject = await deleteARequest({
+      ticketNumber: _request.ticket,
+      landlordID: _request.landlordID,
+    })
+    if (response.data) {
+      toast.success(response?.data?.message)
+    } else if (response.error) {
+    }
+  }
 
   useEffect(() => {
     if (requests) {
@@ -109,10 +144,28 @@ export default function Request() {
         <div className="p-[22px] rounded-b-[10px] grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 text-sm bg-white gap-[16px]">
           {[
             { value: rRequests.length },
-            { value: "--" },
-            { value: "--" },
-            { value: "--" },
-            { value: "--" },
+            {
+              value: rRequests.filter(
+                (each) => each.status.toLowerCase() == "accepted"
+              ).length,
+            },
+            {
+              value: rRequests.filter(
+                (each) => each.status.toLowerCase() == "pending"
+              ).length,
+            },
+            {
+              value: rRequests.filter(
+                (each) => each.status.toLowerCase() == "completed"
+              ).length,
+            },
+            {
+              value: rRequests.filter(
+                (each) =>
+                  each.status.toLowerCase() == "accepted" &&
+                  each.servicePersonnelName
+              ).length,
+            },
           ].map((each, i) => (
             <div
               key={i + "cards"}
@@ -186,7 +239,7 @@ export default function Request() {
                   <td className="p-3">
                     <div className="border-[1px] border-white rounded-[4px] w-[20px] h-[20px]"></div>
                   </td>
-                  <td className="p-3">ID</td>
+                  <td className="p-3">Request ID</td>
                   <td className="p-3">Landlord</td>
                   <td className="p-3">Address</td>
                   <td className="p-3">Tenant</td>
@@ -209,7 +262,9 @@ export default function Request() {
                     </td>
                     <td className="p-3 whitespace-nowrap">
                       {each?.ticket}
-                      <div className="text-xs">{each?.day}</div>
+                      <div className="text-xs">
+                        {new Date(each?.time).toDateString()}
+                      </div>
                     </td>
                     <td className="p-3">
                       <ProfileInTD
@@ -218,7 +273,7 @@ export default function Request() {
                         phone={each.from == "landlord" ? each?.phone : ""}
                       />
                     </td>
-                    <td className="p-3">{each?.propertyLocation}</td>
+                    <td className="p-3 min-w-40">{each?.propertyLocation}</td>
                     <td className="p-3">
                       <ProfileInTD
                         image={each?.tenantPhoto}
@@ -242,16 +297,26 @@ export default function Request() {
                     </td>
                     <td className="p-3">
                       <div className="flex items-center gap-2 h-fit">
-                        <button
-                          onClick={() => {
-                            setCurrentRequest(each)
-                            setRequestDialog(true)
-                          }}
-                        >
-                          <InformationIcon />
-                        </button>
-                        <DeleteRedIcon />
-                        <MoreVertIcon />
+                        {canEdit("requests", user?.role) && (
+                          <button
+                            onClick={() => {
+                              setCurrentRequest(each)
+                              setRequestDialog(true)
+                            }}
+                          >
+                            <InformationIcon />
+                          </button>
+                        )}
+                        {canDelete("requests", user?.role) && (
+                          <button
+                            onClick={() => {
+                              deleteRequestCaution(each)
+                            }}
+                          >
+                            <DeleteRedIcon />
+                          </button>
+                        )}
+                        {/* <MoreVertIcon /> */}
                       </div>
                     </td>
                   </tr>
@@ -274,6 +339,8 @@ export default function Request() {
         isOpen={addrequestDialog}
         setIsOpen={setaddRequestDialog}
       />
+
+      <AreYouSure aYSD={cDIO} setAYSD={setCDIO} />
     </>
   )
 }

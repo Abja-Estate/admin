@@ -1,6 +1,6 @@
 // Need to use the React-specific entry point to import createApi
 import { BASE_URL } from '@/config';
-import { isString } from '@/utils/helpers';
+import { isBrowser, isString } from '@/utils/helpers';
 import { Actor, AddAdmin, AdminLoginT, GetUnit, LandLord, LandlordData, Package, RequestDetails, RespData, TenantInfo, UserData } from '@/utils/types';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import toast from 'react-hot-toast';
@@ -16,13 +16,13 @@ export const appApi = createApi({
 	// refetchOnFocus: true,
 	refetchOnReconnect: true,
 	// refetchOnMountOrArgChange: true,
-	tagTypes: ['User', 'Landlord', 'Request', 'Tenant', 'Rent', 'Property', 'Package'],
+	tagTypes: ['User', 'Landlord', 'Request', 'Tenant', 'Rent', 'Property', 'Package', 'Admin'],
 	baseQuery: fetchBaseQuery({
 		baseUrl: `${BASE_URL}`,
 		prepareHeaders: (headers) => {
 			// prepareHeaders: (headers, { getState }) => {
 			// Get the token from your state or wherever it's stored
-			const token = localStorage.getItem('token');
+			// const token = isBrowser ? localStorage.getItem('token') : "";
 			// const token = getState().auth.token;
 			// if (token) {
 			headers.set('Authorization', `4f1fe63a-5f8b-4e7f-ad38-e68445079351`);
@@ -47,14 +47,15 @@ export const appApi = createApi({
 	}),
 
 	endpoints: (builder) => ({
-		getAdmin: builder.query<UserData, string>({
-			query: () => `service/admin/user`,
-			providesTags: (result) => result ? [{ type: "User", id: result.id }] : ["User"],
+		getAnAdmin: builder.mutation<UserData, { adminID: string }>({
+			query: (body) => ({ url: `auth/admin/get_admin_by_id`, body, method: "POST" }),
+			// transformResponse: (response: any) => response.data,
+			invalidatesTags: ["User", "Admin"],
 			// extraOptions:{},
 			// forceRefetch: () => false
 		}),
 		adminLogin: builder.mutation<RespData<any>, AdminLoginT>({
-			query: (body) => ({ url: `auth/${body.actor}/login`, method: "POST", body }),
+			query: (body) => ({ url: `auth/admin/login`, method: "POST", body }),
 			invalidatesTags: ['User']
 		}),
 		adminResetPass: builder.mutation<any, { actor: Actor, id: string, password: string, confirmPassword: string }>({
@@ -70,13 +71,30 @@ export const appApi = createApi({
 			query: (body) => ({ url: `auth/${body.actor}/verify_otp`, method: "POST", body }),
 			// transformResponse: (response: any) => response.data,
 		}),
+		updateprofile: builder.mutation<RespData<UserData>, any>({
+			query: (body,) => ({ url: `auth/admin/update_admin`, method: "PATCH", body }),
+			transformResponse: (response: any) => response.data,
+			invalidatesTags: ['User', "Admin"]
+		}),
 		registerAdmin: builder.mutation<RespData<UserData>, AddAdmin>({
 			query: (body,) => ({ url: `auth/${body.actor}/register`, method: "POST", body }),
 			transformResponse: (response: any) => response.data,
+			invalidatesTags: ['Admin']
+		}),
+		updateAdmin: builder.mutation<RespData<UserData>, AddAdmin>({
+			query: (body,) => ({ url: `auth/${body.actor}/edit_admin`, method: "POST", body }),
+			transformResponse: (response: any) => response.data,
+			invalidatesTags: ['Admin']
 		}),
 		deleteAdmin: builder.mutation<any, any>({
-			query: (body,) => ({ url: `auth/${body.actor}/`, method: "DELETE", body }),
+			query: (body,) => ({ url: `auth/admin/delete_admin`, method: "POST", body }),
 			transformResponse: (response: any) => response.data,
+			invalidatesTags: ['Admin']
+		}),
+		getAdmins: builder.query<UserData[], any>({
+			query: (qP) => `auth/admin/all_admins`,
+			transformResponse: (response: any) => response.data,
+			providesTags: ['Admin']
 		}),
 
 
@@ -128,14 +146,21 @@ export const appApi = createApi({
 					requests: RequestDetails[];
 				}
 
-				let data: RequestDetails[] = []
+				let data: RequestDetails[] = [];
+
+				const compareDates = (a: RequestDetails, b: RequestDetails) => {
+					const dateA = new Date(a.time) as any;
+					const dateB = new Date(b.time) as any;
+					return (dateB - dateA);
+				}
+
 				response.data
 					.filter((each: ReqDet) => each?.requests?.length)
 					.forEach((each: ReqDet) => {
 						data = data.concat(each.requests)
 					})
 
-				return data;
+				return data.sort(compareDates);
 			},
 			providesTags: ['Request']
 		}),
@@ -143,7 +168,10 @@ export const appApi = createApi({
 			query: (body) => ({ url: `request/admin/update_request`, method: "PATCH", body }),
 			invalidatesTags: ['Request']
 		}),
-
+		deleteRequest: builder.mutation<any, { ticketNumber: string, landlordID: string }>({
+			query: (body,) => ({ url: `request/admin/delete_request`, method: "POST", body }),
+			invalidatesTags: ['Request']
+		}),
 
 
 		getTenants: builder.query<any[], any>({
@@ -191,7 +219,7 @@ export const appApi = createApi({
 // auto-generated based on the defined endpoints
 export const {
 	useGetLandlordsQuery,
-	useGetAdminQuery,
+	useGetAnAdminMutation,
 	useGetPropertiesQuery,
 	useGetRequestsQuery,
 	useGetRentsQuery,
@@ -201,15 +229,20 @@ export const {
 	useUpdateLandlordMutation,
 	useGetTenantByUnitMutation,
 	useAdminResetPassMutation,
+	useGetAdminsQuery,
 	useAdminVerifyOTPMutation,
 	useCreatePackageMutation,
 	useUpdateRequestMutation,
 	useGetLandlordPropertiesMutation,
 	useGetLandlordMutation,
+	useUpdateAdminMutation,
 	useAddLandlordMutation,
 	useAdminChangePassMutation,
+	useUpdateprofileMutation,
 	useDeleteLandlordMutation,
 	useGetPackagesQuery,
+	useRegisterAdminMutation,
+	useDeleteRequestMutation,
 	useDeleteTenantMutation,
 	useGetTenantsQuery,
 	useDeleteAdminMutation

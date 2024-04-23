@@ -16,7 +16,7 @@ export default function Profile({}: {}) {
         <div className="p-[24px]  border-b-[1px] border-b-primary2 w-full">
           <figure>
             <CustomImage
-              src={user?.selfie}
+              src={user?.selfie ?? "/images/circle.svg"}
               fallbackSrc="/images/circle.svg"
               className="h-24 w-24 min-w-24 rounded-full object-cover"
               width={100}

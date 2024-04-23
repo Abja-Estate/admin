@@ -1,17 +1,17 @@
 import { RootState } from '@/redux/store'
-import { Actor } from '@/utils/types';
+import { Actor, UserData } from '@/utils/types';
 import { createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
 import { AnyObject } from 'yup';
 
-type UserData = any;
+// type UserData = any;
 // Define a type for the slice state
 export interface AdminState {
 	// value: number
 	auth?: {
 		email: string,
 		password: string,
-		actor: Actor
+		// actor: Actor
 	} | null
 	profile: UserData | null,
 	navIsOpen: boolean,
@@ -63,7 +63,7 @@ export const adminSlice = createSlice({
 		setAuth: (state, action: PayloadAction<{
 			email: string,
 			password: string,
-			actor: Actor
+			// actor: Actor
 		} | null>) => {
 			state.auth = action.payload
 		},

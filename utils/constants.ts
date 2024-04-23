@@ -1,3 +1,5 @@
+import { Permissions } from "./types";
+
 export const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
 
 export const shuffleItems = (items: any[]) => {
@@ -71,3 +73,31 @@ export const demologs = [
 		time: "2 days ago",
 	},
 ]
+
+
+export const permissions: Permissions = {
+	requests: {
+		view: ["1", "2", "3"],
+		edit: ["1", "2", "3"],
+		add: ["2", "3"],
+		delete: ["2", "3"],
+	},
+	admins: {
+		view: ["3", "2"],
+		edit: ["3"],
+		add: ["3"],
+		delete: ["3"],
+	},
+	landlords: {
+		view: ["1", "2", "3"],
+		edit: ["2", "3"],
+		add: ["2", "3"],
+		delete: ["2", "3"],
+	},
+	tenants: {
+		view: ["1", "2", "3"],
+		edit: ["2", "3"],
+		add: ["2", "3"],
+		delete: ["2", "3"],
+	},
+}

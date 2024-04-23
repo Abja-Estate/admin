@@ -1,6 +1,18 @@
 import { Input } from "./types"
 import * as Yup from 'yup'
 
+const passwordSchema = Yup.string()
+	.required("Password is required")
+	.test(
+		'password-complexity',
+		'Password must include a digit, a symbol, a lowercase and a capital letter',
+		value =>
+			/^(?=.*\d)(?=.*[a-z])(?=.*[!@#$%^&*(),.?":{}|<>])(?=.*[A-Z])/.test(value)
+	)
+	.label("Password");
+
+const cPasswordSchema = (passwordKey: string) => Yup.string().label('Confirm Password').required().oneOf([Yup.ref(passwordKey)], 'Passwords must match')
+
 export const landlordInputs: Input[] = [
 	{ label: "Full Names", name: 'fullname', type: "text", placeholder: "Full name" },
 	{ label: "Contact", name: 'phone', type: "text", placeholder: "Contact Number" },
@@ -26,6 +38,13 @@ export const editlandlordInputs: Input[] = [
 
 
 export const editLandlordSchema = Yup.object().shape({
+	name: Yup.string().required('First name is required'),
+	surname: Yup.string().required('Last name is required'),
+	email: Yup.string().email('Invalid email address').required('Email is required'),
+	phone: Yup.string().required('Phone number is required'),
+	about: Yup.string().nullable(),
+});
+export const editProfileSchema = Yup.object().shape({
 	name: Yup.string().required('First name is required'),
 	surname: Yup.string().required('Last name is required'),
 	email: Yup.string().email('Invalid email address').required('Email is required'),
@@ -160,6 +179,24 @@ export const signInSchema = Yup.object({
 	// .length(10, "Phone number should be 8 digits (without the leading zero)"),
 })
 
+export const addAdminSchema = (update: boolean = false) => Yup.object({
+	email: Yup.string().email("Email is invalid").required("Email is required"),
+	name: Yup.string().required("Firstname is required"),
+	surname: Yup.string().required("Lastname is required"),
+	role: Yup.string().required("Role is required"),
+	phone: update ? Yup.string().notRequired() : Yup.string().required("Phone is required"),
+	password: update ? Yup.string().notRequired() : passwordSchema,
+	// confirmPassword: cPasswordSchema("password")
+})
+
+export const addAdminInputs: Input[] = [
+	{ label: "Firstname", name: 'name', placeholder: "Firstname" },
+	{ label: "Lastname", name: 'surname', placeholder: "Lastname" },
+	{ label: "Email", name: 'email', type: "email", placeholder: "Enter Email" },
+	{ label: "Phone", name: 'phone', placeholder: "Phone" },
+	{ label: "Enter password", name: 'password', type: "password", placeholder: "Password" },
+]
+
 export const reqResetPasswordInputs: Input[] = [
 	{ name: 'email', type: "email", placeholder: "Your Email" },
 	// { name: 'password', type: "password", placeholder: "Your password" },
@@ -177,15 +214,11 @@ export const resetPasswordInputs: Input[] = [
 ]
 
 export const changePasswordSchema = Yup.object({
-	password: Yup.string()
-		.required("Password is required")
-		.test(
-			'password-complexity',
-			'Password must include a digit, a symbol, a lowercase and a capital letter',
-			value =>
-				/^(?=.*\d)(?=.*[a-z])(?=.*[!@#$%^&*(),.?":{}|<>])(?=.*[A-Z])/.test(value)
-		)
-		.label("Password"),
-
-	confirmPassword: Yup.string().label('Confirm Password').required().oneOf([Yup.ref('password')], 'Passwords must match'),
+	password: passwordSchema,
+	confirmPassword: cPasswordSchema("password"),
+})
+export const changePasswordSchema2 = Yup.object({
+	oldPassword: Yup.string().required("Old Password is required"),
+	password: passwordSchema,
+	confirmPassword: cPasswordSchema("password"),
 })

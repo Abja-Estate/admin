@@ -21,13 +21,15 @@ import { months } from "@/utils/constants"
 import LandlordsHeader from "@/components/admin-dashboard/LandlordsHeader"
 import AvatarStack from "@/components/admin-dashboard/AvatarStack"
 import Pagination from "@/components/admin-dashboard/Pagination"
+import { canDelete, canEdit } from "@/utils/helpers"
+import { useAppSelector } from "@/redux/hooks"
 
 export default function AdminLandord() {
   const { data, isLoading } = useGetLandlordsQuery("")
   const [deleteALandlord] = useDeleteLandlordMutation()
   const router = useRouter()
   const [cDIO, setCDIO] = useState<AreYouSureProps>({ status: false })
-
+  const { profile: user } = useAppSelector((state) => state.admin)
   const [filteredLandLords, setFilteredLandLords] = useState<LandLord[]>([])
 
   useEffect(() => {
@@ -255,20 +257,23 @@ export default function AdminLandord() {
                       </td>
                       <td className="p-2">
                         <div className="flex items-center gap-2 xl:gap-4 h-fit">
-                          <Link
-                            href={`/dashboard/landlord/${landlord._id}/edit`}
-                          >
-                            <SVGIcon.EditGreenIcon />
-                          </Link>
+                          {canEdit("landlords", user?.role) && (
+                            <Link
+                              href={`/dashboard/landlord/${landlord._id}/edit`}
+                            >
+                              <SVGIcon.EditGreenIcon />
+                            </Link>
+                          )}
                           <SVGIcon.ShareYellowIcon />
-
-                          <button
-                            onClick={() => {
-                              deleteLandlordCaution(landlord)
-                            }}
-                          >
-                            <SVGIcon.DeleteRedIcon />
-                          </button>
+                          {canDelete("landlords", user?.role) && (
+                            <button
+                              onClick={() => {
+                                deleteLandlordCaution(landlord)
+                              }}
+                            >
+                              <SVGIcon.DeleteRedIcon />
+                            </button>
+                          )}
 
                           <MenuLayout
                             items={[

@@ -49,7 +49,7 @@ export default function Settings() {
         <div className="flex flex-wrap gap-x-7 gap-y-2 pb-[16px] border-b-[1px] border-b-[#949494]">
           <div>
             <CustomImage
-              src={user?.selfie}
+              src={user?.selfie ?? "/images/circle.svg"}
               fallbackSrc="/images/circle.svg"
               alt="User Profile"
               width={60}
