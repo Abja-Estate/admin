@@ -9,6 +9,25 @@ import { isBrowser } from "@/utils/helpers"
 export default function ResetPasswordScreen({
   changeView,
 }: ResetPasswordViewsProps) {
+  // const [adminLogin, { isLoading }] = useAdminLoginMutation()
+  // const signIn_f = useFormik<AdminLoginT>({
+  //   validationSchema: signInSchema,
+  //   initialValues: getDefault(signInInputs) as AdminLoginT,
+  //   onSubmit: async (values) => {
+  //     const ldata: AdminLoginT = {
+  //       ...values,
+  //     }
+  //     // const response: AnyObject = await adminLogin(ldata)
+
+  //     if ("data" in response) {
+  //       const data = response.data.data
+  //       //save login details if "Remember Me" is checked
+
+  //       // localStorage.setItem("token", response.data.access_token)
+  //     }
+  //   },
+  // })
+
   const [loading, setLoading] = useState(false)
 
   const [formData, setFormData] = useState({

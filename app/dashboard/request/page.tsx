@@ -60,11 +60,11 @@ export default function Request() {
 
   const deleteRequest = async (_request: RequestDetails) => {
     const response: AnyObject = await deleteARequest({
-      ticket: _request.ticket,
+      ticketNumber: _request.ticket,
       landlordID: _request.landlordID,
     })
     if (response.data) {
-      toast.success("Landlord Deleted")
+      toast.success(response?.data?.message)
     } else if (response.error) {
     }
   }
