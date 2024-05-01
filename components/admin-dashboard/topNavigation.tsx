@@ -217,12 +217,12 @@ export default function AdminDashboardTopNavigation({
               >
                 Activity
               </button>
-              <butto
+              <button
                 onClick={handleLogout}
                 className="cursor-pointer border-t-[1px] w-full px-6 py-2 text-left"
               >
                 Log out
-              </butto>
+              </button>
             </Popover.Panel>
           </Popover>
         </div>
