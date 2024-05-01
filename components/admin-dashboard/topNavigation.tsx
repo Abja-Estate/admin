@@ -49,6 +49,13 @@ export default function AdminDashboardTopNavigation({
     //   time: formatDateTime("4/15/2024"),
     // },
   ])
+  const handleLogout = () => {
+    isBrowser && localStorage.removeItem("active-user")
+    dispatch(setAdminProfile(null))
+    isBrowser && localStorage.removeItem("token")
+    router.push("/auth/login")
+  }
+
   const dispatch = useAppDispatch()
   function closeModal() {
     setIsOpen(false)
@@ -210,9 +217,12 @@ export default function AdminDashboardTopNavigation({
               >
                 Activity
               </button>
-              <button className="cursor-pointer border-t-[1px] w-full px-6 py-2 text-left">
+              <butto
+                onClick={handleLogout}
+                className="cursor-pointer border-t-[1px] w-full px-6 py-2 text-left"
+              >
                 Log out
-              </button>
+              </butto>
             </Popover.Panel>
           </Popover>
         </div>
