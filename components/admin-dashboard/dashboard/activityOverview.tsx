@@ -36,25 +36,25 @@ const ActivityOverview: React.FC<ActivityOverviewProps> = ({
               title: "Properties",
               value: `${properties ? properties.length : ""} Properties`,
               icon: <PropertyIcon />,
-              images: properties?.map((each) => each.properties[0].photo),
+              images: properties?.map((each) => each.properties[0]?.photo),
             },
             {
               title: "Landlords",
               value: `${landlords ? landlords.length : ""} Landlords`,
               icon: <HouseHoldIcon />,
-              images: landlords?.map((each) => each.selfie),
+              images: landlords?.map((each) => each?.selfie),
             },
             {
               title: "Rents",
               value: `${rents ? rents.length : ""} Rents`,
               icon: <HouseHoldIcon />,
-              images: rents?.map((each) => each.properties[0].photo),
+              images: rents?.map((each) => each.properties[0]?.photo),
             },
             {
               title: "Requests",
               value: `${requests ? requests.length : ""} Requests`,
               icon: <RequestIcon />,
-              images: requests?.map((each) => each.tenantPhoto),
+              images: requests?.map((each) => each?.tenantPhoto),
             },
           ].map((each) => (
             <InfoBox key={each.title} {...each} />
