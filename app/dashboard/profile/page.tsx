@@ -9,14 +9,14 @@ import Link from "next/link"
 
 export default function Profile({}: {}) {
   const { profile: user } = useAppSelector((state) => state.admin)
-
+//user?.selfie ??
   return (
     <div className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-[32px]">
       <div className="col-span-1 lg:col-span-2 flex flex-col rounded-se-[100px] bg-white">
         <div className="p-[24px]  border-b-[1px] border-b-primary2 w-full">
           <figure>
             <CustomImage
-              src={user?.selfie ?? "/images/circle.svg"}
+              src={ "/images/circle.svg"}
               fallbackSrc="/images/circle.svg"
               className="h-24 w-24 min-w-24 rounded-full object-cover"
               width={100}

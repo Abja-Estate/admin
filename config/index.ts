@@ -1,1 +1,1 @@
-export const BASE_URL: string = "https://casmara-app-api.onrender.com/api";
+export const BASE_URL: string = "https://api.abjapropertymanagement.com/api";

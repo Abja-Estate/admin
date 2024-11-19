@@ -113,8 +113,9 @@ export default function Tenant({ params }: { params: { landlord: string } }) {
         <div className="flex flex-col sm:flex-row gap-[20px]">
           <Image
             src={
-              landlordData?.landlordInfo.selfie ??
-              "/images/tenant-profile-img.svg"
+                 "/images/tenant-profile-img.svg"
+             // landlordData?.landlordInfo.selfie ??
+           
             }
             // fallbackSrc="/images/tenant-profile-img.svg"
             alt="Tenant Profile"

@@ -70,7 +70,7 @@ export default function AdminDashboardTopNavigation({
 
   useEffect(() => {
     const ws = new WebSocket(
-      `wss://casmara-request-app-api.onrender.com/ws/admin?apiKey=Ayoseun&id=abja2024Admin`
+      `wss://api.abjapropertymanagement.com/ws/admin?apiKey=${apiKey}&id=${id}`
     )
 
     const sendBroadcastData = {

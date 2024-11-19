@@ -142,7 +142,7 @@ export const appApi = createApi({
 			query: (qP) => `service/admin/all_requests`,
 			transformResponse: (response: any) => {
 				interface ReqDet {
-					landlordID: string;
+					ownerID: string;
 					requests: RequestDetails[];
 				}
 
@@ -168,7 +168,7 @@ export const appApi = createApi({
 			query: (body) => ({ url: `request/admin/update_request`, method: "PATCH", body }),
 			invalidatesTags: ['Request']
 		}),
-		deleteRequest: builder.mutation<any, { ticketNumber: string, landlordID: string }>({
+		deleteRequest: builder.mutation<any, { ticketNumber: string, ownerID: string }>({
 			query: (body,) => ({ url: `request/admin/delete_request`, method: "POST", body }),
 			invalidatesTags: ['Request']
 		}),
@@ -206,7 +206,7 @@ export const appApi = createApi({
 			transformResponse: (response: any) => response.data,
 			providesTags: ['Property']
 		}),
-		getLandlordProperties: builder.mutation<any, { landlordID: string }>({
+		getLandlordProperties: builder.mutation<any, { ownerID: string }>({
 			query: (body) => ({ url: `service/landlord/properties`, method: "POST", body }),
 			invalidatesTags: ['Property', 'Landlord']
 		})

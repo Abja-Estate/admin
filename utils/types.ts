@@ -24,7 +24,7 @@ export type UserData = {
 	activated: boolean,
 	accessToken?: string,
 	created?: string,
-	selfie?: string,
+	selfie?: "/images/circle.svg"// string,
 }
 
 export interface AddAdmin {
@@ -186,13 +186,13 @@ export interface RequestDetails {
 	priority: string;
 	phone: string;
 	email: string;
-	tenantPhoto: string;
+	tenantPhoto: "/images/circle.svg"// string;
 	propertyLocation: string;
 	problems: string[];
 	tenantUnit: string;
 	fullName: string;
 	propertyName: string;
-	landlordID: string;
+	ownerID: string;
 	propertyStructure: string;
 	period: string;
 	others: string;
@@ -200,17 +200,17 @@ export interface RequestDetails {
 	day: string;
 	ticket: string;
 	status: string;
-	isLandlordApproved: boolean;
+	isOwnerApproved: boolean;
 	isResolved: boolean;
 	servicePersonnelName?: string;
-	servicePersonnelPhone?: string;
-	servicePersonnelPhoto?: string;
+	servicePersonnelPhone?: "/images/circle.svg"// string;
+	servicePersonnelPhoto?: "/images/circle.svg"// string;
 	created_at: string
 }
 
 interface LandlordRequests {
 	_id: string;
-	landlordID: string;
+	ownerID: string;
 	requests: RequestDetails[];
 }
 
