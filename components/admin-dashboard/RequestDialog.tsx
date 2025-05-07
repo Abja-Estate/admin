@@ -48,7 +48,7 @@ export default function RequestDialog({
           description: values.description,
           servicePersonnelName: values.servicePersonnelName,
           servicePersonnelPhone: values.servicePersonnelPhone,
-          servicePersonnelPhoto: "",
+          servicePersonnelPhoto: values.servicePersonnelPhoto,
         }
         updateRequest(requestData)
           .unwrap()
@@ -61,37 +61,9 @@ export default function RequestDialog({
     },
   })
 
-  // const getLandlordDet = useCallback(
-  //   async (id: string) => {
-  //     getLandlord({ landlordID: id })
-  //       .unwrap()
-  //       .then((resp) => {
-  //         console.log(resp)
-  //       })
-  //       .catch((err) => {
-  //         console.log(err)
-  //       })
 
-  //     // formik.setValues({ ...formik.values, landlord:"" } ?? {})
-  //   },
-  //   [getLandlord]
-  // )
 
-  // const getTenantDet = useCallback(
-  //   async (details: GetUnit) => {
-  //     getTenant(details)
-  //       .unwrap()
-  //       .then((resp) => {
-  //         console.log(resp)
-  //       })
-  //       .catch((err) => {
-  //         console.log(err)
-  //       })
 
-  //     // formik.setValues({ ...formik.values, landlord:"" } ?? {})
-  //   },
-  //   [getTenant]
-  // )
 
   useEffect(() => {
     if (request) {
@@ -143,7 +115,9 @@ export default function RequestDialog({
             <h3>{request?.ticket}</h3>
           </div>
           <div className="my-4 w-full grid grid-cols-1 md:grid-cols-2 gap-x-7 gap-y-3">
-            {request?.from == "landlord" && (
+            {request?.from == "landlord"
+             &&
+              (
               <>
                 <FormField
                   formik={formik}
@@ -170,6 +144,7 @@ export default function RequestDialog({
                 />
               </>
             )}
+            
             <FormField disabled formik={formik} {...getProps("agent")} t />
             <FormField disabled formik={formik} {...getProps("day")} t />
             {/* <FormField formik={formik} {...getProps("start_time")} t />
