@@ -300,8 +300,15 @@ export default function Request() {
                         {canEdit("requests", user?.role) && (
                           <button
                             onClick={() => {
-                              setCurrentRequest(each)
-                              setRequestDialog(true)
+
+                              if (!each.isOwnerApproved) {
+
+                                toast.error("Landlord has not approved this request")
+                              } else {
+                                setCurrentRequest(each)
+                                setRequestDialog(true)
+                              }
+
                             }}
                           >
                             <InformationIcon />
