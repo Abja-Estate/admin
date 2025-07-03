@@ -56,7 +56,7 @@ export default function ResetPasswordScreen({
 
         isBrowser && localStorage.setItem("form_email", formData.email)
 
-        isBrowser && localStorage.setItem("form_id", response.data.data._id)
+        isBrowser && localStorage.setItem("form_id", response.data.data.id)
 
         changeView("OTP")
       } else {

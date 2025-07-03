@@ -5,6 +5,7 @@ import RecentPayments from "@/components/admin-dashboard/dashboard/recentPayment
 import Requests from "@/components/admin-dashboard/dashboard/requests"
 import {
   useGetLandlordsQuery,
+  useGetMobileAppUsageDataQuery,
   useGetPropertiesQuery,
   useGetRentsQuery,
   useGetRequestsQuery,
@@ -20,7 +21,9 @@ const Dashboard = () => {
   const { data: rents } = useGetRentsQuery("")
   const { data: requests } = useGetRequestsQuery("")
   const { data: properties } = useGetPropertiesQuery("")
+  const {data: mobileAppUsage} = useGetMobileAppUsageDataQuery("")
   return (
+   
     <>
       <header className="">
         <h1 className="font-semibold">Activity overview</h1>
@@ -32,7 +35,9 @@ const Dashboard = () => {
           properties={properties}
           rents={rents}
         />
-        <NumberOfDownloads />
+        <NumberOfDownloads 
+        mobileAppUsage={mobileAppUsage}
+         />
         <Requests />
         <RecentPayments />
       </div>

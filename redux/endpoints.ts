@@ -1,7 +1,7 @@
 // Need to use the React-specific entry point to import createApi
 import { BASE_URL } from '@/config';
 import { isBrowser, isString } from '@/utils/helpers';
-import { Actor, AddAdmin, AdminLoginT, GetUnit, LandLord, LandlordData, Package, RequestDetails, RespData, TenantInfo, UserData } from '@/utils/types';
+import { Actor, AddAdmin, AdminLoginT, GetUnit, LandLord, LandlordData, MobileAppUsageData, Package, RequestDetails, RespData, TenantInfo, UserData } from '@/utils/types';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import toast from 'react-hot-toast';
 import { AnyObject } from 'yup';
@@ -76,8 +76,8 @@ export const appApi = createApi({
 			transformResponse: (response: any) => response.data,
 			invalidatesTags: ['User', "Admin"]
 		}),
-		registerAdmin: builder.mutation<RespData<UserData>, AddAdmin>({
-			query: (body,) => ({ url: `auth/${body.actor}/register`, method: "POST", body }),
+		addAdmin: builder.mutation<RespData<UserData>, AddAdmin>({
+			query: (body,) => ({ url: `auth/${body.actor}/add_admin`, method: "POST", body }),
 			transformResponse: (response: any) => response.data,
 			invalidatesTags: ['Admin']
 		}),
@@ -108,6 +108,11 @@ export const appApi = createApi({
 
 		getPackages: builder.query<Package[], any>({
 			query: (qP) => `data/admin/all_package`,
+			transformResponse: (response: any) => response.data,
+			providesTags: ['Package']
+		}),
+		getMobileAppUsageData: builder.query<MobileAppUsageData, any>({
+			query: (qP) => `service/admin/get_mobile_app_usage_data`,
 			transformResponse: (response: any) => response.data,
 			providesTags: ['Package']
 		}),
@@ -241,9 +246,10 @@ export const {
 	useUpdateprofileMutation,
 	useDeleteLandlordMutation,
 	useGetPackagesQuery,
-	useRegisterAdminMutation,
+	useAddAdminMutation,
 	useDeleteRequestMutation,
 	useDeleteTenantMutation,
 	useGetTenantsQuery,
-	useDeleteAdminMutation
+	useDeleteAdminMutation,
+	useGetMobileAppUsageDataQuery,
 } = appApi

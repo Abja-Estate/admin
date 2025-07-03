@@ -43,8 +43,9 @@ export default function AdminDashboardLayout({
     try {
       if (data) {
         const parsed = JSON.parse(data)
-        if (parsed.email && parsed._id) {
-          fetchData(parsed._id)
+        console.log(parsed)
+        if (parsed.email && parsed.id) {
+          fetchData(parsed.id)
           // dispatch(setAdminProfile(parsed))
           // setcv(<Component />)
         } else {

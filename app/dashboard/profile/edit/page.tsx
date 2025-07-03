@@ -31,7 +31,7 @@ export default function ProfileEdit() {
     onSubmit: async (values) => {
       const response: AnyObject = await updatePassword({
         ...values,
-        id: user?._id,
+        id: user?.id,
         actor: "admin",
       })
       if (response.data) {
@@ -47,7 +47,7 @@ export default function ProfileEdit() {
     onSubmit: async (values) => {
       const response: AnyObject = await updateProfile({
         ...values,
-        id: user?._id,
+        id: user?.id,
       })
       if (response.data) {
         toast.success("Profile Updated successfully")

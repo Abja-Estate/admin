@@ -36,33 +36,39 @@ export default function AdminLoginComp() {
       }
       const response: AnyObject = await adminLogin(ldata)
       dispatch(setAuth(ldata))
+       console.log(response)
+      try {
+        if ("data" in response) {
+          const data = response.data.data
+          //save login details if "Remember Me" is checked
+          if (checked) {
+            isBrowser &&
+              localStorage.setItem("saved-login-details", JSON.stringify(ldata))
+          } else {
+            isBrowser && localStorage.removeItem("saved-login-detail")
+          }
 
-      if ("data" in response) {
-        const data = response.data.data
-        //save login details if "Remember Me" is checked
-        if (checked) {
-          isBrowser &&
-            localStorage.setItem("saved-login-details", JSON.stringify(ldata))
-        } else {
-          isBrowser && localStorage.removeItem("saved-login-detail")
-        }
+          isBrowser && localStorage.setItem("active-user", JSON.stringify(data))
+          router.push("/dashboard")
 
-        isBrowser && localStorage.setItem("active-user", JSON.stringify(data))
-        router.push("/dashboard")
+          // localStorage.setItem("token", response.data.access_token)
+        } else if (response.error) {
+          if (response.error.status == "FETCH_ERROR") {
+            toast.error("Please, check your connection.")
+          }
 
-        // localStorage.setItem("token", response.data.access_token)
-      } else if (response.error) {
-        if (response.error.status == "FETCH_ERROR") {
-          toast.error("Please, check your connection.")
-        }
-
-        if (response.error.data) {
-          const { statusCode, error } = response.error.data
-          if (statusCode == 400 && error.includes("activated yet")) {
-            router.push("/auth/otp")
+          if (response.error.data) {
+            const { statusCode, error } = response.error.data
+            if (statusCode == 400 && error.includes("activated yet")) {
+              router.push("/auth/otp")
+            }
           }
         }
+      } catch (error: any) {
+        console.log(error)
+        toast.error("Something went wrong", error)
       }
+
     },
   })
 

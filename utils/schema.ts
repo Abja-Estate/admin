@@ -61,11 +61,15 @@ export const adminInputs: Input[] = [
 ]
 
 export const adminSettingInputs1: Input[] = [
-	{ label: "Firstname", name: 'name', type: "text", placeholder: "First name" },
-	{ label: "Lastname", name: 'surname', type: "text", placeholder: "Last name" },
-	{ label: "Username", name: 'username', type: "text", placeholder: "Username" },
-	{ label: "Date of Birth", name: 'dob', type: "date", },
+  { label: "First Name", name: "name", type: "text", placeholder: "First name" },
+  { label: "Last Name", name: "surname", type: "text", placeholder: "Last name" },
+  { label: "Phone Number", name: "phone", type: "text", placeholder: "Phone number" },
+  { label: "E-mail Address", name: "email", type: "text", placeholder: "Email address" },
+  { label: "About You", name: "about", type: "textarea", placeholder: "Tell us about yourself" },
+  { label: "Password", name: "password", type: "password", placeholder: "Enter password" },
+  { label: "Confirm Password", name: "confirmPassword", type: "password", placeholder: "Confirm password" },
 ]
+
 
 export const adminSettingInputs3: Input[] = [
 	{ label: "Phone Number", name: 'phone', type: "text", placeholder: "Phone Number" },
@@ -77,9 +81,15 @@ export const adminSettingInputs3: Input[] = [
 ]
 
 export const adminProfileSchema = Yup.object({
-	email: Yup.string().email("Email is invalid").required("Email is required"),
-	// password: Yup.string().required("Password is required")
-	// .length(10, "Phone number should be 8 digits (without the leading zero)"),
+  name: Yup.string().required("First name is required"),
+  surname: Yup.string().required("Last name is required"),
+  phone: Yup.string().required("Phone number is required"),
+  email: Yup.string().email("Invalid email").required("Email is required"),
+  about: Yup.string().optional(),
+  password: Yup.string().min(6, "Minimum 6 characters").required("Password is required"),
+  confirmPassword: Yup.string()
+    .oneOf([Yup.ref("password")], "Passwords must match")
+    .required("Confirm Password is required"),
 })
 
 

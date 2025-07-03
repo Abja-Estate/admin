@@ -109,8 +109,8 @@ const Admin = () => {
 
   const deleteAdmin = async (_admin: any) => {
     const response: AnyObject = await deleteAnAdmin({
-      adminID: _admin._id,
-      superAdminID: user?._id,
+      adminID: _admin.id,
+      superAdminID: user?.id,
     })
     if (response.data) {
       toast.success("Admin Deleted")
@@ -172,10 +172,10 @@ const Admin = () => {
                   Admin {each.role}
                 </td>
                 <td className="text-textcolor100 px-2 whitespace-nowrap text-[14px]">
-                  {each.created && new Date(each.created).toDateString()}
+                  {each.createdAt && new Date(each.createdAt).toDateString()}
                 </td>
                 <td className="text-textcolor100 px-2 whitespace-nowrap text-[14px]">
-                  {each.created && formatDateTime(each.created, true)}
+                  {each.createdAt && formatDateTime(each.createdAt, true)}
                 </td>
                 <td className="text-textcolor100 px-2 whitespace-nowrap text-[14px]">
                   <button

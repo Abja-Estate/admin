@@ -27,6 +27,7 @@ const ActivityOverview: React.FC<ActivityOverviewProps> = ({
   landlords,
   rents,
 }) => {
+  
   return (
     <>
       <section className="grid grid-cols-12 gap-[27px]">
@@ -43,6 +44,9 @@ const ActivityOverview: React.FC<ActivityOverviewProps> = ({
               value: `${landlords ? landlords.length : ""} Landlords`,
               icon: <HouseHoldIcon />,
               images: landlords?.map((each) => each?.selfie),
+              onClick: () => {
+               console.log(landlords!.length)
+              },
             },
             {
               title: "Rents",
@@ -63,9 +67,9 @@ const ActivityOverview: React.FC<ActivityOverviewProps> = ({
         <div className="px-[20px] col-span-full xl:col-span-5 2xl:col-span-4 py-[16px] flex items-center gap-[24px] justify-between box-glass-effect">
           <div className="flex flex-col gap-[10px]">
             {[
-              { icon: <CalculatorIcon />, text: `0 Total Projects` },
+              { icon: <CalculatorIcon />, text: `${properties?.length ?? 0} Total Properties` },
               { icon: <ProgressIcon />, text: `0 In-Progress Tasks` },
-              { icon: <ClockRewindIcon />, text: `0 Pending Requests` },
+              { icon: <ClockRewindIcon />, text: `${requests?.length ?? 0} Pending Requests` },
               { icon: <MoneyHandIcon />, text: `Rent Collection` },
               { icon: <HomeIcon />, text: `Others` },
             ].map((each) => (

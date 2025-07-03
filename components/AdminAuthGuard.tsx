@@ -37,8 +37,8 @@ const AdminAuthGuard = ({ Component }: { Component: React.FC }) => {
     try {
       if (data) {
         const parsed = JSON.parse(data)
-        if (parsed.email && parsed._id) {
-          fetchData(parsed._id)
+        if (parsed.email && parsed.id) {
+          fetchData(parsed.id)
           // dispatch(setAdminProfile(parsed))
           // setcv(<Component />)
         } else {

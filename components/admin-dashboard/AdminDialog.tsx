@@ -7,7 +7,7 @@ import { getDefault } from "@/utils/helpers"
 import FormField from "../inputs/FormField"
 import Image from "next/image"
 import {
-  useRegisterAdminMutation,
+  useAddAdminMutation,
   useUpdateAdminMutation,
   useUpdateprofileMutation,
 } from "@/redux/endpoints"
@@ -29,7 +29,7 @@ const AdminDialog = ({
   )
   const fileInputRef = useRef<HTMLInputElement>(null)
   const [images, setImages] = useState<File[]>([])
-  const [addAdmin, { isLoading: adding }] = useRegisterAdminMutation()
+  const [addAdmin, { isLoading: adding }] = useAddAdminMutation()
   // const [updateAdmin, { isLoading: saving }] = useUpdateAdminMutation()
   const [updateAdmin, { isLoading: saving }] = useUpdateprofileMutation()
 
@@ -65,7 +65,7 @@ const AdminDialog = ({
       }
 
       const response = await (admin
-        ? updateAdmin({ ...details, id: admin._id })
+        ? updateAdmin({ ...details, id: admin.id })
         : addAdmin(details))
       if ("data" in response) {
         setOpen(false)

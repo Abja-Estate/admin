@@ -13,7 +13,7 @@ export type Permissions = {
 }
 
 export type UserData = {
-	_id: string,
+	id: string,
 	name: string,
 	surname: string,
 	phone?: string,
@@ -23,7 +23,8 @@ export type UserData = {
 	about?: string,
 	activated: boolean,
 	accessToken?: string,
-	created?: string,
+	createdAt?: string,
+	updatedAt?: string,
 	selfie?: "/images/circle.svg"// string,
 }
 
@@ -271,4 +272,33 @@ export interface Input {
 	// 	valueKey: string,
 	// 	value: string
 	// }
+}
+
+
+// Monthly chart data interface
+export interface MonthlyChartData {
+  month: string;
+  monthIndex: number;
+  signUps: number;
+  activeUsers: number;
+}
+
+// Summary statistics interface
+export interface UsageSummary {
+  totalUsers: number;
+  totalActive: number;
+  totalLandlords: number;
+  totalTenants: number;
+}
+
+// Main data interface
+export interface MobileAppUsageData {
+  chartData: MonthlyChartData[];
+  summary: UsageSummary;
+}
+
+// API response interface
+export interface MobileAppUsageResponse {
+  statusCode: number;
+  data: MobileAppUsageData;
 }

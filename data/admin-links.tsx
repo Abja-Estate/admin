@@ -32,6 +32,11 @@ export const adminSideNavigationLinksData: Array<AdminSideNavigationLink> = [
     linkText: "Landlord",
     leading: HouseIcon,
   },
+    {
+    href: "/dashboard/properties",
+    linkText: "Properties",
+    leading: HouseIcon,
+  },
   {
     href: "/dashboard/request",
     linkText: "Request",
