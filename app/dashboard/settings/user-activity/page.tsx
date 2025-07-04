@@ -1,10 +1,9 @@
 "use client"
-import RadioInput from "@/components/inputs/radioInput"
+
 import { DeleteIcon } from "@/components/svgs"
-import SwitchToggle from "@/components/inputs/switchToggle"
-import clsx from "clsx"
+
 import Image from "next/image"
-import { Suspense, useEffect, useState } from "react"
+import {  useEffect, useState } from "react"
 import AdminDialog from "@/components/admin-dashboard/AdminDialog"
 import { useDeleteAdminMutation, useGetAdminsQuery } from "@/redux/endpoints"
 import { AreYouSureProps, UserData } from "@/utils/types"
@@ -72,6 +71,7 @@ const Admin = () => {
   const { profile: user } = useAppSelector((state) => state.admin)
 
   const deleteAdminCaution = (data: any) => {
+    
     if (!canDelete("admins", user?.role)) {
       toast.error("You don't have permission")
       return
